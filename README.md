@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sunroot
 
-## Getting Started
+Marketing and ordering site for a small-batch tropical drinks business, built to
+serve two very different customers from one codebase: someone buying a single
+bottle, and someone buying for two hundred guests.
 
-First, run the development server:
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS v4.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The two order paths
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | Route | How it completes |
+| --- | --- | --- |
+| Individual | `/shop` → `/shop/[slug]` → `/cart` | Cart, then a details form. Prices are exact. |
+| Events & bulk | `/events` | Package picker, then a quote form. No prices charged — every event is quoted by hand. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Both paths end the same way: a server action validates the submission, records
+it, and returns a reference plus a prefilled WhatsApp and email link. **No
+payment is taken online.** You confirm by message and collect payment your own
+way. See "Taking payment online" below when you are ready to change that.
 
-## Learn More
+## Where to change things
 
-To learn more about Next.js, take a look at the following resources:
+Almost everything a non-developer needs to edit lives in two files.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `src/lib/site.ts` — the business
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Business name, tagline, phone, WhatsApp number, email, city, service area,
+opening hours, socials, and the event lead time. Changing the name here changes
+it everywhere, including page titles, the footer and the logo.
 
-## Deploy on Vercel
+The WhatsApp number must be **digits only, with country code** — `15550142200`,
+not `+1 (555) 014-2200`. That is what `wa.me` links need.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `src/lib/catalog.ts` — what you sell
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Products, sizes, prices and event packages.
+
+- **Prices are in whole cents.** `750` is $7.50. This is deliberate — floating
+  point money produces totals that are off by a penny, so nothing in this
+  codebase ever stores a price as a decimal.
+- Each product has a `pour` color pair. That pair draws the drink illustration,
+  so a new product looks right without a photograph.
+- `category` is `"drink" | "meal"`. The meals menu drops straight in here when
+  the kitchen launches — no restructuring needed.
+
+Delivery thresholds live in `src/lib/cart.ts` (`FREE_DELIVERY_CENTS`,
+`DELIVERY_FEE_CENTS`).
+
+## How the code is arranged
+
+```
+src/
+  app/
+    actions.ts          Server actions — the only place orders are handled
+    layout.tsx          Fonts, header, footer, cart provider
+    globals.css         Design tokens (colors, fonts, grain)
+    shop/ events/ cart/ kitchen/ about/ contact/
+  components/
+    cart/               Cart state (localStorage) + the checkout screen
+    product/            Cards, size picker, drink illustration
+    forms/              Event quote, kitchen waitlist, handoff panel
+    site/               Header, footer, logo
+    ui/                 Button, form fields, layout container
+  lib/                  site config, catalog, cart maths, message builders
+```
+
+Cart state lives in `localStorage` and holds only `{slug, sizeId, qty}` —
+**prices are always re-read from the catalog**, so a price change never leaves a
+stale total sitting in a customer's browser.
+
+## Design notes
+
+There is no photography yet. Rather than use stock imagery, every drink is drawn
+by `components/product/DrinkGlass.tsx` from its own two catalog colors. When you
+have real shots, replace that one component with `next/image` — nothing else
+needs to change.
+
+Type is Fraunces (display) and Plus Jakarta Sans (body). The palette is cream,
+terracotta, amber and deep palm green, defined once in `globals.css`.
+
+## Receiving orders by email
+
+Orders are currently written to the server log — visible in your hosting
+dashboard. That is a record, not a notification. To also get them by email, add
+your provider's send call inside `record()` in `src/app/actions.ts`. It is one
+function and it is the only place that needs to change.
+
+## Taking payment online
+
+When you want card or wallet checkout, the change is contained:
+
+1. Add your processor's SDK and keys.
+2. In `submitOrder`, create a payment intent from the server-computed total —
+   never a total sent from the browser.
+3. Replace the WhatsApp handoff in `components/forms/Handoff.tsx` with the
+   processor's confirmation step.
+
+The totals are already computed server-side in `submitOrder`, which is the part
+that usually has to be rewritten. It does not here.
+
+## Before going live
+
+- [ ] Real business name, phone, WhatsApp number and email in `src/lib/site.ts`
+- [ ] Real prices in `src/lib/catalog.ts`
+- [ ] Confirm the WhatsApp number receives messages
+- [ ] Email notifications wired into `record()`
+- [ ] Product photography, if you have it
+- [ ] `metadataBase` set in `src/app/layout.tsx` for correct social preview URLs
