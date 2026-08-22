@@ -55,12 +55,11 @@ export default function Home() {
             <h1 className="font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
               Piña colada,
               <br />
-              <span className="text-clay">grown up.</span>
+              {/* The business name comes from site.ts, never hardcoded. */}
+              <span className="text-clay">by {site.name}</span>
             </h1>
-            <p className="mt-5 text-lg text-bark-soft">
-              Real coconut, ripe mango and cold-pressed pineapple, blended fresh.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* Stacked on phones, side by side once there is room. */}
+            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
               <ButtonLink href="/shop" size="lg">
                 Shop the fridge
               </ButtonLink>

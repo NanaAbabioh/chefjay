@@ -18,7 +18,7 @@ const variants: Record<Variant, string> = {
 const sizes: Record<Size, string> = {
   sm: "min-h-11 px-4 py-2 text-sm",
   md: "min-h-11 px-6 py-3 text-sm",
-  lg: "min-h-12 px-6 py-4 text-base sm:px-8",
+  lg: "min-h-11 px-6 py-3 text-base sm:px-7",
 };
 
 const cls = (variant: Variant, size: Size, extra?: string) =>
