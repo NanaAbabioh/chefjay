@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       {/* Hero — the photograph carries this, so the copy stays out of its way */}
-      <section className="relative flex min-h-[78vh] items-center overflow-hidden">
+      <section className="relative flex min-h-[86svh] items-stretch overflow-hidden sm:min-h-[78vh] sm:items-center">
         {/* Backdrop in its own positioned wrapper: painting follows DOM
 
             order, so no negative z-index can drop it behind the body. */}
@@ -46,24 +46,32 @@ export default function Home() {
           {/* Phones get a vertical scrim (text sits above the glass); wider
 
               screens get the original left-to-right one. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/90 via-45% to-transparent to-92% sm:bg-gradient-to-r sm:from-cream sm:from-15% sm:via-cream/80 sm:via-40% sm:to-transparent sm:to-72%" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream/85 via-cream/45 via-42% to-transparent to-88% sm:bg-gradient-to-r sm:from-cream sm:from-15% sm:via-cream/80 sm:via-40% sm:to-transparent sm:to-72%" />
 
         </div>
 
-        <Container className="relative">
-          <div className="max-w-lg animate-rise">
+        <Container className="relative flex w-full">
+          {/* On phones the headline sits at the top and the buttons around the
+              base of the glass, so the drink stands full height between them.
+              From `sm` up it goes back to one centred block. */}
+          <div className="flex w-full max-w-lg animate-rise flex-col pb-16 pt-11 sm:block sm:pb-0 sm:pt-0">
             <h1 className="font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
               Piña colada,
               <br />
               {/* The business name comes from site.ts, never hardcoded. */}
               <span className="text-clay">by {site.name}</span>
             </h1>
-            {/* Stacked on phones, side by side once there is room. */}
-            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
-              <ButtonLink href="/shop" size="lg">
+            {/* Full width and stacked on phones, side by side once there is room. */}
+            <div className="mt-auto flex flex-col gap-3 pt-10 sm:mt-0 sm:flex-row sm:flex-wrap sm:pt-8">
+              <ButtonLink href="/shop" size="lg" className="w-full sm:w-auto">
                 Shop the fridge
               </ButtonLink>
-              <ButtonLink href="/events" size="lg" variant="outline">
+              <ButtonLink
+                href="/events"
+                size="lg"
+                variant="outline"
+                className="w-full bg-cream/70 backdrop-blur-sm sm:w-auto sm:bg-transparent sm:backdrop-blur-none"
+              >
                 Order for an event
               </ButtonLink>
             </div>

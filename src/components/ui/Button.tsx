@@ -4,14 +4,16 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "solid" | "outline" | "ghost" | "light";
 type Size = "sm" | "md" | "lg";
 
+// Every variant carries a border, transparent where it is not wanted, so that
+// solid and outline buttons come out exactly the same height side by side.
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-full border font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  solid: "bg-bark text-cream hover:bg-palm",
-  outline: "border border-bark/25 text-bark hover:border-bark hover:bg-bark/5",
-  ghost: "text-bark hover:bg-bark/5",
-  light: "bg-cream text-bark hover:bg-pineapple",
+  solid: "border-transparent bg-bark text-cream hover:bg-palm",
+  outline: "border-bark/40 text-bark hover:border-bark hover:bg-bark/5",
+  ghost: "border-transparent text-bark hover:bg-bark/5",
+  light: "border-transparent bg-cream text-bark hover:bg-pineapple",
 };
 
 // Every size clears the 44px minimum touch target — most traffic is phones.
