@@ -20,17 +20,25 @@ const planned = [
 export default function KitchenPage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[58vh] items-end overflow-hidden">
-        <Image
-          src="/images/kitchen.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="-z-10 object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-bark/85 via-bark/35 to-transparent" />
-        <Container className="pb-14 text-cream">
+      <section className="relative flex min-h-[58vh] items-end overflow-hidden">
+        {/* Backdrop in its own positioned wrapper: painting follows DOM
+
+            order, so no negative z-index can drop it behind the body. */}
+
+        <div className="absolute inset-0">
+
+          <Image
+            src="/images/kitchen.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bark/85 via-bark/35 to-transparent" />
+
+        </div>
+        <Container className="relative pb-14 text-cream">
           <span className="inline-flex rounded-full bg-pineapple px-3 py-1 text-xs font-bold uppercase tracking-widest text-bark">
             In development
           </span>

@@ -28,18 +28,26 @@ export default function Home() {
   return (
     <>
       {/* Hero — the photograph carries this, so the copy stays out of its way */}
-      <section className="relative isolate flex min-h-[78vh] items-center overflow-hidden">
-        <Image
-          src="/images/hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="-z-10 object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cream via-cream/80 to-transparent sm:via-cream/60" />
+      <section className="relative flex min-h-[78vh] items-center overflow-hidden">
+        {/* Backdrop in its own positioned wrapper: painting follows DOM
 
-        <Container>
+            order, so no negative z-index can drop it behind the body. */}
+
+        <div className="absolute inset-0">
+
+          <Image
+            src="/images/hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-cream from-15% via-cream/80 via-40% to-transparent to-72%" />
+
+        </div>
+
+        <Container className="relative">
           <div className="max-w-lg animate-rise">
             <h1 className="font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
               Piña colada,

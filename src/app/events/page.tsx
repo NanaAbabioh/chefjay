@@ -28,18 +28,26 @@ const facts: [string, string][] = [
 export default function EventsPage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[62vh] items-end overflow-hidden">
-        <Image
-          src="/images/event-table.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="-z-10 object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-bark/85 via-bark/40 to-bark/10" />
+      <section className="relative flex min-h-[62vh] items-end overflow-hidden">
+        {/* Backdrop in its own positioned wrapper: painting follows DOM
 
-        <Container className="pb-14 text-cream">
+            order, so no negative z-index can drop it behind the body. */}
+
+        <div className="absolute inset-0">
+
+          <Image
+            src="/images/event-table.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bark/85 via-bark/40 to-bark/10" />
+
+        </div>
+
+        <Container className="relative pb-14 text-cream">
           <h1 className="max-w-2xl font-display text-5xl font-semibold leading-[0.98] sm:text-6xl">
             You handle the guests.
             <br />
