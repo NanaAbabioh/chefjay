@@ -1,4 +1,4 @@
-# Sunroot
+# Vincent’s
 
 Marketing and ordering site for a small-batch tropical drinks business, built to
 serve two very different customers from one codebase: someone buying a single

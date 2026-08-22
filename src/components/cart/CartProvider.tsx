@@ -10,7 +10,7 @@ import {
 } from "react";
 import { itemCount, lineKey, type CartLine } from "@/lib/cart";
 
-const STORAGE_KEY = "sunroot.cart.v1";
+const STORAGE_KEY = "vincents.cart.v1";
 
 type CartContextValue = {
   lines: CartLine[];
@@ -49,11 +49,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [ready, setReady] = useState(false);
 
-  // Hydration: the server has no localStorage, so it renders an empty cart and
-  // the client fills it in on mount. The extra render pass this costs is the
-  // point of the pattern, not an accident — hence the suppression. Moving the
-  // store into useSyncExternalStore would remove it, and would also keep two
-  // open tabs in sync; worth doing if the cart grows.
+  // localStorage cannot be read during render: the server has no access to it,
+  // so doing it in a lazy initialiser would make the first client render differ
+  // from the server HTML and break hydration. Reading it in a mount effect and
+  // gating on `ready` is the SSR-safe pattern, so the cascading-render warning
+  // is expected here.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLines(read());

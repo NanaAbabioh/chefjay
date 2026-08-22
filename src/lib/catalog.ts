@@ -32,8 +32,8 @@ export type Product = {
 
 export const products: Product[] = [
   {
-    slug: "sunroot-signature",
-    name: "Sunroot Signature",
+    slug: "house-signature",
+    name: "House Signature",
     category: "drink",
     blurb: "The house blend — coconut, mango, pineapple and tiger nut.",
     story:
@@ -180,7 +180,7 @@ export const eventPackages: EventPackage[] = [
     name: "Full Service",
     guests: "50 – 150 guests",
     price: "from $6.50 / guest",
-    summary: "Attended drink station with a Sunroot host for the length of your event.",
+    summary: "Attended drink station with one of our hosts for the length of your event.",
     includes: [
       "Attended station, up to 4 hours",
       "Unlimited pours, up to 6 flavors",

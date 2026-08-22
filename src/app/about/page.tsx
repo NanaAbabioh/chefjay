@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: `Why ${site.name} exists, what goes in the bottle, and what does not.`,
 };
 
-const signature = getProduct("sunroot-signature")!;
+const signature = getProduct("house-signature")!;
 
 const principles = [
   {

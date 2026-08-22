@@ -14,7 +14,7 @@ export function Handoff({
   heading,
   body,
 }: {
-  /** Not named `ref` — React reserves that prop name. */
+  /** Named `reference`, not `ref` — `ref` is reserved by React. */
   reference: string;
   whatsapp: string;
   mailto: string;

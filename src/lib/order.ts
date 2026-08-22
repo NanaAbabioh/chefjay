@@ -30,7 +30,7 @@ export type EventQuote = {
 /** A short, human-readable reference so you and the customer can talk about
  * the same order on the phone. Not a database id — just a handle. */
 export function orderRef(seed: number): string {
-  return `SR-${seed.toString(36).toUpperCase().slice(-5)}`;
+  return `VC-${seed.toString(36).toUpperCase().slice(-5)}`;
 }
 
 export function retailMessage(

@@ -3,8 +3,8 @@
  * Change these values and the whole site updates — nothing else hardcodes them.
  */
 export const site = {
-  name: "Sunroot",
-  tagline: "Tropical blends, grounded in roots.",
+  name: "Vincent’s",
+  tagline: "Tropical blends, made properly.",
   description:
     "Small-batch piña colada and tropical blends made with real coconut, mango, pineapple and tiger nut. Order by the bottle, or by the crowd.",
 
@@ -12,7 +12,7 @@ export const site = {
   phone: "+1 (555) 014-2200",
   /** Digits only, with country code. Used to build wa.me links. */
   whatsapp: "15550142200",
-  email: "orders@sunroot.co",
+  email: "orders@vincents.co",
 
   // Where you operate
   city: "Brooklyn, NY",
