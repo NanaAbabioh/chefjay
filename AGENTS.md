@@ -28,8 +28,10 @@ and where business details live.
   a wrong total.
 - **`className` on `ui/Field` components applies to the wrapper, not the
   control.** Passing layout classes is safe; the input keeps its own styling.
-- Drinks are drawn, not photographed — `components/product/DrinkGlass.tsx`
-  renders from the catalog's `pour` colors. Keep new products' colors distinct.
+- **Product imagery lives in `public/images/<slug>.jpg`** and is referenced by
+  the catalog's `image` field. The current set is AI-generated placeholder
+  photography to be replaced with real shots; keep the filenames slug-matched
+  so swapping one in needs no code change.
 
 ## Verifying changes
 

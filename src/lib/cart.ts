@@ -13,7 +13,7 @@ export type ResolvedLine = CartLine & {
   volume: string;
   unitCents: number;
   lineCents: number;
-  pour: { top: string; bottom: string };
+  image: string;
 };
 
 export const lineKey = (slug: string, sizeId: string) => `${slug}:${sizeId}`;
@@ -31,7 +31,7 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
         volume: size.volume,
         unitCents: size.priceCents,
         lineCents: size.priceCents * line.qty,
-        pour: product.pour,
+        image: product.image,
       },
     ];
   });

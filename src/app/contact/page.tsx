@@ -40,10 +40,8 @@ export default function ContactPage() {
           <h1 className="mt-4 font-display text-5xl font-semibold sm:text-6xl">
             Talk to a person.
           </h1>
-          <p className="prose-measure mt-5 text-lg leading-relaxed text-bark-soft">
-            There is no support queue here — messages come to the same people who
-            press the fruit. For anything time-sensitive, WhatsApp is the fastest
-            way to reach us.
+          <p className="mt-5 text-lg text-bark-soft">
+            No support queue. These reach the people who press the fruit.
           </p>
 
           <ul className="mt-10 space-y-3">
@@ -85,29 +83,27 @@ export default function ContactPage() {
             <div>
               <dt className="font-semibold">Delivery area</dt>
               <dd className="mt-1 text-bark-soft">
-                {site.serviceArea}. Further out is usually possible with a travel
-                fee — ask.
+                {site.serviceArea}. Further out for a travel fee.
               </dd>
             </div>
             <div>
               <dt className="font-semibold">Event notice</dt>
               <dd className="mt-1 text-bark-soft">
-                {site.eventLeadTimeDays} days for most events. Ask anyway if it is
-                sooner.
+                {site.eventLeadTimeDays} days. Ask anyway if it&rsquo;s sooner.
               </dd>
             </div>
           </dl>
 
           <div className="mt-8 border-t border-bark/15 pt-6">
             <p className="text-sm text-bark-soft">
-              Planning something with a guest list?{" "}
+              Guest list?{" "}
               <Link
                 href="/events"
                 className="font-semibold text-clay underline underline-offset-4"
               >
                 Use the quote form
-              </Link>{" "}
-              instead — it asks the things we would ask anyway.
+              </Link>
+              .
             </p>
           </div>
         </div>

@@ -25,8 +25,6 @@ export type Product = {
   image: string;
   ingredients: string[];
   sizes: Size[];
-  /** Two hex stops used to render the drink illustration. */
-  pour: { top: string; bottom: string };
   tags?: string[];
   featured?: boolean;
 };
@@ -44,7 +42,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
     ],
-    pour: { top: "#F7D9A6", bottom: "#E0A45C" },
     tags: ["Dairy-free", "No refined sugar"],
     featured: true,
   },
@@ -60,7 +57,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 900 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3000 },
     ],
-    pour: { top: "#FDF0D2", bottom: "#F3C877" },
     tags: ["Alcohol-free", "Mixer base"],
     featured: true,
   },
@@ -76,7 +72,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
     ],
-    pour: { top: "#FFCF7A", bottom: "#EE8B3C" },
     tags: ["Seasonal fruit"],
     featured: true,
   },
@@ -92,7 +87,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 1000 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3400 },
     ],
-    pour: { top: "#F0E3CE", bottom: "#CBA97E" },
     tags: ["Dairy-free", "Nut-free"],
   },
   {
@@ -107,7 +101,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 900 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3000 },
     ],
-    pour: { top: "#FBE38C", bottom: "#E3A621" },
     tags: ["Spicy", "No dairy"],
   },
   {
@@ -122,7 +115,6 @@ export const products: Product[] = [
       { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
       { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
     ],
-    pour: { top: "#FBF6EC", bottom: "#DFD3BE" },
     tags: ["Low sugar"],
   },
 ];

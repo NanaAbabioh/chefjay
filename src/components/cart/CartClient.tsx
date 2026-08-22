@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useCart } from "./CartProvider";
@@ -13,7 +14,6 @@ import { money } from "@/lib/format";
 import { site } from "@/lib/site";
 import type { Fulfilment, RetailOrder } from "@/lib/order";
 import { submitOrder, type SubmitResult } from "@/app/actions";
-import { DrinkGlass } from "@/components/product/DrinkGlass";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Field, TextArea } from "@/components/ui/Field";
 import { Handoff } from "@/components/forms/Handoff";
@@ -93,16 +93,13 @@ export function CartClient() {
         <ul className="divide-y divide-bark/10 border-y border-bark/10">
           {resolved.map((l) => (
             <li key={`${l.slug}:${l.sizeId}`} className="flex gap-4 py-5">
-              <div
-                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl"
-                style={{ background: `${l.pour.top}55` }}
-              >
-                <DrinkGlass
-                  id={`cart-${l.slug}-${l.sizeId}`}
-                  top={l.pour.top}
-                  bottom={l.pour.bottom}
-                  garnish={false}
-                  className="h-14 w-auto"
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-shell">
+                <Image
+                  src={l.image}
+                  alt=""
+                  fill
+                  sizes="80px"
+                  className="object-cover"
                 />
               </div>
 
