@@ -43,7 +43,10 @@ export default function Home() {
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-cream from-15% via-cream/80 via-40% to-transparent to-72%" />
+          {/* Phones get a vertical scrim (text sits above the glass); wider
+
+              screens get the original left-to-right one. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/90 via-45% to-transparent to-92% sm:bg-gradient-to-r sm:from-cream sm:from-15% sm:via-cream/80 sm:via-40% sm:to-transparent sm:to-72%" />
 
         </div>
 
@@ -55,7 +58,7 @@ export default function Home() {
               <span className="text-clay">grown up.</span>
             </h1>
             <p className="mt-5 text-lg text-bark-soft">
-              Small-batch tropical blends. By the bottle, or by the crowd.
+              Real coconut, ripe mango and cold-pressed pineapple, blended fresh.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/shop" size="lg">

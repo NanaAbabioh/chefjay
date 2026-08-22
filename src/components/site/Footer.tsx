@@ -19,16 +19,22 @@ export function Footer() {
             <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-cream/50">
               Explore
             </h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-2 text-sm sm:mt-4 sm:space-y-2.5">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-cream/80 hover:text-pineapple">
+                  <Link
+                    href={item.href}
+                    className="inline-flex min-h-11 items-center text-cream/80 hover:text-pineapple sm:min-h-0"
+                  >
                     {item.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/contact" className="text-cream/80 hover:text-pineapple">
+                <Link
+                  href="/contact"
+                  className="inline-flex min-h-11 items-center text-cream/80 hover:text-pineapple sm:min-h-0"
+                >
                   Contact
                 </Link>
               </li>
@@ -43,12 +49,18 @@ export function Footer() {
               <li>{site.city}</li>
               <li>{site.hours}</li>
               <li>
-                <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="hover:text-pineapple">
+                <a
+                  href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}
+                  className="inline-flex min-h-11 items-center hover:text-pineapple sm:min-h-0"
+                >
                   {site.phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="hover:text-pineapple">
+                <a
+                  href={`mailto:${site.email}`}
+                  className="inline-flex min-h-11 items-center hover:text-pineapple sm:min-h-0"
+                >
                   {site.email}
                 </a>
               </li>

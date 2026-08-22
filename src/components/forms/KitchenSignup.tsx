@@ -42,7 +42,7 @@ export function KitchenSignup() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@email.com"
           autoComplete="email"
-          className="w-full rounded-full border border-bark/20 bg-cream px-5 py-3.5 text-sm placeholder:text-bark-faint/70 focus:border-palm focus:outline-none"
+          className="w-full rounded-full border border-bark/20 bg-cream px-5 py-3.5 text-base placeholder:text-bark-faint/70 focus:border-palm focus:outline-none sm:text-sm"
         />
         {state.error && (
           <p className="mt-2 px-2 text-sm text-clay" role="alert">

@@ -18,8 +18,8 @@ export type Product = {
   slug: string;
   name: string;
   category: Category;
-  /** One line. This is the only prose a product gets — the photograph does
-   * the rest of the talking. */
+  /** One line, describing what is actually in the drink. This is the only
+   * prose a product gets — the photograph does the rest of the talking. */
   blurb: string;
   /** Placeholder photography under /public/images, named by slug. */
   image: string;
@@ -34,7 +34,7 @@ export const products: Product[] = [
     slug: "house-signature",
     name: "House Signature",
     category: "drink",
-    blurb: "The one we built the business around.",
+    blurb: "Creamy tiger nut and young coconut, ripe mango and pineapple, sweetened with date.",
     image: "/images/house-signature.jpg",
     ingredients: ["Tiger nut", "Young coconut", "Mango", "Pineapple", "Date", "Sea salt"],
     sizes: [
@@ -49,7 +49,7 @@ export const products: Product[] = [
     slug: "classic-pina-colada",
     name: "Classic Piña Colada",
     category: "drink",
-    blurb: "Pineapple and coconut cream. Nothing to hide behind.",
+    blurb: "Ripe pineapple whipped through thick coconut cream, with a squeeze of lime.",
     image: "/images/classic-pina-colada.jpg",
     ingredients: ["Pineapple", "Coconut cream", "Lime", "Cane sugar"],
     sizes: [
@@ -64,7 +64,7 @@ export const products: Product[] = [
     slug: "mango-sunrise",
     name: "Mango Sunrise",
     category: "drink",
-    blurb: "Mango-forward, and lighter than it looks.",
+    blurb: "Sun-ripe mango and pineapple, loosened with cold coconut water and lime.",
     image: "/images/mango-sunrise.jpg",
     ingredients: ["Mango", "Pineapple", "Coconut water", "Lime"],
     sizes: [
@@ -79,7 +79,7 @@ export const products: Product[] = [
     slug: "tiger-nut-horchata",
     name: "Tiger Nut Horchata",
     category: "drink",
-    blurb: "Earthy, spiced, and the one that surprises people.",
+    blurb: "Silky tiger nut milk with sweet date, warm cinnamon, nutmeg and vanilla.",
     image: "/images/tiger-nut-horchata.jpg",
     ingredients: ["Tiger nut", "Date", "Cinnamon", "Nutmeg", "Vanilla"],
     sizes: [
@@ -93,7 +93,7 @@ export const products: Product[] = [
     slug: "pineapple-ginger",
     name: "Pineapple Ginger",
     category: "drink",
-    blurb: "Sharp, cold-pressed, honestly a little aggressive.",
+    blurb: "Cold-pressed pineapple with a bright kick of fresh ginger and lime.",
     image: "/images/pineapple-ginger.jpg",
     ingredients: ["Pineapple", "Ginger", "Lime", "Cane sugar"],
     sizes: [
@@ -107,7 +107,7 @@ export const products: Product[] = [
     slug: "coconut-cloud",
     name: "Coconut Cloud",
     category: "drink",
-    blurb: "The quiet one.",
+    blurb: "Young coconut and cold coconut water, soft with real vanilla bean.",
     image: "/images/coconut-cloud.jpg",
     ingredients: ["Young coconut", "Coconut water", "Vanilla bean"],
     sizes: [

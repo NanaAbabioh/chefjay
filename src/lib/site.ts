@@ -4,19 +4,26 @@
  */
 export const site = {
   name: "Vincent’s",
-  tagline: "Tropical blends, made properly.",
+  tagline: "Coconut, mango and pineapple, blended fresh.",
   description:
-    "Small-batch piña colada and tropical blends made with real coconut, mango, pineapple and tiger nut. Order by the bottle, or by the crowd.",
+    "Piña colada and tropical blends made with real coconut, ripe mango, cold-pressed pineapple and tiger nut. Blended fresh in small batches.",
+
+  /**
+   * Public origin of the deployed site, no trailing slash. Social previews and
+   * canonical URLs are resolved against it. Set NEXT_PUBLIC_SITE_URL in your
+   * host's environment to override it per deployment.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://vincents.com",
 
   // Contact + order handoff
-  phone: "+1 (555) 014-2200",
+  phone: "+1 (646) 707-2097",
   /** Digits only, with country code. Used to build wa.me links. */
-  whatsapp: "15550142200",
-  email: "orders@vincents.co",
+  whatsapp: "16467072097",
+  email: "orders@vincents.com",
 
   // Where you operate
-  city: "Brooklyn, NY",
-  serviceArea: "Brooklyn, Manhattan & Queens",
+  city: "Elizabeth, NJ",
+  serviceArea: "New Jersey & New York",
   hours: "Wed – Sun · 9am – 6pm",
 
   socials: {

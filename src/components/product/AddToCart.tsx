@@ -61,7 +61,7 @@ export function AddToCart({ slug, sizes }: { slug: string; sizes: Size[] }) {
           <button
             type="button"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="px-4 py-2.5 text-lg leading-none disabled:opacity-30"
+            className="inline-flex h-11 w-11 items-center justify-center text-lg leading-none disabled:opacity-30"
             disabled={qty <= 1}
             aria-label="Decrease quantity"
           >
@@ -73,7 +73,7 @@ export function AddToCart({ slug, sizes }: { slug: string; sizes: Size[] }) {
           <button
             type="button"
             onClick={() => setQty((q) => Math.min(99, q + 1))}
-            className="px-4 py-2.5 text-lg leading-none"
+            className="inline-flex h-11 w-11 items-center justify-center text-lg leading-none"
             aria-label="Increase quantity"
           >
             +

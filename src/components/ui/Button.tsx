@@ -14,10 +14,11 @@ const variants: Record<Variant, string> = {
   light: "bg-cream text-bark hover:bg-pineapple",
 };
 
+// Every size clears the 44px minimum touch target — most traffic is phones.
 const sizes: Record<Size, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-sm",
-  lg: "px-8 py-4 text-base",
+  sm: "min-h-11 px-4 py-2 text-sm",
+  md: "min-h-11 px-6 py-3 text-sm",
+  lg: "min-h-12 px-6 py-4 text-base sm:px-8",
 };
 
 const cls = (variant: Variant, size: Size, extra?: string) =>

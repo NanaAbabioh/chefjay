@@ -21,7 +21,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-bark/10 bg-cream/85 backdrop-blur-md">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4 sm:h-20">
-          <Link href="/" className="text-bark" aria-label="Home">
+          <Link href="/" className="inline-flex min-h-11 items-center text-bark" aria-label="Home">
             <Logo />
           </Link>
 
@@ -47,7 +47,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <Link
               href="/cart"
-              className="relative rounded-full border border-bark/20 px-4 py-2 text-sm font-semibold transition-colors hover:border-bark hover:bg-bark/5"
+              className="relative inline-flex min-h-11 items-center rounded-full border border-bark/20 px-4 text-sm font-semibold transition-colors hover:border-bark hover:bg-bark/5"
             >
               Cart
               {ready && count > 0 && (
@@ -61,7 +61,7 @@ export function Header() {
               onClick={() => setOpenAt(open ? null : pathname)}
               aria-expanded={open}
               aria-controls="mobile-nav"
-              className="rounded-full border border-bark/20 p-2.5 md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-bark/20 md:hidden"
             >
               <span className="sr-only">Menu</span>
               <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">

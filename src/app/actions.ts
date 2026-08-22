@@ -2,6 +2,7 @@
 
 import { resolveLines, subtotalCents, deliveryCents, type CartLine } from "@/lib/cart";
 import { eventPackages } from "@/lib/catalog";
+import { site } from "@/lib/site";
 import {
   eventMessage,
   mailtoUrl,
@@ -17,14 +18,58 @@ export type SubmitResult =
   | { ok: false; error: string };
 
 /**
- * Orders are recorded here before the customer is handed off to WhatsApp, so
- * an abandoned handoff still leaves you a record in the server logs.
+ * Emails one submission through Resend. Returns quietly on failure — a bounced
+ * notification must never cost the customer their order, and the server log in
+ * `record` below is still a complete record.
  *
- * To also receive these by email, add your provider's send call in this one
- * function — nothing else needs to change.
+ * Set RESEND_API_KEY to switch this on. Until it is set, nothing is sent, so
+ * local development and builds behave exactly as before.
  */
-async function record(kind: "order" | "quote", ref: string, message: string) {
+async function notify(subject: string, message: string) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return;
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // Resend only accepts a From on a domain you have verified with them.
+        from: process.env.ORDER_EMAIL_FROM ?? `${site.name} <onboarding@resend.dev>`,
+        to: [process.env.ORDER_EMAIL_TO ?? site.email],
+        subject,
+        text: message,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error(`[notify] ${response.status} ${await response.text()}`);
+    }
+  } catch (error) {
+    console.error("[notify] send failed", error);
+  }
+}
+
+const subjects = {
+  order: "Order",
+  quote: "Event quote",
+  signup: "Kitchen waitlist",
+} as const;
+
+/**
+ * Orders are recorded here before the customer is handed off to WhatsApp, so
+ * an abandoned handoff still leaves you a record in the server logs — and, once
+ * RESEND_API_KEY is set, in your inbox too.
+ *
+ * This is the only place a submission is handled. Any other destination you
+ * want — a webhook, a spreadsheet, a database — belongs in this one function.
+ */
+async function record(kind: keyof typeof subjects, ref: string, message: string) {
   console.info(`[${kind}] ${ref}\n${message}\n`);
+  await notify(`${subjects[kind]} ${ref} — ${site.name}`, message);
 }
 
 export async function submitOrder(
@@ -94,6 +139,6 @@ export async function joinKitchenList(
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) {
     return { ok: false, error: "That email does not look right." };
   }
-  await record("quote", "KITCHEN", `Kitchen waitlist signup: ${clean}`);
+  await record("signup", clean, `Kitchen waitlist signup: ${clean}`);
   return { ok: true };
 }

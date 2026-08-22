@@ -43,12 +43,12 @@ export default function EventsPage() {
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bark/85 via-bark/40 to-bark/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bark/90 via-bark/60 to-bark/35 sm:from-bark/85 sm:via-bark/40 sm:to-bark/10" />
 
         </div>
 
         <Container className="relative pb-14 text-cream">
-          <h1 className="max-w-2xl font-display text-5xl font-semibold leading-[0.98] sm:text-6xl">
+          <h1 className="max-w-2xl font-display text-4xl font-semibold leading-[1.02] sm:text-5xl sm:leading-[0.98] md:text-6xl">
             You handle the guests.
             <br />
             We handle the pour.
@@ -59,7 +59,7 @@ export default function EventsPage() {
             </ButtonLink>
             <a
               href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}
-              className="inline-flex items-center rounded-full border border-cream/40 px-8 py-4 font-semibold hover:bg-cream/10"
+              className="inline-flex min-h-12 items-center rounded-full border border-cream/40 px-6 py-4 font-semibold hover:bg-cream/10 sm:px-8"
             >
               {site.phone}
             </a>

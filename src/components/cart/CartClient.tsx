@@ -123,7 +123,7 @@ export function CartClient() {
                     <button
                       type="button"
                       onClick={() => setQty(l.slug, l.sizeId, l.qty - 1)}
-                      className="px-3 py-1.5 leading-none"
+                      className="inline-flex h-10 w-10 items-center justify-center leading-none"
                       aria-label={`Fewer ${l.name}`}
                     >
                       −
@@ -134,7 +134,7 @@ export function CartClient() {
                     <button
                       type="button"
                       onClick={() => setQty(l.slug, l.sizeId, l.qty + 1)}
-                      className="px-3 py-1.5 leading-none"
+                      className="inline-flex h-10 w-10 items-center justify-center leading-none"
                       aria-label={`More ${l.name}`}
                     >
                       +
@@ -246,7 +246,7 @@ export function CartClient() {
               value={order.address}
               onChange={(e) => set("address", e.target.value)}
               autoComplete="street-address"
-              placeholder="Street, apt, borough"
+              placeholder="Street, apt, town"
             />
           ) : (
             <p className="rounded-xl bg-cream px-4 py-3 text-sm text-bark-soft">
@@ -265,7 +265,7 @@ export function CartClient() {
             rows={3}
             value={order.notes}
             onChange={(e) => set("notes", e.target.value)}
-            placeholder="Less sweet, no ginger, leave with the doorman…"
+            placeholder="Less sweet, no ginger, leave it at the door…"
           />
         </div>
 

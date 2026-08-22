@@ -42,8 +42,9 @@ Products, sizes, prices and event packages.
 - **Prices are in whole cents.** `750` is $7.50. This is deliberate — floating
   point money produces totals that are off by a penny, so nothing in this
   codebase ever stores a price as a decimal.
-- Each product has a `pour` color pair. That pair draws the drink illustration,
-  so a new product looks right without a photograph.
+- Each product has an `image` path pointing at `public/images/<slug>.jpg`. Keep
+  the filename matched to the slug and swapping in a new photograph needs no
+  code change.
 - `category` is `"drink" | "meal"`. The meals menu drops straight in here when
   the kitchen launches — no restructuring needed.
 
@@ -74,20 +75,35 @@ stale total sitting in a customer's browser.
 
 ## Design notes
 
-There is no photography yet. Rather than use stock imagery, every drink is drawn
-by `components/product/DrinkGlass.tsx` from its own two catalog colors. When you
-have real shots, replace that one component with `next/image` — nothing else
-needs to change.
+Every product and hero is a photograph rendered through `next/image`, referenced
+by the catalog's `image` field. The current set is AI-generated placeholder
+photography — replace a file in `public/images/` with a real shot of the same
+name and nothing else needs to change.
 
 Type is Fraunces (display) and Plus Jakarta Sans (body). The palette is cream,
 terracotta, amber and deep palm green, defined once in `globals.css`.
 
 ## Receiving orders by email
 
-Orders are currently written to the server log — visible in your hosting
-dashboard. That is a record, not a notification. To also get them by email, add
-your provider's send call inside `record()` in `src/app/actions.ts`. It is one
-function and it is the only place that needs to change.
+Every order, event quote and kitchen signup is written to the server log — a
+record you can read in your hosting dashboard — and emailed to you through
+[Resend](https://resend.com) as it arrives.
+
+Email is off until you set a key, so nothing is sent in development:
+
+| Variable | What it does |
+| --- | --- |
+| `RESEND_API_KEY` | Turns email on. Without it, submissions are logged only. |
+| `ORDER_EMAIL_FROM` | Sender. Must be on a domain verified with Resend. Defaults to their test sender, which only delivers to your own Resend account address. |
+| `ORDER_EMAIL_TO` | Where notifications land. Defaults to the `email` in `src/lib/site.ts`. |
+
+Copy `.env.example` to `.env.local` for local use, and set the same variables in
+your host's dashboard for production.
+
+A send failure is logged and swallowed on purpose — a bounced notification must
+never cost a customer their order. If email goes quiet, the log is still
+complete. Any other destination you want (a webhook, a spreadsheet, a database)
+belongs in `record()` in `src/app/actions.ts`, alongside the email call.
 
 ## Taking payment online
 
@@ -104,9 +120,13 @@ that usually has to be rewritten. It does not here.
 
 ## Before going live
 
-- [ ] Real business name, phone, WhatsApp number and email in `src/lib/site.ts`
+- [x] Real business name, phone, WhatsApp number and email in `src/lib/site.ts`
+- [x] Email notifications wired into `record()` — set `RESEND_API_KEY` to switch them on
+- [x] `metadataBase` set, driven by `site.url` in `src/lib/site.ts`
 - [ ] Real prices in `src/lib/catalog.ts`
 - [ ] Confirm the WhatsApp number receives messages
-- [ ] Email notifications wired into `record()`
-- [ ] Product photography, if you have it
-- [ ] `metadataBase` set in `src/app/layout.tsx` for correct social preview URLs
+- [ ] Set `NEXT_PUBLIC_SITE_URL` to the real domain once it is decided — social
+      previews currently resolve against the `https://vincents.com` placeholder
+- [ ] Verify your sending domain with Resend, then set `ORDER_EMAIL_FROM`
+- [ ] Product photography — `public/images/` is AI-generated placeholder work
+- [ ] Real Instagram and TikTok links in `site.socials`
