@@ -35,13 +35,15 @@ export default function Home() {
 
         <div className="absolute inset-0">
 
+          {/* Narrow screens crop hard into this landscape frame, so the crop
+              is biased downwards to keep the foot of the glass in shot. */}
           <Image
             src="/images/hero.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[50%_62%] sm:object-center"
           />
           {/* Phones get a vertical scrim (text sits above the glass); wider
 
@@ -54,23 +56,24 @@ export default function Home() {
           {/* On phones the headline sits at the top and the buttons around the
               base of the glass, so the drink stands full height between them.
               From `sm` up it goes back to one centred block. */}
-          <div className="flex w-full max-w-lg animate-rise flex-col pb-16 pt-11 sm:block sm:pb-0 sm:pt-0">
+          <div className="flex w-full max-w-lg animate-rise flex-col pb-5 pt-11 sm:block sm:pb-0 sm:pt-0">
             <h1 className="font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
               Piña colada,
               <br />
               {/* The business name comes from site.ts, never hardcoded. */}
               <span className="text-clay">by {site.name}</span>
             </h1>
-            {/* Full width and stacked on phones, side by side once there is room. */}
-            <div className="mt-auto flex flex-col gap-3 pt-10 sm:mt-0 sm:flex-row sm:flex-wrap sm:pt-8">
-              <ButtonLink href="/shop" size="lg" className="w-full sm:w-auto">
+            {/* Stacked on phones. A fit-content grid sizes both to the wider
+                label, so they match without stretching across the screen. */}
+            <div className="mt-auto grid w-fit gap-3 pt-10 sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:flex-wrap sm:pt-8">
+              <ButtonLink href="/shop" size="lg">
                 Shop the fridge
               </ButtonLink>
               <ButtonLink
                 href="/events"
                 size="lg"
                 variant="outline"
-                className="w-full bg-cream/70 backdrop-blur-sm sm:w-auto sm:bg-transparent sm:backdrop-blur-none"
+                className="bg-cream/70 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none"
               >
                 Order for an event
               </ButtonLink>
