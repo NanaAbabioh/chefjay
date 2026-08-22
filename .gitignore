@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Quarantined copy of the repo damaged by the 2026-08-21 iCloud eviction
+.git.corrupt/
+
+# Local source archive taken during that recovery
+vincents-source-backup.tar.gz

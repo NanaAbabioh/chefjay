@@ -18,10 +18,11 @@ export type Product = {
   slug: string;
   name: string;
   category: Category;
-  /** One line, used on cards. */
+  /** One line. This is the only prose a product gets — the photograph does
+   * the rest of the talking. */
   blurb: string;
-  /** Full paragraph, used on the product page. */
-  story: string;
+  /** Placeholder photography under /public/images, named by slug. */
+  image: string;
   ingredients: string[];
   sizes: Size[];
   /** Two hex stops used to render the drink illustration. */
@@ -35,9 +36,8 @@ export const products: Product[] = [
     slug: "house-signature",
     name: "House Signature",
     category: "drink",
-    blurb: "The house blend — coconut, mango, pineapple and tiger nut.",
-    story:
-      "The one we built the business around. Tiger nut is soaked overnight and pressed into a milk with real body, then blended with ripe mango, cold-pressed pineapple and young coconut. Creamy without a drop of dairy, sweet without a spoon of refined sugar.",
+    blurb: "The one we built the business around.",
+    image: "/images/house-signature.jpg",
     ingredients: ["Tiger nut", "Young coconut", "Mango", "Pineapple", "Date", "Sea salt"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
@@ -53,8 +53,7 @@ export const products: Product[] = [
     name: "Classic Piña Colada",
     category: "drink",
     blurb: "Pineapple and coconut cream. Nothing to hide behind.",
-    story:
-      "Cold-pressed pineapple folded into coconut cream and a little lime to keep it bright. Served alcohol-free by default — add your own rum at home, or ask us to build it as a mixer base for your bar.",
+    image: "/images/classic-pina-colada.jpg",
     ingredients: ["Pineapple", "Coconut cream", "Lime", "Cane sugar"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 700 },
@@ -69,9 +68,8 @@ export const products: Product[] = [
     slug: "mango-sunrise",
     name: "Mango Sunrise",
     category: "drink",
-    blurb: "Alphonso mango, pineapple, a whisper of coconut.",
-    story:
-      "Mango-forward and lighter than the Signature. We use Alphonso when the season allows and Kent the rest of the year, which is why this one tastes a little different in July than it does in January. That is on purpose.",
+    blurb: "Mango-forward, and lighter than it looks.",
+    image: "/images/mango-sunrise.jpg",
     ingredients: ["Mango", "Pineapple", "Coconut water", "Lime"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
@@ -86,9 +84,8 @@ export const products: Product[] = [
     slug: "tiger-nut-horchata",
     name: "Tiger Nut Horchata",
     category: "drink",
-    blurb: "Atadwe, dates and warm spice. Creamy, earthy, ancient.",
-    story:
-      "Known as atadwe in Ghana and kunun aya in Nigeria, tiger nut milk has been made this way for centuries. We soak, press and spice it with cinnamon and a little nutmeg. This is the drink that surprises people the most.",
+    blurb: "Earthy, spiced, and the one that surprises people.",
+    image: "/images/tiger-nut-horchata.jpg",
     ingredients: ["Tiger nut", "Date", "Cinnamon", "Nutmeg", "Vanilla"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 800 },
@@ -102,9 +99,8 @@ export const products: Product[] = [
     slug: "pineapple-ginger",
     name: "Pineapple Ginger",
     category: "drink",
-    blurb: "Sharp, cold-pressed, and honestly a little aggressive.",
-    story:
-      "No coconut, no cream — just pineapple pressed with a serious amount of fresh ginger and lime. The one our regulars buy by the jug and drink through the week.",
+    blurb: "Sharp, cold-pressed, honestly a little aggressive.",
+    image: "/images/pineapple-ginger.jpg",
     ingredients: ["Pineapple", "Ginger", "Lime", "Cane sugar"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 700 },
@@ -118,9 +114,8 @@ export const products: Product[] = [
     slug: "coconut-cloud",
     name: "Coconut Cloud",
     category: "drink",
-    blurb: "Young coconut and vanilla bean. The quiet one.",
-    story:
-      "Young coconut flesh blended with its own water and a real vanilla bean. Barely sweet. This is what we drink ourselves at the end of a long production day.",
+    blurb: "The quiet one.",
+    image: "/images/coconut-cloud.jpg",
     ingredients: ["Young coconut", "Coconut water", "Vanilla bean"],
     sizes: [
       { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
