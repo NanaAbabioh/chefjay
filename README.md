@@ -54,19 +54,24 @@ Delivery thresholds live in `src/lib/cart.ts` (`FREE_DELIVERY_CENTS`,
 ## How the code is arranged
 
 ```
+db/
+  001_init.sql          Tables for orders, event quotes and the waitlist
 src/
   app/
     actions.ts          Server actions — the only place orders are handled
-    layout.tsx          Fonts, header, footer, cart provider
+    layout.tsx          Document, fonts and metadata only
     globals.css         Design tokens (colors, fonts, grain)
-    shop/ events/ cart/ kitchen/ about/ contact/
+    (site)/             The storefront, with its header, footer and cart
+      shop/ events/ cart/ kitchen/ about/ contact/
+    admin/              The dashboard, outside the storefront chrome
   components/
     cart/               Cart state (localStorage) + the checkout screen
     product/            Cards, size picker, drink illustration
     forms/              Event quote, kitchen waitlist, handoff panel
     site/               Header, footer, logo
     ui/                 Button, form fields, layout container
-  lib/                  site config, catalog, cart maths, message builders
+  lib/                  site config, catalog, cart maths, message builders,
+                        persistence (store.ts) and reporting (reports.ts)
 ```
 
 Cart state lives in `localStorage` and holds only `{slug, sizeId, qty}` —
@@ -105,6 +110,48 @@ never cost a customer their order. If email goes quiet, the log is still
 complete. Any other destination you want (a webhook, a spreadsheet, a database)
 belongs in `record()` in `src/app/actions.ts`, alongside the email call.
 
+## The dashboard
+
+`/admin` — orders as they arrive, what still needs doing, and what you have
+taken. Protected by a single password (`ADMIN_PASSWORD`) exchanged for a signed
+session cookie; set `ADMIN_SESSION_SECRET` alongside it or every login is
+refused. There is no user table and no accounts to manage.
+
+Three things worth knowing before you read the numbers:
+
+- **Takings count completed orders only.** Nothing is charged online, so a
+  submitted order is an intention, not money. Orders you have not fulfilled are
+  reported separately as open, so you can see both without confusing them. An
+  order becomes takings when you mark it completed.
+- **Days are Elizabeth days**, not UTC — `site.timeZone`. An order taken at 8pm
+  on Friday belongs in Friday.
+- **Line items keep the price they were sold at.** Raising a price never
+  rewrites history.
+
+Orders move `new → confirmed → preparing → ready → completed`, or are cancelled.
+Event enquiries move `new → quoted → won/lost`, and you type the figure you
+quoted against each one — that is what the events page totals.
+
+### Connecting the database
+
+Without `DATABASE_URL` the site behaves exactly as it always has: orders are
+taken, logged and emailed. Nothing is stored, and the dashboard says so. To
+switch storage on:
+
+1. Create a free Postgres database — [Neon](https://neon.tech) is what this is
+   built against. Through Vercel: `vercel install neon`.
+2. Put its pooled connection string in `DATABASE_URL`, locally in `.env.local`
+   and in your host's environment.
+3. Create the tables:
+
+   ```bash
+   psql "$DATABASE_URL" -f db/001_init.sql
+   ```
+
+A failed write never costs a customer their order — the same rule the email
+notifier follows. If the database is unreachable the order still completes and
+the log and your inbox still hold a full copy.
+
 ## Taking payment online
 
 When you want card or wallet checkout, the change is contained:
@@ -130,3 +177,5 @@ that usually has to be rewritten. It does not here.
 - [ ] Verify your sending domain with Resend, then set `ORDER_EMAIL_FROM`
 - [ ] Product photography — `public/images/` is AI-generated placeholder work
 - [ ] Real Instagram and TikTok links in `site.socials`
+- [ ] `DATABASE_URL` set and `db/001_init.sql` applied, so orders are stored
+- [ ] `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` set for `/admin`

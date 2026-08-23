@@ -25,6 +25,12 @@ export const site = {
   city: "Elizabeth, NJ",
   serviceArea: "New Jersey & New York",
   hours: "Wed – Sun · 9am – 6pm",
+  /**
+   * IANA zone the business trades in. The dashboard groups takings by day
+   * against this, not UTC — otherwise an order taken at 8pm on Friday lands
+   * in Saturday's figures.
+   */
+  timeZone: "America/New_York",
 
   socials: {
     instagram: "https://instagram.com/",

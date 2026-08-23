@@ -3,6 +3,7 @@
 import { resolveLines, subtotalCents, deliveryCents, type CartLine } from "@/lib/cart";
 import { eventPackages } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { saveOrder, saveQuote, saveSignup } from "@/lib/store";
 import {
   eventMessage,
   mailtoUrl,
@@ -97,7 +98,13 @@ export async function submitOrder(
     total: subtotal + delivery,
   });
 
-  await record("order", ref, message);
+  // Recorded and stored side by side. Neither can fail the order: `record`
+  // swallows a bad email, `saveOrder` swallows a bad write, and the server
+  // log holds a full copy regardless.
+  await Promise.all([
+    record("order", ref, message),
+    saveOrder(ref, order, resolved, { subtotal, delivery, total: subtotal + delivery }),
+  ]);
 
   return {
     ok: true,
@@ -120,7 +127,7 @@ export async function submitQuote(quote: EventQuote): Promise<SubmitResult> {
   const ref = orderRef(Date.now());
   const message = eventMessage(ref, quote, pkg?.name ?? "Not specified");
 
-  await record("quote", ref, message);
+  await Promise.all([record("quote", ref, message), saveQuote(ref, quote)]);
 
   return {
     ok: true,
@@ -139,6 +146,9 @@ export async function joinKitchenList(
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) {
     return { ok: false, error: "That email does not look right." };
   }
-  await record("signup", clean, `Kitchen waitlist signup: ${clean}`);
+  await Promise.all([
+    record("signup", clean, `Kitchen waitlist signup: ${clean}`),
+    saveSignup(clean),
+  ]);
   return { ok: true };
 }
