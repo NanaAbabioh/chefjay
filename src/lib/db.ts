@@ -13,13 +13,25 @@ import { neon } from "@neondatabase/serverless";
  */
 export type Sql = ReturnType<typeof neon>;
 
+/**
+ * `DATABASE_URL` is what this project documents, but Vercel's Postgres
+ * integrations inject their own names when you connect a database through the
+ * marketplace. Accepting the usual aliases means connecting one does not
+ * silently do nothing.
+ */
+const connectionString = () =>
+  process.env.DATABASE_URL ||
+  process.env.POSTGRES_URL ||
+  process.env.DATABASE_POSTGRES_URL ||
+  "";
+
 let cached: Sql | null | undefined;
 
 export function db(): Sql | null {
   if (cached !== undefined) return cached;
-  const url = process.env.DATABASE_URL;
+  const url = connectionString();
   cached = url ? neon(url) : null;
   return cached;
 }
 
-export const hasDatabase = () => Boolean(process.env.DATABASE_URL);
+export const hasDatabase = () => Boolean(connectionString());

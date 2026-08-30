@@ -139,14 +139,32 @@ taken, logged and emailed. Nothing is stored, and the dashboard says so. To
 switch storage on:
 
 1. Create a free Postgres database — [Neon](https://neon.tech) is what this is
-   built against. Through Vercel: `vercel install neon`.
-2. Put its pooled connection string in `DATABASE_URL`, locally in `.env.local`
-   and in your host's environment.
+   built against. The easiest route is through Vercel, which provisions it and
+   sets the connection string on the project for you:
+
+   ```bash
+   vercel install neon
+   ```
+
+2. Bring that connection string down to your machine:
+
+   ```bash
+   vercel env pull .env.local
+   ```
+
+   (Or paste it into `.env.local` as `DATABASE_URL` by hand. The integrations
+   name this variable differently depending on the provider, so `src/lib/db.ts`
+   also accepts `POSTGRES_URL` and `DATABASE_POSTGRES_URL`.)
+
 3. Create the tables:
 
    ```bash
-   psql "$DATABASE_URL" -f db/001_init.sql
+   npm run db:setup
    ```
+
+   This applies `db/001_init.sql` using the driver the app already depends on,
+   so no `psql` install is needed. Running it again is harmless — every
+   statement is `if not exists`.
 
 A failed write never costs a customer their order — the same rule the email
 notifier follows. If the database is unreachable the order still completes and
@@ -177,5 +195,5 @@ that usually has to be rewritten. It does not here.
 - [ ] Verify your sending domain with Resend, then set `ORDER_EMAIL_FROM`
 - [ ] Product photography — `public/images/` is AI-generated placeholder work
 - [ ] Real Instagram and TikTok links in `site.socials`
-- [ ] `DATABASE_URL` set and `db/001_init.sql` applied, so orders are stored
+- [ ] Database connected (`vercel install neon`) and `npm run db:setup` run
 - [ ] `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` set for `/admin`
