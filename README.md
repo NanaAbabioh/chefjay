@@ -132,6 +132,18 @@ Orders move `new → confirmed → preparing → ready → completed`, or are ca
 Event enquiries move `new → quoted → won/lost`, and you type the figure you
 quoted against each one — that is what the events page totals.
 
+### Seeing it work before there is data
+
+```bash
+ADMIN_DEMO=1
+```
+
+Fills the dashboard with a month of invented orders, event enquiries and
+signups, so you can judge it before taking a real order. Two things keep it
+honest: a banner marks every page as sample data while it is on, and it is
+ignored the moment a database is connected — invented takings must never be
+able to sit next to real ones. Nothing you click in this mode is saved.
+
 ### Connecting the database
 
 Without `DATABASE_URL` the site behaves exactly as it always has: orders are

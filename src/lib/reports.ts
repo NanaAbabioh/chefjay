@@ -1,6 +1,15 @@
 import { db } from "./db";
 import { site } from "./site";
 import { DELIVERY_FEE_CENTS } from "./cart";
+import {
+  demoDailyTakings,
+  demoMode,
+  demoOrders,
+  demoQuotes,
+  demoSummary,
+  demoTopProducts,
+  demoWaitlist,
+} from "./demo";
 
 /**
  * Every read the dashboard makes.
@@ -83,7 +92,7 @@ export type Summary = {
 
 export async function getSummary(): Promise<Summary | null> {
   const sql = db();
-  if (!sql) return null;
+  if (!sql) return demoMode() ? demoSummary() : null;
 
   // A single round trip: every figure is a filtered aggregate over one scan
   // rather than half a dozen separate queries.
@@ -152,7 +161,7 @@ export async function getSummary(): Promise<Summary | null> {
 /** Takings per business-local day, oldest first, quiet days included as zero. */
 export async function getDailyTakings(days = 14) {
   const sql = db();
-  if (!sql) return [];
+  if (!sql) return demoMode() ? demoDailyTakings(days) : [];
   return (await sql`
     select
       to_char(d.day at time zone ${TZ}, 'YYYY-MM-DD') as day,
@@ -176,7 +185,7 @@ export async function getDailyTakings(days = 14) {
 /** What actually sells, by units and by money, over the last N days. */
 export async function getTopProducts(days = 30) {
   const sql = db();
-  if (!sql) return [];
+  if (!sql) return demoMode() ? demoTopProducts() : [];
   return (await sql`
     select i.slug, i.name,
            sum(i.qty)::int as units,
@@ -193,7 +202,7 @@ export async function getTopProducts(days = 30) {
 
 export async function getOrders(status?: OrderStatus, limit = 60) {
   const sql = db();
-  if (!sql) return [];
+  if (!sql) return demoMode() ? demoOrders(status).slice(0, limit) : [];
   // Items are aggregated in the same query, so the list never fans out into
   // one query per order.
   const rows = status
@@ -245,7 +254,7 @@ export type QuoteRow = {
 
 export async function getQuotes(limit = 60) {
   const sql = db();
-  if (!sql) return [];
+  if (!sql) return demoMode() ? demoQuotes().slice(0, limit) : [];
   return (await sql`
     select * from event_quotes order by created_at desc limit ${limit}
   `) as unknown as QuoteRow[];
@@ -253,7 +262,7 @@ export async function getQuotes(limit = 60) {
 
 export async function getWaitlist() {
   const sql = db();
-  if (!sql) return { count: 0, recent: [] };
+  if (!sql) return demoMode() ? demoWaitlist() : { count: 0, recent: [] };
   const [counts, recent] = await Promise.all([
     sql`select count(*)::int as n from kitchen_signups`,
     sql`select email, created_at from kitchen_signups order by created_at desc limit 10`,

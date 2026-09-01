@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { hasDatabase } from "@/lib/db";
+import { demoMode } from "@/lib/demo";
 import { money } from "@/lib/format";
 import {
   getDailyTakings,
@@ -9,7 +10,14 @@ import {
   getTopProducts,
   getWaitlist,
 } from "@/lib/reports";
-import { Empty, NoDatabase, Panel, Stat, TakingsChart } from "@/components/admin/Pieces";
+import {
+  DemoBanner,
+  Empty,
+  NoDatabase,
+  Panel,
+  Stat,
+  TakingsChart,
+} from "@/components/admin/Pieces";
 import { OrderCard } from "@/components/admin/OrderCard";
 
 // Every figure is read at request time; nothing here may be served stale.
@@ -18,7 +26,7 @@ export const dynamic = "force-dynamic";
 export default async function OverviewPage() {
   await requireAdmin();
 
-  if (!hasDatabase()) {
+  if (!hasDatabase() && !demoMode()) {
     return <NoDatabase />;
   }
 
@@ -41,6 +49,7 @@ export default async function OverviewPage() {
 
   return (
     <div className="space-y-6">
+      {demoMode() && <DemoBanner />}
       <div>
         <h1 className="font-display text-3xl font-semibold">Overview</h1>
         <p className="mt-1 text-bark-soft">

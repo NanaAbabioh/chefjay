@@ -1,11 +1,19 @@
 import { requireAdmin } from "@/lib/admin-auth";
 import { hasDatabase } from "@/lib/db";
+import { demoMode } from "@/lib/demo";
 import { money } from "@/lib/format";
 import { site } from "@/lib/site";
 import { eventPackages } from "@/lib/catalog";
 import { getQuotes, type QuoteStatus } from "@/lib/reports";
 import { setQuoteAmount, setQuoteStatus } from "@/app/admin/actions";
-import { Empty, NoDatabase, Panel, Stat, StatusBadge } from "@/components/admin/Pieces";
+import {
+  DemoBanner,
+  Empty,
+  NoDatabase,
+  Panel,
+  Stat,
+  StatusBadge,
+} from "@/components/admin/Pieces";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Events" };
@@ -26,7 +34,7 @@ const NEXT: Record<QuoteStatus, QuoteStatus[]> = {
 
 export default async function QuotesPage() {
   await requireAdmin();
-  if (!hasDatabase()) return <NoDatabase />;
+  if (!hasDatabase() && !demoMode()) return <NoDatabase />;
 
   const quotes = await getQuotes();
   const packageName = (id: string | null) =>
@@ -40,6 +48,7 @@ export default async function QuotesPage() {
 
   return (
     <div className="space-y-6">
+      {demoMode() && <DemoBanner />}
       <div>
         <h1 className="font-display text-3xl font-semibold">Events</h1>
         <p className="mt-1 text-bark-soft">

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { hasDatabase } from "@/lib/db";
+import { demoMode } from "@/lib/demo";
 import { money } from "@/lib/format";
 import { getOrders, type OrderStatus } from "@/lib/reports";
-import { Empty, NoDatabase } from "@/components/admin/Pieces";
+import { DemoBanner, Empty, NoDatabase } from "@/components/admin/Pieces";
 import { OrderCard } from "@/components/admin/OrderCard";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +25,7 @@ export default async function OrdersPage({
   searchParams,
 }: PageProps<"/admin/orders">) {
   await requireAdmin();
-  if (!hasDatabase()) return <NoDatabase />;
+  if (!hasDatabase() && !demoMode()) return <NoDatabase />;
 
   const { status } = await searchParams;
   const active = FILTERS.find((f) => f.value === status)?.value ?? "all";
@@ -34,6 +35,7 @@ export default async function OrdersPage({
 
   return (
     <div className="space-y-6">
+      {demoMode() && <DemoBanner />}
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-3xl font-semibold">Orders</h1>
         <p className="text-sm text-bark-soft tabular-nums">

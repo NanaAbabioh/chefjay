@@ -21,10 +21,10 @@ const COOKIE = "vincents_admin";
 const MAX_AGE_SECONDS = 60 * 60 * 12;
 
 export const adminConfigured = () =>
-  Boolean(process.env.ADMIN_PASSWORD && process.env.ADMIN_SESSION_SECRET);
+  Boolean(process.env.ADMIN_PASSWORD?.trim() && process.env.ADMIN_SESSION_SECRET?.trim());
 
 const sign = (payload: string) =>
-  createHmac("sha256", process.env.ADMIN_SESSION_SECRET!)
+  createHmac("sha256", process.env.ADMIN_SESSION_SECRET!.trim())
     .update(payload)
     .digest("hex");
 
@@ -36,10 +36,17 @@ function safeEqual(a: string, b: string) {
   return timingSafeEqual(left, right);
 }
 
+/**
+ * Both sides are trimmed. A value pasted into a hosting dashboard picks up a
+ * trailing newline or space remarkably easily, and an invisible character
+ * there would lock you out of your own dashboard with no way to see why. A
+ * password whose leading or trailing spaces are load-bearing is not a password
+ * anyone meant to set.
+ */
 export function verifyPassword(attempt: string) {
-  const expected = process.env.ADMIN_PASSWORD;
+  const expected = process.env.ADMIN_PASSWORD?.trim();
   if (!expected) return false;
-  return safeEqual(attempt, expected);
+  return safeEqual(attempt.trim(), expected);
 }
 
 export async function startSession() {

@@ -127,3 +127,21 @@ export function NoDatabase() {
     </div>
   );
 }
+
+/**
+ * Sits above every dashboard page while sample data is on. Deliberately hard
+ * to miss: a figure you cannot bank should never be mistaken for one you can.
+ */
+export function DemoBanner() {
+  return (
+    <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-card border border-clay/30 bg-clay/8 px-5 py-3">
+      <span className="rounded-full bg-clay px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-cream">
+        Sample data
+      </span>
+      <p className="text-sm text-bark-soft">
+        Invented orders, so you can see how this works. Nothing here is real and
+        nothing you click is saved. Connect a database and it disappears.
+      </p>
+    </div>
+  );
+}
