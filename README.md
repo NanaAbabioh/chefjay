@@ -202,8 +202,7 @@ that usually has to be rewritten. It does not here.
 - [x] `metadataBase` set, driven by `site.url` in `src/lib/site.ts`
 - [ ] Real prices in `src/lib/catalog.ts`
 - [ ] Confirm the WhatsApp number receives messages
-- [ ] Set `NEXT_PUBLIC_SITE_URL` to the real domain once it is decided — social
-      previews currently resolve against the `https://vincents.com` placeholder
+- [ ] Point `chefjayskp.com` at the Vercel project (Settings → Domains)
 - [ ] Verify your sending domain with Resend, then set `ORDER_EMAIL_FROM`
 - [ ] Product photography — `public/images/` is AI-generated placeholder work
 - [ ] Real Instagram and TikTok links in `site.socials`

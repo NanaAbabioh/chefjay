@@ -13,13 +13,13 @@ export const site = {
    * canonical URLs are resolved against it. Set NEXT_PUBLIC_SITE_URL in your
    * host's environment to override it per deployment.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://vincents.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://chefjayskp.com",
 
   // Contact + order handoff
   phone: "+1 (646) 707-2097",
   /** Digits only, with country code. Used to build wa.me links. */
   whatsapp: "16467072097",
-  email: "orders@vincents.com",
+  email: "orders@chefjayskp.com",
 
   // Where you operate
   city: "Elizabeth, NJ",
