@@ -14,7 +14,7 @@ const paths = [
     href: "/shop",
     image: "/images/event-bottles.jpg",
     label: "For one, or a few",
-    title: "By the bottle",
+    title: "By the cup",
   },
   {
     href: "/events",
@@ -60,8 +60,9 @@ export default function Home() {
             <h1 className="font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
               Piña colada,
               <br />
-              {/* The business name comes from site.ts, never hardcoded. */}
-              <span className="text-clay">by {site.name}</span>
+              {/* From site.ts, never hardcoded. `owner` rather than `name`:
+                  the hero reads "by Chef Jay", not "by Chef Jay's". */}
+              <span className="text-clay">by {site.owner}</span>
             </h1>
             {/* Stacked on phones. A fit-content grid sizes both to the wider
                 label, so they match without stretching across the screen. */}
@@ -139,15 +140,15 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Kitchen */}
+      {/* Kpataashie */}
       <section className="pb-20 sm:pb-24">
         <Container>
           <Link
-            href="/kitchen"
+            href="/kpataashie"
             className="group relative block aspect-[16/9] overflow-hidden rounded-card sm:aspect-[21/9]"
           >
             <Image
-              src="/images/kitchen.jpg"
+              src="/images/kpataashie.jpg"
               alt=""
               fill
               sizes="100vw"
@@ -156,12 +157,14 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-bark/80 via-bark/40 to-transparent" />
             <div className="absolute inset-y-0 left-0 flex max-w-md flex-col justify-center p-8 text-cream sm:p-12">
               <span className="text-xs font-bold uppercase tracking-[0.18em] text-pineapple">
-                Coming soon
+                Now serving
               </span>
               <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-                {site.name} Kitchen
+                Kpataashie
               </h2>
-              <p className="mt-2 text-cream/75">Jollof, tilapia, plantain.</p>
+              <p className="mt-2 text-cream/75">
+                Jollof, fried rice, goat soups.
+              </p>
             </div>
           </Link>
         </Container>

@@ -29,93 +29,89 @@ export type Product = {
   featured?: boolean;
 };
 
+/**
+ * One shared description, with the flavour added on the end — every drink is
+ * the same build, so the copy says so.
+ */
+const BASE = "Ripe pineapple whipped through thick coconut cream, with a squeeze of lime";
+const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
+
+/**
+ * One size per flavour.
+ *
+ * TODO — confirm with Chef Jay: the volume below is an assumption, not a
+ * measured figure. It shows in the cart, on the WhatsApp handoff and in the
+ * dashboard, so it wants checking before the first real order. Changing it
+ * here changes it everywhere.
+ */
+const VOLUME = "16 oz";
+const size = (priceCents: number) => [
+  { id: "std", label: "Cup", volume: VOLUME, priceCents },
+];
+
 export const products: Product[] = [
-  {
-    slug: "house-signature",
-    name: "House Signature",
-    category: "drink",
-    blurb: "Creamy tiger nut and young coconut, ripe mango and pineapple, sweetened with date.",
-    image: "/images/house-signature.jpg",
-    ingredients: ["Tiger nut", "Young coconut", "Mango", "Pineapple", "Date", "Sea salt"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
-    ],
-    tags: ["Dairy-free", "No refined sugar"],
-    featured: true,
-  },
   {
     slug: "classic-pina-colada",
     name: "Classic Piña Colada",
     category: "drink",
-    blurb: "Ripe pineapple whipped through thick coconut cream, with a squeeze of lime.",
+    blurb: `${BASE}.`,
     image: "/images/classic-pina-colada.jpg",
-    ingredients: ["Pineapple", "Coconut cream", "Lime", "Cane sugar"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 700 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 900 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3000 },
-    ],
+    ingredients: BASE_INGREDIENTS,
+    sizes: size(499),
     tags: ["Alcohol-free", "Mixer base"],
     featured: true,
   },
   {
-    slug: "mango-sunrise",
-    name: "Mango Sunrise",
+    slug: "mango-pina-colada",
+    name: "Mango Piña Colada",
     category: "drink",
-    blurb: "Sun-ripe mango and pineapple, loosened with cold coconut water and lime.",
-    image: "/images/mango-sunrise.jpg",
-    ingredients: ["Mango", "Pineapple", "Coconut water", "Lime"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
-    ],
-    tags: ["Seasonal fruit"],
+    blurb: `${BASE}, and sweet ripe mango.`,
+    image: "/images/mango-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Mango"],
+    sizes: size(599),
+    tags: ["Alcohol-free"],
     featured: true,
   },
   {
-    slug: "tiger-nut-horchata",
-    name: "Tiger Nut Horchata",
+    slug: "tigernut-pina-colada",
+    name: "Tigernut Piña Colada",
     category: "drink",
-    blurb: "Silky tiger nut milk with sweet date, warm cinnamon, nutmeg and vanilla.",
-    image: "/images/tiger-nut-horchata.jpg",
-    ingredients: ["Tiger nut", "Date", "Cinnamon", "Nutmeg", "Vanilla"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 800 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 1000 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3400 },
-    ],
-    tags: ["Dairy-free", "Nut-free"],
+    blurb: `${BASE}, and creamy tiger nut.`,
+    image: "/images/tigernut-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Tiger nut"],
+    sizes: size(699),
+    tags: ["Alcohol-free", "Dairy-free"],
+    featured: true,
   },
   {
-    slug: "pineapple-ginger",
-    name: "Pineapple Ginger",
+    slug: "passion-fruit-pina-colada",
+    name: "Passion Fruit Piña Colada",
     category: "drink",
-    blurb: "Cold-pressed pineapple with a bright kick of fresh ginger and lime.",
-    image: "/images/pineapple-ginger.jpg",
-    ingredients: ["Pineapple", "Ginger", "Lime", "Cane sugar"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 700 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 900 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3000 },
-    ],
-    tags: ["Spicy", "No dairy"],
+    blurb: `${BASE}, and sharp passion fruit.`,
+    image: "/images/passion-fruit-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Passion fruit"],
+    sizes: size(599),
+    tags: ["Alcohol-free"],
   },
   {
-    slug: "coconut-cloud",
-    name: "Coconut Cloud",
+    slug: "strawberry-pina-colada",
+    name: "Strawberry Piña Colada",
     category: "drink",
-    blurb: "Young coconut and cold coconut water, soft with real vanilla bean.",
-    image: "/images/coconut-cloud.jpg",
-    ingredients: ["Young coconut", "Coconut water", "Vanilla bean"],
-    sizes: [
-      { id: "12", label: "Single", volume: "12 oz", priceCents: 750 },
-      { id: "16", label: "Large", volume: "16 oz", priceCents: 950 },
-      { id: "64", label: "Jug", volume: "64 oz", priceCents: 3200 },
-    ],
-    tags: ["Low sugar"],
+    blurb: `${BASE}, and ripe strawberry.`,
+    image: "/images/strawberry-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Strawberry"],
+    sizes: size(599),
+    tags: ["Alcohol-free"],
+  },
+  {
+    slug: "raspberry-pina-colada",
+    name: "Raspberry Piña Colada",
+    category: "drink",
+    blurb: `${BASE}, and tart raspberry.`,
+    image: "/images/raspberry-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Raspberry"],
+    sizes: size(599),
+    tags: ["Alcohol-free"],
   },
 ];
 
@@ -195,3 +191,28 @@ export function getProduct(slug: string): Product | undefined {
 }
 
 export const drinks = products.filter((p) => p.category === "drink");
+
+/**
+ * Kpataashie — the food menu. ("Kpataashie" is Ga for kitchen.)
+ *
+ * Deliberately not a `Product`. These are shown so people know what is on,
+ * and ordered by message: pan sizes and proteins want confirming by hand, and
+ * nothing here has a fixed online price yet. When it does, each item becomes a
+ * `Product` with `category: "meal"` and drops into the array above — which is
+ * what that field was put there for.
+ */
+export type MenuItem = {
+  name: string;
+  /** Portions, or the choice that comes with it. */
+  detail?: string;
+};
+
+export const kpataashieMenu: MenuItem[] = [
+  { name: "Jollof rice", detail: "Half pan or full pan, with fried goat or turkey" },
+  { name: "Fried rice", detail: "Half pan or full pan, with fried goat or turkey" },
+  { name: "Gobɛ" },
+  { name: "Goat light soup" },
+  { name: "Goat peanut butter soup" },
+  { name: "Goat abɛnkwan" },
+  { name: "Goat nkatebɛ" },
+];

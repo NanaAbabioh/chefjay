@@ -8,7 +8,6 @@ import {
   getOrders,
   getSummary,
   getTopProducts,
-  getWaitlist,
 } from "@/lib/reports";
 import {
   DemoBanner,
@@ -30,11 +29,10 @@ export default async function OverviewPage() {
     return <NoDatabase />;
   }
 
-  const [summary, takings, products, waitlist, open] = await Promise.all([
+  const [summary, takings, products, open] = await Promise.all([
     getSummary(),
     getDailyTakings(14),
     getTopProducts(30),
-    getWaitlist(),
     getOrders(),
   ]);
 
@@ -137,7 +135,7 @@ export default async function OverviewPage() {
         </Panel>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6">
         <Panel
           title="What sells"
           aside={<span className="text-sm text-bark-faint">30 days</span>}
@@ -166,22 +164,6 @@ export default async function OverviewPage() {
           )}
         </Panel>
 
-        <Panel
-          title="Kitchen waitlist"
-          aside={<span className="text-sm text-bark-faint">{waitlist.count} signed up</span>}
-        >
-          {waitlist.recent.length === 0 ? (
-            <Empty>Nobody on the list yet.</Empty>
-          ) : (
-            <ul className="space-y-1.5 text-sm">
-              {waitlist.recent.map((s) => (
-                <li key={s.email} className="truncate text-bark-soft">
-                  {s.email}
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
       </div>
     </div>
   );

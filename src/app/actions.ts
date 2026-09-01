@@ -3,7 +3,7 @@
 import { resolveLines, subtotalCents, deliveryCents, type CartLine } from "@/lib/cart";
 import { eventPackages } from "@/lib/catalog";
 import { site } from "@/lib/site";
-import { saveOrder, saveQuote, saveSignup } from "@/lib/store";
+import { saveOrder, saveQuote } from "@/lib/store";
 import {
   eventMessage,
   mailtoUrl,
@@ -57,7 +57,6 @@ async function notify(subject: string, message: string) {
 const subjects = {
   order: "Order",
   quote: "Event quote",
-  signup: "Kitchen waitlist",
 } as const;
 
 /**
@@ -136,19 +135,4 @@ export async function submitQuote(quote: EventQuote): Promise<SubmitResult> {
     whatsapp: whatsappUrl(message),
     mailto: mailtoUrl(`Event quote ${ref}`, message),
   };
-}
-
-/** Kitchen waitlist. Same recording path as orders. */
-export async function joinKitchenList(
-  email: string,
-): Promise<{ ok: true } | { ok: false; error: string }> {
-  const clean = email.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) {
-    return { ok: false, error: "That email does not look right." };
-  }
-  await Promise.all([
-    record("signup", clean, `Kitchen waitlist signup: ${clean}`),
-    saveSignup(clean),
-  ]);
-  return { ok: true };
 }

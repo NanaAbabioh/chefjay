@@ -52,8 +52,8 @@ for (const statement of statements) {
 const [{ n }] = await sql`
   select count(*)::int as n from information_schema.tables
   where table_schema = 'public'
-    and table_name in ('orders','order_items','event_quotes','kitchen_signups')
+    and table_name in ('orders','order_items','event_quotes')
 `;
 
-console.log(`Applied ${applied} statements. ${n}/4 tables present.`);
-if (n < 4) process.exit(1);
+console.log(`Applied ${applied} statements. ${n}/3 tables present.`);
+if (n < 3) process.exit(1);

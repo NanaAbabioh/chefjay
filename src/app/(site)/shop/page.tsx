@@ -9,7 +9,7 @@ import { money } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Six small-batch tropical blends in three sizes — single bottles, large bottles and 64 oz jugs.",
+    "Six piña coladas made to order — classic, mango, tigernut, passion fruit, strawberry and raspberry.",
 };
 
 export default function ShopPage() {

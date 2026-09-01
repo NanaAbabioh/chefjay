@@ -15,8 +15,20 @@ export function AddToCart({ slug, sizes }: { slug: string; sizes: Size[] }) {
 
   const size = sizes.find((s) => s.id === sizeId)!;
 
+  // A picker with one option is not a choice. Single-size products show the
+  // price plainly and go straight to quantity.
+  const onlySize = sizes.length === 1;
+
   return (
     <div className="mt-8">
+      {onlySize ? (
+        <p className="font-display text-3xl font-semibold tabular-nums">
+          {money(sizes[0].priceCents)}
+          <span className="ml-2 align-middle text-base font-normal text-bark-faint">
+            {sizes[0].volume}
+          </span>
+        </p>
+      ) : (
       <fieldset>
         <legend className="text-xs font-semibold uppercase tracking-[0.2em] text-bark-faint">
           Size
@@ -55,6 +67,7 @@ export function AddToCart({ slug, sizes }: { slug: string; sizes: Size[] }) {
           })}
         </div>
       </fieldset>
+      )}
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <div className="flex items-center rounded-full border border-bark/20">

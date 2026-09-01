@@ -210,14 +210,14 @@ export function demoQuotes(): QuoteRow[] {
       id: 2, ref: "VC-QT9K7", status: "quoted", name: "Marcus Rivera",
       phone: "9735550177", email: "marcus@example.com", package_id: "service",
       event_type: "Corporate launch", event_date: "Sept 12", guests: "120",
-      venue: "Newark, indoor", flavors: ["House Signature"], notes: null,
+      venue: "Newark, indoor", flavors: ["Tigernut Piña Colada"], notes: null,
       quoted_cents: 84000, created_at: daysAgoIso(5),
     },
     {
       id: 3, ref: "VC-QT1B8", status: "won", name: "Abena Owusu",
       phone: "9735550155", email: "abena@example.com", package_id: "dozen",
       event_type: "Baby shower", event_date: "Aug 9", guests: "14",
-      venue: null, flavors: ["Coconut Cloud"], notes: null,
+      venue: null, flavors: ["Strawberry Piña Colada"], notes: null,
       quoted_cents: 7800, created_at: daysAgoIso(16),
     },
     {
@@ -229,11 +229,3 @@ export function demoQuotes(): QuoteRow[] {
     },
   ];
 }
-
-export const demoWaitlist = () => ({
-  count: 34,
-  recent: [
-    "kofi@example.com", "naa@example.com", "t.mensah@example.com",
-    "priya@example.com", "jblake@example.com",
-  ].map((email, i) => ({ email, created_at: daysAgoIso(i + 1) })),
-});

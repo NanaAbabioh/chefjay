@@ -1,4 +1,4 @@
-# Vincent’s
+# Chef Jay’s
 
 Marketing and ordering site for a small-batch tropical drinks business, built to
 serve two very different customers from one codebase: someone buying a single
@@ -55,19 +55,19 @@ Delivery thresholds live in `src/lib/cart.ts` (`FREE_DELIVERY_CENTS`,
 
 ```
 db/
-  001_init.sql          Tables for orders, event quotes and the waitlist
+  001_init.sql          Tables for orders and event quotes
 src/
   app/
     actions.ts          Server actions — the only place orders are handled
     layout.tsx          Document, fonts and metadata only
     globals.css         Design tokens (colors, fonts, grain)
     (site)/             The storefront, with its header, footer and cart
-      shop/ events/ cart/ kitchen/ about/ contact/
+      shop/ events/ cart/ kpataashie/ contact/
     admin/              The dashboard, outside the storefront chrome
   components/
     cart/               Cart state (localStorage) + the checkout screen
     product/            Cards, size picker, drink illustration
-    forms/              Event quote, kitchen waitlist, handoff panel
+    forms/              Event quote and handoff panel
     site/               Header, footer, logo
     ui/                 Button, form fields, layout container
   lib/                  site config, catalog, cart maths, message builders,
@@ -90,7 +90,7 @@ terracotta, amber and deep palm green, defined once in `globals.css`.
 
 ## Receiving orders by email
 
-Every order, event quote and kitchen signup is written to the server log — a
+Every order and event quote is written to the server log — a
 record you can read in your hosting dashboard — and emailed to you through
 [Resend](https://resend.com) as it arrives.
 
@@ -138,8 +138,8 @@ quoted against each one — that is what the events page totals.
 ADMIN_DEMO=1
 ```
 
-Fills the dashboard with a month of invented orders, event enquiries and
-signups, so you can judge it before taking a real order. Two things keep it
+Fills the dashboard with a month of invented orders and event enquiries,
+so you can judge it before taking a real order. Two things keep it
 honest: a banner marks every page as sample data while it is on, and it is
 ignored the moment a database is connected — invented takings must never be
 able to sit next to real ones. Nothing you click in this mode is saved.

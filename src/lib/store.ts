@@ -87,16 +87,5 @@ export function saveQuote(ref: string, quote: EventQuote) {
   );
 }
 
-export function saveSignup(email: string) {
-  return attempt(
-    // Someone signing up twice is not an error worth surfacing to them.
-    (sql) => sql`
-      insert into kitchen_signups (email) values (${email})
-      on conflict (email) do nothing
-    `,
-    "saving kitchen signup",
-  );
-}
-
 /** Business-local day boundaries. See `site.timeZone` for why. */
 export const TZ = site.timeZone;

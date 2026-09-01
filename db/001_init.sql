@@ -82,12 +82,6 @@ create table if not exists event_quotes (
   updated_at   timestamptz not null default now()
 );
 
-create table if not exists kitchen_signups (
-  id         bigserial primary key,
-  email      text        not null unique,
-  created_at timestamptz not null default now()
-);
-
 -- The dashboard reads newest-first and filters by status; events are read by
 -- how soon they are.
 create index if not exists orders_created_at_idx  on orders (created_at desc);

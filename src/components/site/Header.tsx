@@ -27,7 +27,12 @@ export function Header() {
 
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((item) => {
-              const active = pathname.startsWith(item.href);
+              // "/" is a prefix of every route, so the home link has to match
+              // exactly or it would read as active on every page.
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}

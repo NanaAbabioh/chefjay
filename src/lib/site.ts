@@ -3,10 +3,17 @@
  * Change these values and the whole site updates — nothing else hardcodes them.
  */
 export const site = {
-  name: "Vincent’s",
+  name: "Chef Jay’s",
+  /**
+   * How the founder is referred to in the hero and anywhere the brand name
+   * would read awkwardly with its possessive — "by Chef Jay", not
+   * "by Chef Jay's".
+   */
+  owner: "Chef Jay",
+
   tagline: "Coconut, mango and pineapple, blended fresh.",
   description:
-    "Piña colada and tropical blends made with real coconut, ripe mango, cold-pressed pineapple and tiger nut. Blended fresh in small batches.",
+    "Piña colada six ways — classic, mango, tigernut, passion fruit, strawberry and raspberry. Plus jollof, fried rice and goat soups from Kpataashie.",
 
   /**
    * Public origin of the deployed site, no trailing slash. Social previews and
@@ -42,8 +49,8 @@ export const site = {
 } as const;
 
 export const nav = [
+  { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
   { href: "/events", label: "Events & Bulk" },
-  { href: "/kitchen", label: "Kitchen" },
-  { href: "/about", label: "About" },
+  { href: "/kpataashie", label: "Kpataashie" },
 ] as const;

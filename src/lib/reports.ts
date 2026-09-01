@@ -8,7 +8,6 @@ import {
   demoQuotes,
   demoSummary,
   demoTopProducts,
-  demoWaitlist,
 } from "./demo";
 
 /**
@@ -258,17 +257,4 @@ export async function getQuotes(limit = 60) {
   return (await sql`
     select * from event_quotes order by created_at desc limit ${limit}
   `) as unknown as QuoteRow[];
-}
-
-export async function getWaitlist() {
-  const sql = db();
-  if (!sql) return demoMode() ? demoWaitlist() : { count: 0, recent: [] };
-  const [counts, recent] = await Promise.all([
-    sql`select count(*)::int as n from kitchen_signups`,
-    sql`select email, created_at from kitchen_signups order by created_at desc limit 10`,
-  ]);
-  return {
-    count: (counts as unknown as { n: number }[])[0]?.n ?? 0,
-    recent: recent as unknown as { email: string; created_at: string }[],
-  };
 }

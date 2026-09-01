@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Vincent’s — project notes
+# Chef Jay’s — project notes
 
 A drinks ordering site. Read `README.md` first; it explains the two order paths
 and where business details live.
