@@ -157,7 +157,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-bark/80 via-bark/40 to-transparent" />
             <div className="absolute inset-y-0 left-0 flex max-w-md flex-col justify-center p-8 text-cream sm:p-12">
               <span className="text-xs font-bold uppercase tracking-[0.18em] text-pineapple">
-                Now serving
+                Now serving from the
               </span>
               <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
                 Kpataashie

@@ -37,14 +37,11 @@ const BASE = "Ripe pineapple whipped through thick coconut cream, with a squeeze
 const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
 
 /**
- * One size per flavour.
- *
- * TODO — confirm with Chef Jay: the volume below is an assumption, not a
- * measured figure. It shows in the cart, on the WhatsApp handoff and in the
- * dashboard, so it wants checking before the first real order. Changing it
- * here changes it everywhere.
+ * One size per flavour. Confirmed with the caterer. This shows in the cart,
+ * on the WhatsApp handoff and in the dashboard — changing it here changes it
+ * everywhere.
  */
-const VOLUME = "16 oz";
+const VOLUME = "8 oz";
 const size = (priceCents: number) => [
   { id: "std", label: "Cup", volume: VOLUME, priceCents },
 ];
