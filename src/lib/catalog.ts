@@ -26,7 +26,6 @@ export type Product = {
   ingredients: string[];
   sizes: Size[];
   tags?: string[];
-  featured?: boolean;
 };
 
 /**
@@ -56,7 +55,6 @@ export const products: Product[] = [
     ingredients: BASE_INGREDIENTS,
     sizes: size(499),
     tags: ["Alcohol-free", "Mixer base"],
-    featured: true,
   },
   {
     slug: "mango-pina-colada",
@@ -67,7 +65,6 @@ export const products: Product[] = [
     ingredients: [...BASE_INGREDIENTS, "Mango"],
     sizes: size(599),
     tags: ["Alcohol-free"],
-    featured: true,
   },
   {
     slug: "tigernut-pina-colada",
@@ -78,7 +75,6 @@ export const products: Product[] = [
     ingredients: [...BASE_INGREDIENTS, "Tiger nut"],
     sizes: size(699),
     tags: ["Alcohol-free", "Dairy-free"],
-    featured: true,
   },
   {
     slug: "passion-fruit-pina-colada",

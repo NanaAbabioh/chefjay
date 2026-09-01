@@ -3,10 +3,8 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
-import { products } from "@/lib/catalog";
+import { drinks } from "@/lib/catalog";
 import { site } from "@/lib/site";
-
-const featured = products.filter((p) => p.featured);
 
 /** The two order paths, which are the whole point of the site. */
 const paths = [
@@ -121,19 +119,13 @@ export default function Home() {
       {/* Lineup */}
       <section className="pb-20 sm:pb-24">
         <Container>
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-              The lineup
-            </h2>
-            <Link
-              href="/shop"
-              className="text-sm font-semibold text-clay underline underline-offset-4"
-            >
-              All six →
-            </Link>
-          </div>
+          <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+            The lineup
+          </h2>
+          {/* All of them. A link to the rest is too easy to miss, and there is
+              room on the page to simply show the lot. */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((p) => (
+            {drinks.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
