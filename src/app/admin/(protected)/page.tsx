@@ -75,7 +75,9 @@ export default async function OverviewPage() {
         <Stat
           label="Last 30 days"
           value={money(summary.monthCents)}
-          hint={`${summary.monthOrders} orders · ${money(summary.averageCents)} average`}
+          hint={`${summary.monthOrders} ${
+            summary.monthOrders === 1 ? "order" : "orders"
+          } · ${money(summary.averageCents)} average`}
         />
       </div>
 

@@ -46,3 +46,4 @@ next-env.d.ts
 
 # Local source archive taken during that recovery
 vincents-source-backup.tar.gz
+.env*.local
