@@ -42,7 +42,7 @@ const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
  */
 const VOLUME = "8 oz";
 const size = (priceCents: number) => [
-  { id: "std", label: "Cup", volume: VOLUME, priceCents },
+  { id: "std", label: "Bottle", volume: VOLUME, priceCents },
 ];
 
 export const products: Product[] = [
@@ -141,7 +141,7 @@ export const eventPackages: EventPackage[] = [
     id: "party",
     name: "Party Pack",
     guests: "25 – 40 guests",
-    price: "$185",
+    price: "Starting from $185",
     summary: "Two 3-gallon dispensers, cups and ice. You pour, we handle the rest.",
     includes: [
       "2 × 3-gallon dispensers",
@@ -202,7 +202,9 @@ export type MenuItem = {
 
 export const kpataashieMenu: MenuItem[] = [
   { name: "Jollof rice", detail: "Half pan or full pan, with fried goat or turkey" },
-  { name: "Fried rice", detail: "Half pan or full pan, with fried goat or turkey" },
+  { name: "Fried rice", detail: "Half pan or full pan, with turkey or chicken" },
+  { name: "Peppered goat sauce", detail: "With white rice and plantain" },
+  { name: "Indomie" },
   { name: "Gobɛ" },
   { name: "Goat light soup" },
   { name: "Goat peanut butter soup" },

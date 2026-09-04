@@ -154,6 +154,9 @@ export default function Home() {
               <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
                 Kpataashie
               </h2>
+              {/* The gloss only, not the pronunciation — that belongs on the
+                  page itself, and repeating it here would wear thin. */}
+              <p className="mt-1 text-sm text-cream/55">Ga for kitchen</p>
               <p className="mt-2 text-cream/75">
                 Jollof, fried rice, goat soups.
               </p>

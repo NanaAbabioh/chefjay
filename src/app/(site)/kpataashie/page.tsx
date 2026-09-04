@@ -36,8 +36,16 @@ export default function KpataashiePage() {
           <h1 className="font-display text-5xl font-semibold sm:text-6xl">
             Kpataashie
           </h1>
+          {/* Said aloud before it is understood: people do not recommend a
+              place whose name they cannot pronounce. Hence sound first,
+              meaning second. */}
+          <p className="mt-2 text-sm text-cream/60">
+            <span className="italic">/kpa-tah-shee/</span>
+            <span className="px-2 text-cream/40">·</span>
+            Ga for kitchen
+          </p>
           <p className="mt-4 max-w-md text-lg text-cream/80">
-            The kitchen. Jollof, fried rice and goat soups, cooked to order.
+            Jollof, fried rice and goat soups, cooked to order.
           </p>
         </Container>
       </section>
