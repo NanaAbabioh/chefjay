@@ -29,10 +29,15 @@ export type Product = {
 };
 
 /**
- * One shared description, with the flavour added on the end — every drink is
- * the same build, so the copy says so.
+ * Descriptions are written per flavour, not assembled from a shared stem.
+ *
+ * They used to be: one constant plus the flavour appended. That kept the copy
+ * honest against the recipe, but it meant all eight opened with the same
+ * eleven words and the only distinguishing word landed last — on a grid, eight
+ * cards that read as the same drink. So each one now leads with what makes it
+ * different, and refers back to the base in its own words. The ingredient list
+ * below still carries the factual record.
  */
-const BASE = "Ripe pineapple whipped through thick coconut cream, with a squeeze of lime";
 const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
 
 /**
@@ -50,7 +55,7 @@ export const products: Product[] = [
     slug: "classic-pina-colada",
     name: "Classic Piña Colada",
     category: "drink",
-    blurb: `${BASE}.`,
+    blurb: "Pineapple, coconut cream and a squeeze of lime. The base everything else is built on.",
     image: "/images/classic-pina-colada.jpg",
     ingredients: BASE_INGREDIENTS,
     sizes: size(499),
@@ -60,7 +65,7 @@ export const products: Product[] = [
     slug: "classic-less-sugar-pina-colada",
     name: "Classic Piña Colada (Less Sugar)",
     category: "drink",
-    blurb: `${BASE}, made with less sugar.`,
+    blurb: "The same Classic, with the sugar pulled right back.",
     image: "/images/classic-less-sugar-pina-colada.jpg",
     ingredients: BASE_INGREDIENTS,
     sizes: size(499),
@@ -70,7 +75,7 @@ export const products: Product[] = [
     slug: "mango-pina-colada",
     name: "Mango Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and sweet ripe mango.`,
+    blurb: "Sun-ripe mango folded through the classic.",
     image: "/images/mango-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Mango"],
     sizes: size(599),
@@ -80,7 +85,7 @@ export const products: Product[] = [
     slug: "tigernut-pina-colada",
     name: "Tigernut Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and creamy tiger nut.`,
+    blurb: "Earthy tiger nut over a classic piña colada base.",
     image: "/images/tigernut-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Tiger nut"],
     sizes: size(699),
@@ -90,7 +95,7 @@ export const products: Product[] = [
     slug: "peach-pina-colada",
     name: "Peach Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and soft ripe peach.`,
+    blurb: "Soft peach, barely sweet, on pineapple and coconut cream.",
     image: "/images/peach-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Peach"],
     sizes: size(699),
@@ -100,7 +105,7 @@ export const products: Product[] = [
     slug: "passion-fruit-pina-colada",
     name: "Passion Fruit Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and sharp passion fruit.`,
+    blurb: "Sharp passion fruit cutting through the house colada.",
     image: "/images/passion-fruit-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Passion fruit"],
     sizes: size(599),
@@ -110,7 +115,7 @@ export const products: Product[] = [
     slug: "strawberry-pina-colada",
     name: "Strawberry Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and ripe strawberry.`,
+    blurb: "Ripe strawberry blended into the coconut base.",
     image: "/images/strawberry-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Strawberry"],
     sizes: size(599),
@@ -120,7 +125,7 @@ export const products: Product[] = [
     slug: "raspberry-pina-colada",
     name: "Raspberry Piña Colada",
     category: "drink",
-    blurb: `${BASE}, and tart raspberry.`,
+    blurb: "Tart raspberry against sweet pineapple and coconut.",
     image: "/images/raspberry-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Raspberry"],
     sizes: size(599),
