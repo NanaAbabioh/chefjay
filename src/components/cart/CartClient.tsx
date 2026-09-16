@@ -74,7 +74,7 @@ export function CartClient() {
       <div className="py-16 text-center">
         <h2 className="font-display text-3xl font-semibold">Your cart is empty.</h2>
         <p className="mt-3 text-bark-soft">
-          Six blends are waiting. Start with the Signature.
+          Eight blends are waiting. Start with the Classic.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <ButtonLink href="/shop">Shop the drinks</ButtonLink>

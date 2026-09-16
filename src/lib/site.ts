@@ -13,7 +13,7 @@ export const site = {
 
   tagline: "Coconut, mango and pineapple, blended fresh.",
   description:
-    "Piña colada six ways — classic, mango, tigernut, passion fruit, strawberry and raspberry. Plus jollof, fried rice and goat soups from Kpataashie.",
+    "Piña colada eight ways, from classic to peach and tigernut. Plus jollof, fried rice and goat soups from Kpataashie.",
 
   /**
    * Public origin of the deployed site, no trailing slash. Social previews and

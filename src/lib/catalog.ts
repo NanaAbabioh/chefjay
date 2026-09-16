@@ -57,6 +57,16 @@ export const products: Product[] = [
     tags: ["Alcohol-free", "Mixer base"],
   },
   {
+    slug: "classic-less-sugar-pina-colada",
+    name: "Classic Piña Colada (Less Sugar)",
+    category: "drink",
+    blurb: `${BASE}, made with less sugar.`,
+    image: "/images/classic-less-sugar-pina-colada.jpg",
+    ingredients: BASE_INGREDIENTS,
+    sizes: size(499),
+    tags: ["Alcohol-free", "Less sugar"],
+  },
+  {
     slug: "mango-pina-colada",
     name: "Mango Piña Colada",
     category: "drink",
@@ -75,6 +85,16 @@ export const products: Product[] = [
     ingredients: [...BASE_INGREDIENTS, "Tiger nut"],
     sizes: size(699),
     tags: ["Alcohol-free", "Dairy-free"],
+  },
+  {
+    slug: "peach-pina-colada",
+    name: "Peach Piña Colada",
+    category: "drink",
+    blurb: `${BASE}, and soft ripe peach.`,
+    image: "/images/peach-pina-colada.jpg",
+    ingredients: [...BASE_INGREDIENTS, "Peach"],
+    sizes: size(699),
+    tags: ["Alcohol-free"],
   },
   {
     slug: "passion-fruit-pina-colada",
