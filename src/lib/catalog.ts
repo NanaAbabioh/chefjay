@@ -63,13 +63,13 @@ export const products: Product[] = [
   },
   {
     slug: "classic-less-sugar-pina-colada",
-    name: "Classic Piña Colada (Less Sugar)",
+    name: "Classic Piña Colada (Less Sweet)",
     category: "drink",
-    blurb: "The same Classic, with the sugar pulled right back.",
+    blurb: "The same Classic, just less sweet.",
     image: "/images/classic-less-sugar-pina-colada.jpg",
     ingredients: BASE_INGREDIENTS,
     sizes: size(499),
-    tags: ["Alcohol-free", "Less sugar"],
+    tags: ["Alcohol-free", "Less sweet"],
   },
   {
     slug: "mango-pina-colada",

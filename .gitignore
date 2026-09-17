@@ -47,3 +47,7 @@ next-env.d.ts
 # Local source archive taken during that recovery
 vincents-source-backup.tar.gz
 .env*.local
+
+# 4K generated sources for the product shots (~50 MB). The finished images
+# live in public/images; keep these locally rather than in git history.
+design/glass/

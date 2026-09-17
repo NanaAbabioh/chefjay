@@ -9,7 +9,7 @@ import { money } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry, and a less-sugar classic.",
+    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry, and a less-sweet classic.",
 };
 
 export default function ShopPage() {
