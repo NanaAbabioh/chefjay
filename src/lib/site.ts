@@ -23,9 +23,9 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://chefjayskp.com",
 
   // Contact + order handoff
-  phone: "+1 (646) 707-2097",
+  phone: "+1 (929) 743-8480",
   /** Digits only, with country code. Used to build wa.me links. */
-  whatsapp: "16467072097",
+  whatsapp: "19297438480",
   email: "orders@chefjayskp.com",
 
   // Where you operate
