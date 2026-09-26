@@ -220,19 +220,49 @@ export const drinks = products.filter((p) => p.category === "drink");
  * what that field was put there for.
  */
 export type MenuItem = {
+  /** The name it is sold under. */
   name: string;
-  /** Portions, or the choice that comes with it. */
-  detail?: string;
+  /** The plain-English dish, and what it is served with. Shown underneath the
+   * name, in italics — the menu name sells it, this line says what it is. */
+  dish: string;
 };
 
 export const kpataashieMenu: MenuItem[] = [
-  { name: "Jollof rice", detail: "Half pan or full pan, with fried goat or turkey" },
-  { name: "Fried rice", detail: "Half pan or full pan, with turkey or chicken" },
-  { name: "Peppered goat sauce", detail: "With white rice and plantain" },
-  { name: "Indomie" },
-  { name: "Gobɛ" },
-  { name: "Goat light soup" },
-  { name: "Goat peanut butter soup" },
-  { name: "Goat abɛnkwan" },
-  { name: "Goat nkatebɛ" },
+  {
+    name: "Golden Savannah Jollof Royale",
+    dish: "Ghanaian jollof rice with fried turkey",
+  },
+  {
+    name: "Imperial Garden Fried Rice",
+    dish: "Vegetable, egg or sausage fried rice with fried turkey",
+  },
+  {
+    name: "Ember-Kissed Goat in Crimson Pepper Sauce",
+    dish: "Spicy peppered goat in sauce with plain rice",
+  },
+  {
+    name: "Velvet Peanut Goat Royale",
+    dish: "Goat groundnut soup with omotuo or fufu",
+  },
+  {
+    name: "Gold Palm Nut Goat Soup",
+    dish: "Goat palm nut soup with omotuo or fufu",
+  },
+  {
+    name: "Crimson Deluxe Goat Soup",
+    dish: "Goat light soup with fufu or plain rice",
+  },
+  {
+    name: "Rustic Beans with Caramelized Plantains",
+    dish: "Gɔbɛ — gari and beans with fried plantain and eggs",
+  },
+];
+
+/**
+ * Shown under the menu. Kept separate from the dishes because they qualify
+ * every one of them.
+ */
+export const kpataashieNotes = [
+  "Proteins can be swapped to your preference.",
+  "Other options include chicken, tilapia, veal, mackerel and tuna.",
 ];

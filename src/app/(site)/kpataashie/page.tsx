@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Container } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
-import { kpataashieMenu } from "@/lib/catalog";
+import { kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { whatsappUrl } from "@/lib/order";
 
@@ -71,10 +71,14 @@ export default function KpataashiePage() {
               }`}
             >
               <p className="font-display text-lg font-semibold">{item.name}</p>
-              {item.detail && (
-                <p className="mt-1 text-sm text-bark-soft">{item.detail}</p>
-              )}
+              <p className="mt-1 text-sm italic text-bark-soft">{item.dish}</p>
             </li>
+          ))}
+        </ul>
+
+        <ul className="mt-6 space-y-1 text-sm text-bark-faint">
+          {kpataashieNotes.map((note) => (
+            <li key={note}>{note}</li>
           ))}
         </ul>
 
