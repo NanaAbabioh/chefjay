@@ -234,7 +234,7 @@ export const kpataashieMenu: MenuItem[] = [
   },
   {
     name: "Imperial Garden Fried Rice",
-    dish: "Vegetable, egg or sausage fried rice with fried turkey",
+    dish: "Vegetable fried rice with fried turkey — egg and sausage optional",
   },
   {
     name: "Ember-Kissed Goat in Crimson Pepper Sauce",
@@ -254,7 +254,7 @@ export const kpataashieMenu: MenuItem[] = [
   },
   {
     name: "Rustic Beans with Caramelized Plantains",
-    dish: "Gɔbɛ — gari and beans with fried plantain and eggs",
+    dish: "Gɔbɛ — gari and beans with fried plantain, egg optional",
   },
 ];
 
@@ -265,4 +265,5 @@ export const kpataashieMenu: MenuItem[] = [
 export const kpataashieNotes = [
   "Proteins can be swapped to your preference.",
   "Other options include chicken, tilapia, veal, mackerel and tuna.",
+  "Anything marked optional can be left out — just say so when you order.",
 ];
