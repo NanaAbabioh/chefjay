@@ -63,3 +63,30 @@ export function Button({
     </button>
   );
 }
+
+/**
+ * Text link with a trailing arrow, for actions that should not carry the
+ * weight of a button. When every action is a filled pill, nothing looks
+ * more important than anything else.
+ */
+export function ArrowLink({
+  href,
+  className = "",
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`group inline-flex min-h-11 items-center gap-2 font-semibold text-bark underline-offset-[6px] hover:underline ${className}`}
+    >
+      {children}
+      <span aria-hidden className="transition-transform group-hover:translate-x-1">
+        →
+      </span>
+    </Link>
+  );
+}

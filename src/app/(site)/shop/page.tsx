@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Container } from "@/components/ui/Section";
+import { ArrowLink } from "@/components/ui/Button";
+import { Container, Eyebrow } from "@/components/ui/Section";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
 import { FREE_DELIVERY_CENTS } from "@/lib/cart";
@@ -14,11 +14,14 @@ export const metadata: Metadata = {
 
 export default function ShopPage() {
   return (
-    <Container className="py-14 sm:py-20">
+    <Container className="py-20 sm:py-28">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
-        <h1 className="font-display text-5xl font-semibold sm:text-6xl">
-          The fridge
-        </h1>
+        <div>
+          <Eyebrow>Piña colada, eight ways</Eyebrow>
+          <h1 className="mt-3 font-display text-5xl font-semibold leading-[0.95] sm:text-6xl">
+            The fridge
+          </h1>
+        </div>
         <p className="text-sm text-bark-faint">
           Free delivery over {money(FREE_DELIVERY_CENTS)}
         </p>
@@ -34,12 +37,7 @@ export default function ShopPage() {
         <p className="font-display text-xl font-semibold">
           Buying for more than ten people?
         </p>
-        <Link
-          href="/events"
-          className="rounded-full bg-bark px-6 py-3 text-sm font-semibold text-cream hover:bg-palm"
-        >
-          Event packages
-        </Link>
+        <ArrowLink href="/events">Event packages</ArrowLink>
       </div>
     </Container>
   );

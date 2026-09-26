@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Container } from "@/components/ui/Section";
-import { ButtonLink } from "@/components/ui/Button";
+import { Container, SectionHead } from "@/components/ui/Section";
+import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { whatsappUrl } from "@/lib/order";
@@ -50,13 +50,16 @@ export default function KpataashiePage() {
         </Container>
       </section>
 
-      <Container className="py-16">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-3xl font-semibold">On the menu</h2>
-          <p className="text-sm text-bark-faint">
-            Priced by the pan — message us for a quote
-          </p>
-        </div>
+      <Container className="py-20 sm:py-28">
+        <SectionHead
+          eyebrow="Cooked to order"
+          title="On the menu"
+          aside={
+            <p className="text-base text-bark-faint">
+              Priced by the pan — message us for a quote
+            </p>
+          }
+        />
 
         <ul className="mt-8 grid gap-px overflow-hidden rounded-card border border-bark/15 bg-bark/15 sm:grid-cols-2">
           {kpataashieMenu.map((item, i) => (
@@ -102,9 +105,7 @@ export default function KpataashiePage() {
           <p className="font-display text-xl font-semibold">
             Feeding a crowd?
           </p>
-          <ButtonLink href="/events" variant="outline">
-            See event packages
-          </ButtonLink>
+          <ArrowLink href="/events">See event packages</ArrowLink>
         </div>
       </Container>
     </>

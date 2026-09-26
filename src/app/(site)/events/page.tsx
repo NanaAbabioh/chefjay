@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Container } from "@/components/ui/Section";
+import { Container, SectionHead } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { EventsPlanner } from "@/components/forms/EventsPlanner";
 import { site } from "@/lib/site";
@@ -67,20 +67,18 @@ export default function EventsPage() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-20 sm:py-28">
         <Container>
-          <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-            Pick a starting point.
-          </h2>
+          <SectionHead eyebrow="Packages" title="Pick a starting point." />
           <div className="mt-10">
             <EventsPlanner />
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-bark/10 bg-shell py-16">
+      <section className="border-t border-bark/10 bg-shell py-20 sm:py-28">
         <Container>
-          <h2 className="font-display text-2xl font-semibold">Good to know</h2>
+          <SectionHead eyebrow="Before you book" title="Good to know" />
           <dl className="mt-8 grid gap-x-12 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
             {facts.map(([term, detail]) => (
               <div key={term} className="border-t border-bark/15 pt-3">

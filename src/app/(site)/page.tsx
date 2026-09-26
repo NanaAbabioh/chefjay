@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Container } from "@/components/ui/Section";
+import { Band, Container, SectionHead } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
@@ -82,8 +82,13 @@ export default function Home() {
       </section>
 
       {/* Two paths */}
-      <section className="py-20 sm:py-24">
+      <Band tone="shell">
         <Container>
+          <SectionHead
+            eyebrow="Two ways to order"
+            title="However many you are"
+            className="mb-10"
+          />
           <div className="grid gap-5 sm:grid-cols-2">
             {paths.map((p) => (
               <Link
@@ -114,14 +119,12 @@ export default function Home() {
             ))}
           </div>
         </Container>
-      </section>
+      </Band>
 
       {/* Lineup */}
-      <section className="pb-20 sm:pb-24">
+      <Band>
         <Container>
-          <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-            The lineup
-          </h2>
+          <SectionHead eyebrow="Eight flavours" title="The lineup" />
           {/* All of them. A link to the rest is too easy to miss, and there is
               room on the page to simply show the lot. */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -130,10 +133,10 @@ export default function Home() {
             ))}
           </div>
         </Container>
-      </section>
+      </Band>
 
       {/* Kpataashie */}
-      <section className="pb-20 sm:pb-24">
+      <Band tone="sand">
         <Container>
           <Link
             href="/kpataashie"
@@ -163,7 +166,7 @@ export default function Home() {
             </div>
           </Link>
         </Container>
-      </section>
+      </Band>
     </>
   );
 }
