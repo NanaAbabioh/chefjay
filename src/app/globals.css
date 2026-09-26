@@ -91,6 +91,21 @@
   }
 }
 
+/* Big monitors get a bigger root, so every rem-based size and gap grows with
+   the screen instead of leaving the page marooned in the middle of it. Phones
+   and laptops are untouched: the site is read on a phone most of the time. */
+@media (min-width: 1280px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

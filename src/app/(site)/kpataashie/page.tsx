@@ -70,13 +70,13 @@ export default function KpataashiePage() {
                   : ""
               }`}
             >
-              <p className="font-display text-lg font-semibold">{item.name}</p>
-              <p className="mt-1 text-sm italic text-bark-soft">{item.dish}</p>
+              <p className="font-display text-xl font-semibold">{item.name}</p>
+              <p className="mt-1 text-base italic text-bark-soft">{item.dish}</p>
             </li>
           ))}
         </ul>
 
-        <ul className="mt-6 space-y-1 text-sm text-bark-faint">
+        <ul className="mt-6 space-y-1 text-base text-bark-faint">
           {kpataashieNotes.map((note) => (
             <li key={note}>{note}</li>
           ))}

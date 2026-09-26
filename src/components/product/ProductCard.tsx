@@ -23,17 +23,17 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
 
       <div className="mt-4 flex items-baseline justify-between gap-3">
-        <h3 className="font-display text-lg font-semibold leading-tight">
+        <h3 className="font-display text-xl font-semibold leading-tight">
           <Link href={`/shop/${product.slug}`} className="hover:text-clay">
             {product.name}
           </Link>
         </h3>
-        <span className="shrink-0 text-sm text-bark-faint">
+        <span className="shrink-0 text-base text-bark-faint">
           {money(cheapest.priceCents)}
         </span>
       </div>
 
-      <p className="mt-1 text-sm leading-relaxed text-bark-soft">{product.blurb}</p>
+      <p className="mt-1 text-base leading-relaxed text-bark-soft">{product.blurb}</p>
 
       <div className="mt-3">
         <QuickAdd
