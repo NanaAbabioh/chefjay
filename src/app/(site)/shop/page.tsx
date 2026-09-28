@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowLink } from "@/components/ui/Button";
-import { Container, Eyebrow } from "@/components/ui/Section";
+import { Container, Eyebrow, Seal } from "@/components/ui/Section";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
 import { FREE_DELIVERY_CENTS } from "@/lib/cart";
@@ -22,9 +22,12 @@ export default function ShopPage() {
             The fridge
           </h1>
         </div>
-        <p className="text-sm text-bark-faint">
-          Free delivery over {money(FREE_DELIVERY_CENTS)}
-        </p>
+        <div className="flex items-center gap-5">
+          <p className="text-base text-bark-faint">
+            Free delivery over {money(FREE_DELIVERY_CENTS)}
+          </p>
+          <Seal lines={["Blended", "to order"]} className="hidden sm:inline-flex" />
+        </div>
       </div>
 
       <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">

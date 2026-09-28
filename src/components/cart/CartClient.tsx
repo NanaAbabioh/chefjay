@@ -107,7 +107,7 @@ export function CartClient() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-display text-lg font-semibold leading-tight">
-                      <Link href={`/shop/${l.slug}`} className="hover:text-palm">
+                      <Link href={`/shop/${l.slug}`} className="hover:text-clay">
                         {l.name}
                       </Link>
                     </h3>

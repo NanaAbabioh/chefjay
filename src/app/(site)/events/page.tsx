@@ -19,8 +19,11 @@ export const metadata: Metadata = {
 const facts: [string, string][] = [
   ["Lead time", `${site.eventLeadTimeDays} days. Ask anyway if it's sooner.`],
   ["How much", "Two 12 oz servings per guest, per two hours."],
-  ["Alcohol", "None served. The Classic works as a rum base."],
-  ["Allergies", "All dairy-free. Tiger nut is a tuber, not a nut."],
+  ["Alcohol", "None served. Coconut rum works as a base."],
+  [
+    "Allergies",
+    "Non-dairy products used. Please state any allergies when placing your order.",
+  ],
   ["Delivery", `${site.serviceArea}. Further out for a travel fee.`],
   ["Changes", "Free up to 48 hours before."],
 ];

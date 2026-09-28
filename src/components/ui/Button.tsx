@@ -10,10 +10,10 @@ const base =
   "inline-flex items-center justify-center gap-2 rounded-full border font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  solid: "border-transparent bg-bark text-cream hover:bg-palm",
+  solid: "border-transparent bg-bark text-cream hover:bg-bark-soft",
   outline: "border-bark/40 text-bark hover:border-bark hover:bg-bark/5",
   ghost: "border-transparent text-bark hover:bg-bark/5",
-  light: "border-transparent bg-cream text-bark hover:bg-pineapple",
+  light: "border-transparent bg-cream text-bark hover:bg-sand",
 };
 
 // Every size clears the 44px minimum touch target — most traffic is phones.

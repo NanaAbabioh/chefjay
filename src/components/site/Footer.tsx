@@ -24,7 +24,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="inline-flex min-h-11 items-center text-cream/80 hover:text-pineapple sm:min-h-0"
+                    className="inline-flex min-h-11 items-center text-cream/80 hover:text-cream sm:min-h-0"
                   >
                     {item.label}
                   </Link>
@@ -33,7 +33,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-11 items-center text-cream/80 hover:text-pineapple sm:min-h-0"
+                  className="inline-flex min-h-11 items-center text-cream/80 hover:text-cream sm:min-h-0"
                 >
                   Contact
                 </Link>
@@ -51,7 +51,7 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}
-                  className="inline-flex min-h-11 items-center hover:text-pineapple sm:min-h-0"
+                  className="inline-flex min-h-11 items-center hover:text-cream sm:min-h-0"
                 >
                   {site.phone}
                 </a>
@@ -59,7 +59,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="inline-flex min-h-11 items-center hover:text-pineapple sm:min-h-0"
+                  className="inline-flex min-h-11 items-center hover:text-cream sm:min-h-0"
                 >
                   {site.email}
                 </a>

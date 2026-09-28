@@ -90,3 +90,30 @@ export function SectionHead({
     </div>
   );
 }
+
+/**
+ * Circular outlined stamp — a rubber-stamp impression, not a badge.
+ *
+ * Borrowed from the creamery reference: an outline, no fill, small tracked
+ * caps, set slightly off-square so it reads as pressed on by hand rather than
+ * positioned by a machine. One per page at most; it stops being a stamp the
+ * moment there are two.
+ */
+export function Seal({
+  lines,
+  className = "",
+}: {
+  lines: string[];
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden
+      className={`inline-flex size-[104px] shrink-0 -rotate-6 flex-col items-center justify-center rounded-full border border-clay/50 text-center text-[10px] font-semibold uppercase leading-[1.5] tracking-[0.16em] text-clay ${className}`}
+    >
+      {lines.map((line) => (
+        <span key={line}>{line}</span>
+      ))}
+    </span>
+  );
+}

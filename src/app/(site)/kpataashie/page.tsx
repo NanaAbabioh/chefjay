@@ -61,13 +61,15 @@ export default function KpataashiePage() {
           }
         />
 
-        <ul className="mt-8 grid gap-px overflow-hidden rounded-card border border-bark/15 bg-bark/15 sm:grid-cols-2">
+        <ul className="mt-10 grid sm:grid-cols-2 sm:gap-x-14">
           {kpataashieMenu.map((item, i) => (
             <li
               key={item.name}
-              // An odd number of dishes would leave a dead cell in the last
-              // row, so the final one spans the full width instead.
-              className={`bg-cream p-6 ${
+              // A rule above each dish rather than a box around it: the list
+              // reads as a menu instead of a table. An odd number of dishes
+              // would leave a dead cell in the last row, so the final one
+              // spans the full width instead.
+              className={`border-t border-bark/15 py-6 ${
                 i === kpataashieMenu.length - 1 && kpataashieMenu.length % 2 === 1
                   ? "sm:col-span-2"
                   : ""
