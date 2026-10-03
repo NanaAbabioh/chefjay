@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Container, Eyebrow } from "@/components/ui/Section";
 import { SubscribePicker } from "@/components/subscribe/SubscribePicker";
-import { promo } from "@/lib/promo";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -17,6 +16,10 @@ const terms: [string, string][] = [
   ["Flavours", "Chosen each month. Change them whenever you like."],
   ["Delivery", `${site.serviceArea}. We agree a day that suits you.`],
   ["Pausing", "Skip a month or stop entirely — just say so before the next drop."],
+  [
+    "Opening offer",
+    "The free fourth bottle is a shop offer. Subscriptions are priced separately and do not stack with it.",
+  ],
 ];
 
 export default function SubscribePage() {
@@ -62,10 +65,11 @@ export default function SubscribePage() {
           ))}
         </dl>
 
-        {/* Said plainly rather than in a footnote: a subscription that quietly
-            ends with the promotion would be a nasty surprise. */}
+        {/* Said plainly rather than in a footnote: someone signing up during
+            the opening fortnight should not discover later that they were
+            buying under different terms from the shop. */}
         <p className="mt-10 text-base text-bark-faint">
-          Subscriptions open with the grand opening, {promo.window}.
+          Subscriptions start with the grand opening and carry on after it.
         </p>
       </Container>
     </>
