@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Band, Container, SectionHead } from "@/components/ui/Section";
-import { ButtonLink } from "@/components/ui/Button";
+import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
 import { Testimonial } from "@/components/site/Testimonial";
 import { promo } from "@/lib/promo";
@@ -192,17 +192,21 @@ export default function Home() {
             />
             <div>
               <SectionHead
-                eyebrow="From the people drinking it"
+                eyebrow="From our customers"
                 title="Don't take our word for it."
               />
               <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft">
-                A minute of customers with a bottle in hand, at parties and at
-                home, saying what they think of it.
+                A minute of customers with a bottle in hand and a plate in
+                front of them, at parties and at home, on the drinks and the
+                cooking both.
               </p>
-              <div className="mt-7">
+              {/* Both halves of the business are in the clip, so both are
+                  reachable from under it. */}
+              <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-4">
                 <ButtonLink href="/shop" size="lg">
                   Shop the fridge
                 </ButtonLink>
+                <ArrowLink href="/kpataashie">See the Kpataashie menu</ArrowLink>
               </div>
             </div>
           </div>
