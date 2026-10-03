@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { PromoGate } from "@/components/site/Promo";
 import { Container, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
+import { promo } from "@/lib/promo";
 import { site } from "@/lib/site";
 import { whatsappUrl } from "@/lib/order";
 
@@ -80,6 +82,16 @@ export default function KpataashiePage() {
             </li>
           ))}
         </ul>
+
+        <PromoGate>
+          <p className="mt-8 border-l-2 border-clay/40 pl-4 text-base text-bark-soft">
+            <span className="font-semibold text-clay">
+              {promo.mealDiscountPercent}% off every meal, {promo.window}.
+            </span>{" "}
+            Quote <span className="font-semibold">{promo.code}</span> when you
+            order and it comes off your quote.
+          </p>
+        </PromoGate>
 
         <ul className="mt-6 space-y-1 text-base text-bark-faint">
           {kpataashieNotes.map((note) => (

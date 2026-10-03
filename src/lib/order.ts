@@ -1,6 +1,7 @@
 import { money } from "./format";
 import { site } from "./site";
 import type { ResolvedLine } from "./cart";
+import { promo } from "./promo";
 
 export type Fulfilment = "delivery" | "pickup";
 
@@ -37,7 +38,7 @@ export function retailMessage(
   ref: string,
   order: RetailOrder,
   lines: ResolvedLine[],
-  totals: { subtotal: number; delivery: number; total: number },
+  totals: { subtotal: number; discount: number; delivery: number; total: number },
 ): string {
   const items = lines
     .map((l) => `• ${l.qty} × ${l.name} (${l.volume}) — ${money(l.lineCents)}`)
@@ -49,6 +50,11 @@ export function retailMessage(
     items,
     ``,
     `Subtotal: ${money(totals.subtotal)}`,
+    // Shown as a line of its own: this message is what the customer
+    // screenshots, so the discount has to be visible, not just netted off.
+    totals.discount > 0
+      ? `${promo.eyebrow} (4th bottle free): -${money(totals.discount)}`
+      : null,
     order.method === "delivery"
       ? `Delivery: ${totals.delivery === 0 ? "Free" : money(totals.delivery)}`
       : `Pickup: Free`,

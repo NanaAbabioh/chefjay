@@ -1,5 +1,6 @@
 /**
- * Applies db/001_init.sql to whatever DATABASE_URL points at.
+ * Applies every db/*.sql migration, in filename order, to whatever
+ * DATABASE_URL points at.
  *
  * This exists so setting the database up needs no psql install — it uses the
  * same driver the application already depends on. Safe to run more than once:
@@ -8,7 +9,7 @@
  *   npm run db:setup
  */
 import { neon } from "@neondatabase/serverless";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 const url =
   process.env.DATABASE_URL ||
@@ -24,7 +25,12 @@ if (!url) {
   process.exit(1);
 }
 
-const file = readFileSync(new URL("../db/001_init.sql", import.meta.url), "utf8");
+const dir = new URL("../db/", import.meta.url);
+const file = readdirSync(dir)
+  .filter((name) => name.endsWith(".sql"))
+  .sort()
+  .map((name) => readFileSync(new URL(name, dir), "utf8"))
+  .join("\n;\n");
 
 // The HTTP driver takes one statement per call, so the migration is split.
 // Comments go first: they are the only place a stray semicolon could hide.

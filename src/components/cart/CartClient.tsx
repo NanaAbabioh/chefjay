@@ -6,10 +6,13 @@ import { useState, useTransition } from "react";
 import { useCart } from "./CartProvider";
 import {
   deliveryCents,
+  discountCents,
+  itemCount,
   resolveLines,
   subtotalCents,
   FREE_DELIVERY_CENTS,
 } from "@/lib/cart";
+import { promo, promoActive } from "@/lib/promo";
 import { money } from "@/lib/format";
 import { site } from "@/lib/site";
 import type { Fulfilment, RetailOrder } from "@/lib/order";
@@ -36,8 +39,13 @@ export function CartClient() {
 
   const resolved = resolveLines(lines);
   const subtotal = subtotalCents(resolved);
-  const delivery = deliveryCents(subtotal, order.method);
-  const total = subtotal + delivery;
+  // Shown so the customer can see the offer land before they commit. The
+  // server works it out again on submit; this number is never trusted.
+  const discount = discountCents(resolved);
+  const delivery = deliveryCents(subtotal - discount, order.method);
+  const total = subtotal - discount + delivery;
+  const bottlesToFree =
+    promo.bottlesPerFree - (itemCount(lines) % promo.bottlesPerFree);
 
   const set = <K extends keyof RetailOrder>(key: K, value: RetailOrder[K]) =>
     setOrder((o) => ({ ...o, [key]: value }));
@@ -160,10 +168,21 @@ export function CartClient() {
           >
             ← Keep shopping
           </Link>
-          {subtotal < FREE_DELIVERY_CENTS && order.method === "delivery" && (
-            <p className="text-sm text-bark-faint">
-              {money(FREE_DELIVERY_CENTS - subtotal)} more for free delivery.
+          {/* One nudge at a time: the free bottle is worth more than the
+              delivery saving, so it wins when both apply. */}
+          {promoActive() && bottlesToFree < promo.bottlesPerFree ? (
+            <p className="text-sm font-semibold text-clay">
+              {bottlesToFree === 1
+                ? "One more bottle and it's free."
+                : `${bottlesToFree} more bottles and one is free.`}
             </p>
+          ) : (
+            subtotal < FREE_DELIVERY_CENTS &&
+            order.method === "delivery" && (
+              <p className="text-sm text-bark-faint">
+                {money(FREE_DELIVERY_CENTS - subtotal)} more for free delivery.
+              </p>
+            )
           )}
         </div>
       </div>
@@ -274,6 +293,12 @@ export function CartClient() {
             <dt className="text-bark-soft">Subtotal</dt>
             <dd className="font-semibold">{money(subtotal)}</dd>
           </div>
+          {discount > 0 && (
+            <div className="flex justify-between text-clay">
+              <dt>{promo.eyebrow} — 4th bottle free</dt>
+              <dd className="font-semibold">−{money(discount)}</dd>
+            </div>
+          )}
           <div className="flex justify-between">
             <dt className="text-bark-soft">
               {order.method === "delivery" ? "Delivery" : "Pickup"}

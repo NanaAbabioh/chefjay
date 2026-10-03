@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Band, Container, SectionHead } from "@/components/ui/Section";
+import { Band, Container, Eyebrow, SectionHead } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
+import { PromoGate } from "@/components/site/Promo";
+import { promo } from "@/lib/promo";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
 import { site } from "@/lib/site";
@@ -80,6 +82,32 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* Grand opening. Lives between the hero and the two paths so it is the
+          first thing after the headline, and disappears on its own when the
+          dates run out. */}
+      <PromoGate>
+        <Band tone="sand">
+          <Container>
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-xl">
+                <Eyebrow>
+                  {promo.eyebrow} · {promo.window}
+                </Eyebrow>
+                <h2 className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
+                  {promo.heading}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-bark-soft">
+                  {promo.body}
+                </p>
+              </div>
+              <ButtonLink href="/shop" size="lg">
+                Shop the fridge
+              </ButtonLink>
+            </div>
+          </Container>
+        </Band>
+      </PromoGate>
 
       {/* Two paths */}
       <Band tone="shell">

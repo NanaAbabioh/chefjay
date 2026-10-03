@@ -1,5 +1,6 @@
 import { CartProvider } from "@/components/cart/CartProvider";
 import { Header } from "@/components/site/Header";
+import { PromoBar } from "@/components/site/Promo";
 import { Footer } from "@/components/site/Footer";
 
 /**
@@ -16,6 +17,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       >
         Skip to content
       </a>
+      <PromoBar />
       <Header />
       <main id="main" className="flex-1">
         {children}

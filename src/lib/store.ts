@@ -28,7 +28,7 @@ export function saveOrder(
   ref: string,
   order: RetailOrder,
   lines: ResolvedLine[],
-  totals: { subtotal: number; delivery: number; total: number },
+  totals: { subtotal: number; discount: number; delivery: number; total: number },
 ) {
   return attempt(
     (sql) =>
@@ -39,13 +39,14 @@ export function saveOrder(
         with new_order as (
           insert into orders (
             ref, name, phone, email, method, address, preferred_time, notes,
-            subtotal_cents, delivery_cents, total_cents
+            subtotal_cents, discount_cents, delivery_cents, total_cents
           )
           values (
             ${ref}, ${order.name}, ${order.phone}, ${order.email || null},
             ${order.method}, ${order.address || null}, ${order.when || null},
             ${order.notes || null},
-            ${totals.subtotal}, ${totals.delivery}, ${totals.total}
+            ${totals.subtotal}, ${totals.discount}, ${totals.delivery},
+            ${totals.total}
           )
           returning id
         )

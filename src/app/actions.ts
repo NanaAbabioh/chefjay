@@ -1,6 +1,12 @@
 "use server";
 
-import { resolveLines, subtotalCents, deliveryCents, type CartLine } from "@/lib/cart";
+import {
+  resolveLines,
+  subtotalCents,
+  discountCents,
+  deliveryCents,
+  type CartLine,
+} from "@/lib/cart";
 import { eventPackages } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { saveOrder, saveQuote } from "@/lib/store";
@@ -88,21 +94,22 @@ export async function submitOrder(
     return { ok: false, error: "Your cart is empty." };
   }
 
+  // Every figure is recomputed here from the catalog and the promotion's own
+  // dates. The browser's arithmetic is never trusted, and that includes the
+  // discount: a cart kept open past the last day of the offer loses it.
   const subtotal = subtotalCents(resolved);
-  const delivery = deliveryCents(subtotal, order.method);
+  const discount = discountCents(resolved);
+  const delivery = deliveryCents(subtotal - discount, order.method);
+  const totals = { subtotal, discount, delivery, total: subtotal - discount + delivery };
   const ref = orderRef(Date.now());
-  const message = retailMessage(ref, order, resolved, {
-    subtotal,
-    delivery,
-    total: subtotal + delivery,
-  });
+  const message = retailMessage(ref, order, resolved, totals);
 
   // Recorded and stored side by side. Neither can fail the order: `record`
   // swallows a bad email, `saveOrder` swallows a bad write, and the server
   // log holds a full copy regardless.
   await Promise.all([
     record("order", ref, message),
-    saveOrder(ref, order, resolved, { subtotal, delivery, total: subtotal + delivery }),
+    saveOrder(ref, order, resolved, totals),
   ]);
 
   return {
