@@ -40,13 +40,10 @@ export default function SubscribePage() {
         <Container className="relative pb-14 pt-24">
           <Eyebrow>Monthly subscription</Eyebrow>
           <h1 className="mt-3 max-w-xl font-display text-5xl font-semibold leading-[0.95] sm:text-6xl">
-            A standing order of piña colada.
+            A constant pour of piña colada, for you.
           </h1>
-          {/* "Standing order" already carries the idea that nobody has to ask
-              each time, so this line only adds what it does not: the rhythm is
-              yours, and what it costs. */}
           <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
-            Bottles at your door on a rhythm you set, from $4 each.
+            A standing order of drinks at your door.
           </p>
         </Container>
       </section>
