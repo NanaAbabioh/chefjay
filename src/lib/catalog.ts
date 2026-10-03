@@ -98,7 +98,7 @@ export const products: Product[] = [
     blurb: "Soft peach, barely sweet, on pineapple and coconut cream.",
     image: "/images/peach-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Peach"],
-    sizes: size(699),
+    sizes: size(599),
     tags: ["Alcohol-free"],
   },
   {

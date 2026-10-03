@@ -45,9 +45,12 @@ export default function ShopPage() {
 
       <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-bark/10 pt-8">
         <p className="font-display text-xl font-semibold">
-          Buying for more than ten people?
+          Drinking these every week?
         </p>
-        <ArrowLink href="/events">Event packages</ArrowLink>
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+          <ArrowLink href="/subscribe">Subscribe monthly</ArrowLink>
+          <ArrowLink href="/events">Event packages</ArrowLink>
+        </div>
       </div>
     </Container>
   );

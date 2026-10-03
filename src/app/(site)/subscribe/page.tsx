@@ -1,0 +1,73 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import { Container, Eyebrow } from "@/components/ui/Section";
+import { SubscribePicker } from "@/components/subscribe/SubscribePicker";
+import { promo } from "@/lib/promo";
+import { site } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Subscribe",
+  description:
+    "A standing order of piña colada — two or four bottles, weekly or fortnightly, from $4 a bottle. Delivered across New Jersey and New York.",
+};
+
+/** Answers the questions a standing order raises, before they are asked. */
+const terms: [string, string][] = [
+  ["Billing", "Monthly, settled with Chef Jay. No card stored on the site."],
+  ["Flavours", "Chosen each month. Change them whenever you like."],
+  ["Delivery", `${site.serviceArea}. We agree a day that suits you.`],
+  ["Pausing", "Skip a month or stop entirely — just say so before the next drop."],
+];
+
+export default function SubscribePage() {
+  return (
+    <>
+      <section className="relative flex min-h-[46vh] items-end overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/promo-opening.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-right"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/85 to-transparent" />
+        </div>
+        <Container className="relative pb-14 pt-24">
+          <Eyebrow>Monthly subscription</Eyebrow>
+          <h1 className="mt-3 max-w-xl font-display text-5xl font-semibold leading-[0.95] sm:text-6xl">
+            A standing order of piña colada.
+          </h1>
+          {/* "Standing order" already carries the idea that nobody has to ask
+              each time, so this line only adds what it does not: the rhythm is
+              yours, and what it costs. */}
+          <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
+            Bottles at your door on a rhythm you set, from $4 each.
+          </p>
+        </Container>
+      </section>
+
+      <Container className="py-20 sm:py-28">
+        <SubscribePicker />
+
+        <dl className="mt-16 grid gap-x-12 gap-y-5 border-t border-bark/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          {terms.map(([term, detail]) => (
+            <div key={term} className="border-t border-bark/15 pt-3">
+              <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-bark-faint">
+                {term}
+              </dt>
+              <dd className="mt-1.5 text-bark-soft">{detail}</dd>
+            </div>
+          ))}
+        </dl>
+
+        {/* Said plainly rather than in a footnote: a subscription that quietly
+            ends with the promotion would be a nasty surprise. */}
+        <p className="mt-10 text-base text-bark-faint">
+          Subscriptions open with the grand opening, {promo.window}.
+        </p>
+      </Container>
+    </>
+  );
+}
