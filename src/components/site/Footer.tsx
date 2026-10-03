@@ -2,6 +2,7 @@ import Link from "next/link";
 import { nav, site } from "@/lib/site";
 import { Container } from "@/components/ui/Section";
 import { Logo } from "./Logo";
+import { Social } from "./Social";
 
 export function Footer() {
   return (
@@ -65,6 +66,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+            <Social className="-ml-3 mt-3" />
           </div>
         </div>
 

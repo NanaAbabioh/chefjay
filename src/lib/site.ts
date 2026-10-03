@@ -39,9 +39,12 @@ export const site = {
    */
   timeZone: "America/New_York",
 
+  /** Public profiles. Tracking parameters are stripped — they belong to the
+   *  link that was shared with us, not to ours. */
   socials: {
-    instagram: "https://instagram.com/",
-    tiktok: "https://tiktok.com/",
+    handle: "@chefjayskp",
+    instagram: "https://www.instagram.com/chefjayskp",
+    tiktok: "https://www.tiktok.com/@chefjayskp",
   },
 
   /** Minimum lead time for event orders, in days. Shown on the quote form. */

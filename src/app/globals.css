@@ -104,6 +104,32 @@
     animation-play-state: paused;
   }
 
+  /* A nav item that asks to be noticed, without becoming the loudest thing in
+     the room. Still for most of the cycle, then two small hops — movement the
+     eye catches in passing and stops registering once it has. The global
+     reduced-motion rule freezes it. */
+  .nudge {
+    animation: nudge 6s ease-in-out infinite;
+  }
+
+  @keyframes nudge {
+    0%, 70%, 100% {
+      transform: translateY(0);
+    }
+    76% {
+      transform: translateY(-3px);
+    }
+    82% {
+      transform: translateY(0);
+    }
+    88% {
+      transform: translateY(-2px);
+    }
+    94% {
+      transform: translateY(0);
+    }
+  }
+
   @keyframes marquee {
     from {
       transform: translateX(0);

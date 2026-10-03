@@ -41,6 +41,10 @@ export function Header() {
                     active
                       ? "bg-bark/8 text-bark"
                       : "text-bark-soft hover:bg-bark/5 hover:text-bark"
+                  } ${
+                    // The newest thing on the menu, and the one people do not
+                    // know to look for. It stops hopping once they are on it.
+                    item.href === "/subscribe" && !active ? "nudge" : ""
                   }`}
                 >
                   {item.label}
@@ -98,7 +102,9 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="border-b border-bark/5 py-3.5 text-base font-medium last:border-0"
+                className={`border-b border-bark/5 py-3.5 text-base font-medium last:border-0 ${
+                  item.href === "/subscribe" ? "nudge" : ""
+                }`}
               >
                 {item.label}
               </Link>
