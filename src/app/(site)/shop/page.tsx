@@ -33,7 +33,9 @@ export default function ShopPage() {
             </PromoGate>
             <p>Free delivery over {money(FREE_DELIVERY_CENTS)}</p>
           </div>
-          <Seal lines={["Blended", "to order"]} className="hidden sm:inline-flex" />
+          <span className="hidden sm:block">
+              <Seal lines={["Blended", "to order"]} />
+            </span>
         </div>
       </div>
 

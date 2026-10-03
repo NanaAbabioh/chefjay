@@ -104,29 +104,29 @@
     animation-play-state: paused;
   }
 
-  /* A nav item that asks to be noticed, without becoming the loudest thing in
-     the room. Still for most of the cycle, then two small hops — movement the
-     eye catches in passing and stops registering once it has. The global
-     reduced-motion rule freezes it. */
-  .nudge {
-    animation: nudge 6s ease-in-out infinite;
+  /* A slow wave through the whole pill — rise, tilt, settle — rather than a
+     hop in place. Long enough between passes that it reads as an invitation
+     and not a flashing banner. The global reduced-motion rule stops it. */
+  .sway {
+    animation: sway 5s ease-in-out infinite;
+    transform-origin: center bottom;
   }
 
-  @keyframes nudge {
-    0%, 70%, 100% {
-      transform: translateY(0);
+  @keyframes sway {
+    0%, 62%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    68% {
+      transform: translateY(-5px) rotate(-2.5deg);
     }
     76% {
-      transform: translateY(-3px);
+      transform: translateY(-2px) rotate(2deg);
     }
-    82% {
-      transform: translateY(0);
+    84% {
+      transform: translateY(-4px) rotate(-1.2deg);
     }
-    88% {
-      transform: translateY(-2px);
-    }
-    94% {
-      transform: translateY(0);
+    92% {
+      transform: translateY(0) rotate(0deg);
     }
   }
 
