@@ -18,7 +18,7 @@ export const promo = {
   code: "B3G1",
   /** First and last day the offer runs, inclusive, as YYYY-MM-DD. */
   startsOn: "2026-10-03",
-  endsOn: "2026-10-16",
+  endsOn: "2026-10-18",
 
   /** Bottles: every nth bottle in the cart is free. 4 = buy three, get one. */
   bottlesPerFree: 4,
@@ -38,7 +38,7 @@ export const promo = {
   short: "Buy 3 bottles, get the 4th free",
   /** Shown wherever the dates matter. Kept as prose: "3–11 October" reads
    *  better than a date range nobody parses. */
-  window: "3 – 16 October",
+  window: "3 – 18 October",
 } as const;
 
 /** Today where the business trades, as YYYY-MM-DD. */
