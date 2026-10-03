@@ -89,6 +89,29 @@
   .prose-measure {
     max-width: 62ch;
   }
+
+  /* Marquee. The track holds the message twice and slides exactly half its
+     width, so the loop closes on itself with no gap and no jump. Duration is
+     set per instance from the message length, keeping the speed even however
+     long the sentence is. Paused on hover so it can be read. */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 /* Big monitors get a bigger root, so every rem-based size and gap grows with

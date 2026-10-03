@@ -173,8 +173,8 @@ export function CartClient() {
           {promoActive() && bottlesToFree < promo.bottlesPerFree ? (
             <p className="text-sm font-semibold text-clay">
               {bottlesToFree === 1
-                ? "One more bottle and it's free."
-                : `${bottlesToFree} more bottles and one is free.`}
+                ? "Add one more bottle for free."
+                : `Add ${bottlesToFree} more bottles and one is free.`}
             </p>
           ) : (
             subtotal < FREE_DELIVERY_CENTS &&

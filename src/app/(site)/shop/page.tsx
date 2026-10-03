@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
+import { promo } from "@/lib/promo";
 import { Container, Eyebrow, Seal } from "@/components/ui/Section";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
@@ -27,7 +28,7 @@ export default function ShopPage() {
           <div className="text-base text-bark-faint">
             <PromoGate>
               <p className="font-semibold text-clay">
-                Add four bottles, the cheapest is free
+                {promo.short} — mix any flavours
               </p>
             </PromoGate>
             <p>Free delivery over {money(FREE_DELIVERY_CENTS)}</p>

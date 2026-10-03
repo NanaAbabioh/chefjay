@@ -26,13 +26,16 @@ export const promo = {
   mealDiscountPercent: 15,
 
   eyebrow: "Grand opening",
-  /** One line. It goes in the bar above the header, so it has to fit a phone. */
-  bar: "Grand opening — buy 3 bottles, the 4th is on us",
-  heading: "Three bottles. The fourth is on us.",
+  /** The scrolling bar above the header. It repeats, so it reads as one
+   *  sentence rather than a headline. */
+  bar: "We're celebrating our grand opening with a promo — buy 3 bottles of any flavour and the 4th is on us, plus 15% off every meal with code B3G1",
+  heading: "Buy three bottles, the fourth is free.",
   body:
-    "Mix any flavours you like: add four bottles and the cheapest comes off " +
-    "at checkout, no code needed. Ordering from Kpataashie? Quote B3G1 and " +
-    "take 15% off your meal.",
+    "Mix any flavours you like — the free one is taken off automatically at " +
+    "checkout, no code needed. Ordering from Kpataashie? Quote B3G1 and take " +
+    "15% off your meal.",
+  /** Said the same way everywhere a short version is needed. */
+  short: "Buy 3 bottles, get the 4th free",
   /** Shown wherever the dates matter. Kept as prose: "3–11 October" reads
    *  better than a date range nobody parses. */
   window: "3 – 11 October",

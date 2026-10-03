@@ -30,15 +30,40 @@ export function PromoGate({ children }: { children: ReactNode }) {
   return running ? <>{children}</> : null;
 }
 
-/** One line above the header. Slim, because it sits above everything. */
+/**
+ * The scrolling bar above the header.
+ *
+ * The message travels rather than sitting still, which is the point — but it
+ * is one sentence repeated, not a stack of competing claims, and it pauses
+ * when the pointer is over it so it can actually be read. Someone who has
+ * asked their system for less motion gets it frozen, courtesy of the global
+ * reduced-motion rule.
+ */
 export function PromoBar() {
+  const message = `${promo.bar} · ${promo.window}`;
+  // Four copies, animating across half the track: two fill the widest screen,
+  // and the second pair is what the loop lands on.
+  const run = [message, message, message, message];
+
   return (
     <PromoGate>
-      <div className="bg-bark px-5 py-2.5 text-center text-cream">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] sm:text-xs">
-          {promo.bar}
-          <span className="hidden text-cream/50 sm:inline"> · {promo.window}</span>
-        </p>
+      <div className="overflow-hidden bg-bark py-2.5 text-cream">
+        <div
+          className="marquee"
+          // Speed, not duration: longer sentences take proportionally longer
+          // so the text moves at the same pace whatever it says.
+          style={{ ["--marquee-duration" as string]: `${message.length * 0.26}s` }}
+        >
+          {run.map((text, i) => (
+            <p
+              key={i}
+              aria-hidden={i > 0}
+              className="shrink-0 whitespace-nowrap px-8 text-[11px] font-semibold uppercase tracking-[0.16em] sm:text-xs"
+            >
+              {text}
+            </p>
+          ))}
+        </div>
       </div>
     </PromoGate>
   );
