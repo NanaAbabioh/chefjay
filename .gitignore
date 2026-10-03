@@ -51,3 +51,7 @@ vincents-source-backup.tar.gz
 # 4K generated sources for the product shots (~50 MB). The finished images
 # live in public/images; keep these locally rather than in git history.
 design/glass/
+
+# Camera originals for the site video (~14 MB). The web-ready encode lives
+# in public/video.
+design/video/

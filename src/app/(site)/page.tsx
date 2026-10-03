@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Band, Container, SectionHead } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
+import { Testimonial } from "@/components/site/Testimonial";
 import { promo } from "@/lib/promo";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
@@ -175,6 +176,35 @@ export default function Home() {
             {drinks.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
+          </div>
+        </Container>
+      </Band>
+
+      {/* What people say. Sits after the lineup: by here someone has seen the
+          drinks and the prices, and the question left is whether anyone else
+          rates them. */}
+      <Band tone="shell">
+        <Container>
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+            <Testimonial
+              poster="/video/testimonials-poster.jpg"
+              src="/video/testimonials.mp4"
+            />
+            <div>
+              <SectionHead
+                eyebrow="From the people drinking it"
+                title="Don't take our word for it."
+              />
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft">
+                A minute of customers with a bottle in hand, at parties and at
+                home, saying what they think of it.
+              </p>
+              <div className="mt-7">
+                <ButtonLink href="/shop" size="lg">
+                  Shop the fridge
+                </ButtonLink>
+              </div>
+            </div>
           </div>
         </Container>
       </Band>
