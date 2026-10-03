@@ -89,22 +89,22 @@ export default function Home() {
       <PromoGate>
         <Band tone="sand">
           <Container>
-            {/* The photograph was shot for this: drink on the left, bare wall
-                on the right. The words stay words — on a phone they sit under
+            {/* The photograph was shot for this: drink on the right, bare wall
+                on the left. The words stay words — on a phone they sit under
                 the image, and from `sm` up they move onto the wall the picture
                 left empty for them. */}
             <div className="overflow-hidden rounded-card bg-cream sm:relative">
-              <div className="relative aspect-[16/10] sm:aspect-auto sm:absolute sm:inset-0">
+              <div className="relative aspect-[16/9] sm:aspect-auto sm:absolute sm:inset-0">
                 <Image
-                  src="/images/promo-banner.jpg"
+                  src="/images/promo-opening.jpg"
                   alt=""
                   fill
                   sizes="(min-width: 640px) 90vw, 100vw"
-                  className="object-cover object-left"
+                  className="object-cover object-right"
                 />
               </div>
 
-              <div className="relative p-7 sm:ml-auto sm:flex sm:min-h-[30rem] sm:w-[52%] sm:flex-col sm:justify-center sm:p-14">
+              <div className="relative p-7 sm:mr-auto sm:flex sm:min-h-[26rem] sm:w-[52%] sm:flex-col sm:justify-center sm:p-14">
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
                   {promo.eyebrow} · {promo.window}
                 </p>

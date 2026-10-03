@@ -17,8 +17,13 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       >
         Skip to content
       </a>
-      <PromoBar />
-      <Header />
+      {/* The bar and the header pin together. The header carries its own
+          `sticky`, but wrapping both means the offer never scrolls away and
+          the two can never overlap each other at the top of the page. */}
+      <div className="sticky top-0 z-50">
+        <PromoBar />
+        <Header />
+      </div>
       <main id="main" className="flex-1">
         {children}
       </main>
