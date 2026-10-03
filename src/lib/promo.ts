@@ -16,8 +16,15 @@ import { site } from "./site";
 export const promo = {
   /** Shown on flyers and posts; the bottle offer applies without it. */
   code: "B3G1",
-  /** First and last day the offer runs, inclusive, as YYYY-MM-DD. */
-  startsOn: "2026-10-03",
+  /** First and last day the offer runs, inclusive, as YYYY-MM-DD.
+   *
+   * Live a day before the advertised start so the offer can be tested on the
+   * real site in real conditions. `window` below is what customers are told,
+   * and the two are deliberately allowed to differ: starting early only ever
+   * honours the offer for someone who turns up sooner. Never the reverse —
+   * ending before the advertised last day would refuse a customer the thing
+   * the banner promised them. */
+  startsOn: "2026-10-02",
   endsOn: "2026-10-18",
 
   /** Bottles: every nth bottle in the cart is free. 4 = buy three, get one. */
