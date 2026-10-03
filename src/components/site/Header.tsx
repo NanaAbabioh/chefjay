@@ -74,16 +74,15 @@ export function Header() {
             </Link>
             <Link
               href="/cart"
-              className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-bark/20 text-sm font-semibold transition-colors hover:border-bark hover:bg-bark/5 sm:h-auto sm:min-h-11 sm:w-auto sm:px-4"
+              className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-bark/20 transition-colors hover:border-bark hover:bg-bark/5"
             >
-              {/* The word costs about thirty pixels, which is the difference
-                  between the Subscribe pill fitting on a 375px phone and the
-                  menu button falling off the edge. The basket speaks for
-                  itself at that size; the word comes back from `sm`. */}
-              <span className="sr-only sm:not-sr-only">Cart</span>
+              {/* A basket needs no caption. The label stays for screen
+                  readers, and the count rides the rim where it reads as a
+                  number of things rather than part of a word. */}
+              <span className="sr-only">Cart</span>
               <svg
                 viewBox="0 0 20 20"
-                className="h-5 w-5 sm:hidden"
+                className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.6"
@@ -96,7 +95,7 @@ export function Header() {
                 <circle cx="14.5" cy="16.5" r="1" />
               </svg>
               {ready && count > 0 && (
-                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-clay px-1.5 text-xs font-bold text-cream sm:static sm:ml-1.5">
+                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-clay px-1.5 text-xs font-bold text-cream">
                   {count}
                 </span>
               )}
