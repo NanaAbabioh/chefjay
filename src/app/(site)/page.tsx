@@ -89,23 +89,37 @@ export default function Home() {
       <PromoGate>
         <Band tone="sand">
           <Container>
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-xl">
-                {/* Louder than the standard Eyebrow: this one is the offer
-                    announcing itself, not a section label. */}
+            {/* The photograph was shot for this: drink on the left, bare wall
+                on the right. The words stay words — on a phone they sit under
+                the image, and from `sm` up they move onto the wall the picture
+                left empty for them. */}
+            <div className="overflow-hidden rounded-card bg-cream sm:relative">
+              <div className="relative aspect-[16/10] sm:aspect-auto sm:absolute sm:inset-0">
+                <Image
+                  src="/images/promo-banner.jpg"
+                  alt=""
+                  fill
+                  sizes="(min-width: 640px) 90vw, 100vw"
+                  className="object-cover object-left"
+                />
+              </div>
+
+              <div className="relative p-7 sm:ml-auto sm:flex sm:min-h-[30rem] sm:w-[52%] sm:flex-col sm:justify-center sm:p-14">
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
                   {promo.eyebrow} · {promo.window}
                 </p>
                 <h2 className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
                   {promo.heading}
                 </h2>
-                <p className="mt-5 text-lg leading-relaxed text-bark-soft sm:text-xl">
+                <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
                   {promo.body}
                 </p>
+                <div className="mt-7">
+                  <ButtonLink href="/shop" size="lg">
+                    Shop the fridge
+                  </ButtonLink>
+                </div>
               </div>
-              <ButtonLink href="/shop" size="lg">
-                Shop the fridge
-              </ButtonLink>
             </div>
           </Container>
         </Band>
