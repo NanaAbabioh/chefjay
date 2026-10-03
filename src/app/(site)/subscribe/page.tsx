@@ -40,7 +40,7 @@ export default function SubscribePage() {
         <Container className="relative pb-14 pt-24">
           <Eyebrow>Monthly subscription</Eyebrow>
           <h1 className="mt-3 max-w-xl font-display text-5xl font-semibold leading-[0.95] sm:text-6xl">
-            A constant pour of piña colada, for you.
+            A constant pour of piña colada.
           </h1>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
             A standing order of drinks at your door.
