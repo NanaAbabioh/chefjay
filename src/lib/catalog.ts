@@ -136,17 +136,16 @@ export const products: Product[] = [
     slug: "gold-coast-corn-shake",
     name: "Gold Coast Corn Shake",
     category: "drink",
-    blurb: "Mashed kenkey, blended smooth and poured cold.",
+    blurb: "Mashed kenkey blended with milk and sugar, poured cold.",
     image: "/images/gold-coast-corn-shake.jpg",
-    // Left empty on purpose until the kitchen confirms what goes in it.
-    // Iced kenkey is commonly made with milk and sometimes peanut, both
-    // allergens: a plausible guess printed on a product page is worse than
-    // no list at all.
-    ingredients: [],
+    ingredients: ["Kenkey (fermented corn)", "Milk", "Sugar"],
     // The only drink that prices its own 12 oz: $6.99 and $9.99, a three
     // dollar step rather than the usual two.
     sizes: size(699, 999),
-    tags: ["Alcohol-free"],
+    // Milk is called out on the card as well as in the list: it is the one
+    // drink here that is not dairy-free, and an allergy should not depend on
+    // someone opening the product page to find out.
+    tags: ["Alcohol-free", "Contains milk"],
   },
   {
     slug: "raspberry-pina-colada",
