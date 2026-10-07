@@ -52,14 +52,13 @@ const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
  */
 const LARGE_PREMIUM_CENTS = 200;
 
-const size = (priceCents: number) => [
+/** The 12 oz is two dollars more unless a drink prices it itself. */
+const size = (
+  priceCents: number,
+  largeCents: number = priceCents + LARGE_PREMIUM_CENTS,
+) => [
   { id: "std", label: "Bottle", volume: "8 oz", priceCents },
-  {
-    id: "lg",
-    label: "Bottle",
-    volume: "12 oz",
-    priceCents: priceCents + LARGE_PREMIUM_CENTS,
-  },
+  { id: "lg", label: "Bottle", volume: "12 oz", priceCents: largeCents },
 ];
 
 export const products: Product[] = [
@@ -131,6 +130,22 @@ export const products: Product[] = [
     image: "/images/strawberry-pina-colada.jpg",
     ingredients: [...BASE_INGREDIENTS, "Strawberry"],
     sizes: size(599),
+    tags: ["Alcohol-free"],
+  },
+  {
+    slug: "gold-coast-corn-shake",
+    name: "Gold Coast Corn Shake",
+    category: "drink",
+    blurb: "Mashed kenkey, blended smooth and poured cold.",
+    image: "/images/gold-coast-corn-shake.jpg",
+    // Left empty on purpose until the kitchen confirms what goes in it.
+    // Iced kenkey is commonly made with milk and sometimes peanut, both
+    // allergens: a plausible guess printed on a product page is worse than
+    // no list at all.
+    ingredients: [],
+    // The only drink that prices its own 12 oz: $6.99 and $9.99, a three
+    // dollar step rather than the usual two.
+    sizes: size(699, 999),
     tags: ["Alcohol-free"],
   },
   {

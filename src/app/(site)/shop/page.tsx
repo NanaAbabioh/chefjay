@@ -11,7 +11,7 @@ import { money } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry, and a less-sweet classic.",
+    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry and a less-sweet classic — plus the Gold Coast Corn Shake, iced kenkey by the bottle.",
 };
 
 export default function ShopPage() {
@@ -19,7 +19,7 @@ export default function ShopPage() {
     <Container className="py-20 sm:py-28">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <Eyebrow>Piña colada, eight ways</Eyebrow>
+          <Eyebrow>Eight coladas, one corn shake</Eyebrow>
           <h1 className="mt-3 font-display text-5xl font-semibold leading-[0.95] sm:text-6xl">
             The fridge
           </h1>
