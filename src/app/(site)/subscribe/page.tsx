@@ -13,6 +13,10 @@ export const metadata: Metadata = {
 /** Answers the questions a standing order raises, before they are asked. */
 const terms: [string, string][] = [
   ["Billing", "Monthly, settled with Chef Jay. No card stored on the site."],
+  [
+    "Bottle size",
+    "Plan prices are for 8 oz bottles. Ask when you start if you would rather have 12 oz.",
+  ],
   ["Flavours", "Chosen each month. Change them whenever you like."],
   ["Delivery", `${site.serviceArea}. We agree a day that suits you.`],
   ["Pausing", "Skip a month or stop entirely — just say so before the next drop."],

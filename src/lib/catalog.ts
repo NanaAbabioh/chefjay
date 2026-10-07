@@ -41,13 +41,25 @@ export type Product = {
 const BASE_INGREDIENTS = ["Pineapple", "Coconut cream", "Lime", "Cane sugar"];
 
 /**
- * One size per flavour. Confirmed with the caterer. This shows in the cart,
- * on the WhatsApp handoff and in the dashboard — changing it here changes it
- * everywhere.
+ * Two sizes per flavour, the larger a flat two dollars more whatever the
+ * flavour costs. Volumes and prices show in the cart, on the WhatsApp handoff
+ * and in the dashboard — changing them here changes them everywhere.
+ *
+ * The 8 oz keeps the id "std" it has always had. Carts live in the browser's
+ * storage as {slug, sizeId, qty}, so renaming it would silently empty every
+ * basket saved before today: `resolveLines` drops a line whose size no longer
+ * exists, by design, and the customer would never be told why.
  */
-const VOLUME = "8 oz";
+const LARGE_PREMIUM_CENTS = 200;
+
 const size = (priceCents: number) => [
-  { id: "std", label: "Bottle", volume: VOLUME, priceCents },
+  { id: "std", label: "Bottle", volume: "8 oz", priceCents },
+  {
+    id: "lg",
+    label: "Bottle",
+    volume: "12 oz",
+    priceCents: priceCents + LARGE_PREMIUM_CENTS,
+  },
 ];
 
 export const products: Product[] = [
@@ -214,10 +226,10 @@ export const drinks = products.filter((p) => p.category === "drink");
  * Kpataashie — the food menu. ("Kpataashie" is Ga for kitchen.)
  *
  * Deliberately not a `Product`. These are shown so people know what is on,
- * and ordered by message: pan sizes and proteins want confirming by hand, and
- * nothing here has a fixed online price yet. When it does, each item becomes a
- * `Product` with `category: "meal"` and drops into the array above — which is
- * what that field was put there for.
+ * and ordered by message: a pan feeds a room, proteins get swapped, and the
+ * final number wants agreeing by hand. The price list below is what a pan
+ * costs; it is priced by pan and protein rather than by dish, so it is kept
+ * separate from the menu rather than bolted onto each name.
  */
 export type MenuItem = {
   /** The name it is sold under. */
@@ -262,6 +274,54 @@ export const kpataashieMenu: MenuItem[] = [
  * Shown under the menu. Kept separate from the dishes because they qualify
  * every one of them.
  */
+/**
+ * What a pan costs. Rice, protein and soup are priced on their own because
+ * that is how the kitchen sells them — a jollof pan with turkey is two lines,
+ * not one dish. The pairs at the end are the combinations that come cheaper
+ * bought together than apart.
+ */
+export type PanPrice = {
+  name: string;
+  /** Dollars, whole — the kitchen quotes round numbers. */
+  half?: number;
+  full?: number;
+  /** Shown instead of the two columns where only one size exists. */
+  note?: string;
+};
+
+export type PanGroup = { heading: string; rows: PanPrice[] };
+
+export const kpataashiePricing: PanGroup[] = [
+  {
+    heading: "Rice",
+    rows: [{ name: "Jollof rice or fried rice", half: 80, full: 150 }],
+  },
+  {
+    heading: "Protein",
+    rows: [
+      { name: "Fried turkey", half: 70, full: 125 },
+      { name: "Chicken", half: 60, full: 100 },
+    ],
+  },
+  {
+    heading: "Soup",
+    rows: [{ name: "Goat soup", full: 120, note: "Full pot" }],
+  },
+  {
+    heading: "Together, by the full pan",
+    rows: [
+      { name: "Jollof and goat", full: 240 },
+      { name: "Jollof and turkey or chicken", full: 220 },
+    ],
+  },
+];
+
+/** How many a pan feeds. The question every caterer is asked first. */
+export const panServings = [
+  { size: "Full pan", serves: "15 – 20 people" },
+  { size: "Half pan", serves: "7 – 10 people" },
+];
+
 export const kpataashieNotes = [
   "Proteins can be swapped to your preference.",
   "Other options include chicken, tilapia, veal, mackerel and tuna.",

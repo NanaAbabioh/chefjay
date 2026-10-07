@@ -6,6 +6,8 @@ import { QuickAdd } from "./QuickAdd";
 
 export function ProductCard({ product }: { product: Product }) {
   const cheapest = product.sizes[0];
+  // With two sizes on the card, a bare price would read as the only price.
+  const fromPrice = product.sizes.length > 1;
 
   return (
     <article className="group flex flex-col">
@@ -29,6 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
           </Link>
         </h3>
         <span className="shrink-0 text-base text-bark-faint">
+          {fromPrice && <span className="mr-1 text-sm">from</span>}
           {money(cheapest.priceCents)}
         </span>
       </div>
