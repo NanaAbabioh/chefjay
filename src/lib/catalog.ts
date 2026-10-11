@@ -151,14 +151,14 @@ export const products: Product[] = [
     slug: "fura",
     name: "Fura-liscious",
     category: "drink",
-    blurb: "Northern Ghana's millet drink, blended smooth and poured cold.",
+    blurb: "Northern Ghana's millet drink, blended with milk and poured cold. No sugar.",
     image: "/images/fura.jpg",
-    // Empty until the kitchen confirms it. Fura is usually milk-based, and
-    // milk is an allergen — a guess on a product page is worse than silence.
-    ingredients: [],
+    ingredients: ["Millet", "Milk"],
     // Priced with the corn shake: $6.99 and $9.99.
     sizes: size(699, 999),
-    tags: ["Alcohol-free"],
+    // Milk on the card as well as in the list, as on the corn shake: the two
+    // drinks here that are not dairy-free say so before you open the page.
+    tags: ["Alcohol-free", "No sugar", "Contains milk"],
   },
   {
     slug: "raspberry-pina-colada",
