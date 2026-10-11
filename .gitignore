@@ -55,3 +55,13 @@ design/glass/
 # Camera originals for the site video (~14 MB). The web-ready encode lives
 # in public/video.
 design/video/
+
+# Launch video working files: the Hyperframes project and the rendered
+# output (~5 MB). The plan, brief and share copy are kept.
+brag-output/composition/
+brag-output/brag.mp4
+brag-output/brag.jpg
+
+brag-output/composition-vertical/
+brag-output/brag-vertical.mp4
+brag-output/brag-vertical.jpg

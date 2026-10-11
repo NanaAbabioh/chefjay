@@ -148,6 +148,19 @@ export const products: Product[] = [
     tags: ["Alcohol-free", "Contains milk"],
   },
   {
+    slug: "fura",
+    name: "Fura-liscious",
+    category: "drink",
+    blurb: "Northern Ghana's millet drink, blended smooth and poured cold.",
+    image: "/images/fura.jpg",
+    // Empty until the kitchen confirms it. Fura is usually milk-based, and
+    // milk is an allergen — a guess on a product page is worse than silence.
+    ingredients: [],
+    // Priced with the corn shake: $6.99 and $9.99.
+    sizes: size(699, 999),
+    tags: ["Alcohol-free"],
+  },
+  {
     slug: "raspberry-pina-colada",
     name: "Raspberry Piña Colada",
     category: "drink",
