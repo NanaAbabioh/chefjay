@@ -10,7 +10,8 @@ import {
   itemCount,
   resolveLines,
   subtotalCents,
-  FREE_DELIVERY_CENTS,
+  zones,
+  type Zone,
 } from "@/lib/cart";
 import { promo, promoActive } from "@/lib/promo";
 import { money } from "@/lib/format";
@@ -26,6 +27,9 @@ const empty: RetailOrder = {
   phone: "",
   email: "",
   method: "delivery",
+  // New Jersey by default: it is where the kitchen is and where most orders
+  // go. The customer can change it, and the picker shows all three prices.
+  zone: "NJ",
   address: "",
   when: "",
   notes: "",
@@ -42,8 +46,10 @@ export function CartClient() {
   // Shown so the customer can see the offer land before they commit. The
   // server works it out again on submit; this number is never trusted.
   const discount = discountCents(resolved);
-  const delivery = deliveryCents(subtotal - discount, order.method);
-  const total = subtotal - discount + delivery;
+  const delivery = deliveryCents(order.method, order.zone);
+  // `null` is "not known yet", not "nothing to pay" — the row and the total
+  // both have to say so rather than quietly adding zero.
+  const total = subtotal - discount + (delivery ?? 0);
   const bottlesToFree =
     promo.bottlesPerFree - (itemCount(lines) % promo.bottlesPerFree);
 
@@ -168,21 +174,12 @@ export function CartClient() {
           >
             ← Keep shopping
           </Link>
-          {/* One nudge at a time: the free bottle is worth more than the
-              delivery saving, so it wins when both apply. */}
-          {promoActive() && bottlesToFree < promo.bottlesPerFree ? (
+          {promoActive() && bottlesToFree < promo.bottlesPerFree && (
             <p className="text-sm font-semibold text-clay">
               {bottlesToFree === 1
                 ? "Add one more bottle for free."
                 : `Add ${bottlesToFree} more bottles and one is free.`}
             </p>
-          ) : (
-            subtotal < FREE_DELIVERY_CENTS &&
-            order.method === "delivery" && (
-              <p className="text-sm text-bark-faint">
-                {money(FREE_DELIVERY_CENTS - subtotal)} more for free delivery.
-              </p>
-            )
           )}
         </div>
       </div>
@@ -233,6 +230,46 @@ export function CartClient() {
             ))}
           </div>
         </fieldset>
+
+        {order.method === "delivery" && (
+          <fieldset className="mt-4">
+            <legend className="text-xs font-semibold uppercase tracking-[0.16em] text-bark-faint">
+              Where to
+            </legend>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {zones.map((z) => {
+                const active = order.zone === z.id;
+                return (
+                  <label
+                    key={z.id}
+                    className={`cursor-pointer rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${
+                      active
+                        ? "border-bark bg-bark text-cream"
+                        : "border-bark/20 bg-cream hover:border-bark/40"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="zone"
+                      value={z.id}
+                      checked={active}
+                      onChange={() => set("zone", z.id as Zone)}
+                      className="sr-only"
+                    />
+                    {z.label}
+                    <span
+                      className={`mt-0.5 block text-xs font-normal ${
+                        active ? "text-cream/70" : "text-bark-faint"
+                      }`}
+                    >
+                      {z.feeCents === null ? "priced by hand" : money(z.feeCents)}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
+        )}
 
         <div className="mt-5 space-y-4">
           <Field
@@ -304,13 +341,23 @@ export function CartClient() {
               {order.method === "delivery" ? "Delivery" : "Pickup"}
             </dt>
             <dd className="font-semibold">
-              {delivery === 0 ? "Free" : money(delivery)}
+              {order.method === "pickup"
+                ? "Free"
+                : delivery === null
+                  ? "To be confirmed"
+                  : money(delivery)}
             </dd>
           </div>
           <div className="flex justify-between border-t border-bark/15 pt-2 font-display text-xl font-semibold">
-            <dt>Total</dt>
+            <dt>{delivery === null ? "Total so far" : "Total"}</dt>
             <dd>{money(total)}</dd>
           </div>
+          {delivery === null && (
+            <p className="pt-1 text-sm text-bark-soft">
+              Delivery outside New Jersey and New York is priced by hand — Chef
+              Jay confirms it with you before your order goes out.
+            </p>
+          )}
         </dl>
 
         {result && !result.ok && (

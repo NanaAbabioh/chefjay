@@ -99,8 +99,16 @@ export async function submitOrder(
   // discount: a cart kept open past the last day of the offer loses it.
   const subtotal = subtotalCents(resolved);
   const discount = discountCents(resolved);
-  const delivery = deliveryCents(subtotal - discount, order.method);
-  const totals = { subtotal, discount, delivery, total: subtotal - discount + delivery };
+  const delivery = deliveryCents(order.method, order.zone);
+  const totals = {
+    subtotal,
+    discount,
+    delivery,
+    // With no delivery price yet, the total is what is known so far. It is
+    // never treated as zero: that would quote a customer a number the
+    // business cannot honour.
+    total: subtotal - discount + (delivery ?? 0),
+  };
   const ref = orderRef(Date.now());
   const message = retailMessage(ref, order, resolved, totals);
 

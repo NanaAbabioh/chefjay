@@ -1,6 +1,7 @@
 import { money } from "./format";
 import { site } from "./site";
-import type { ResolvedLine } from "./cart";
+import type { ResolvedLine, Zone } from "./cart";
+import { zoneLabel } from "./cart";
 import { promo } from "./promo";
 
 export type Fulfilment = "delivery" | "pickup";
@@ -10,6 +11,8 @@ export type RetailOrder = {
   phone: string;
   email: string;
   method: Fulfilment;
+  /** Which price band the address falls in. Asked for, never inferred. */
+  zone: Zone;
   address: string;
   when: string;
   notes: string;
@@ -38,7 +41,13 @@ export function retailMessage(
   ref: string,
   order: RetailOrder,
   lines: ResolvedLine[],
-  totals: { subtotal: number; discount: number; delivery: number; total: number },
+  totals: {
+    subtotal: number;
+    discount: number;
+    /** null when the address is outside both states and needs a quote. */
+    delivery: number | null;
+    total: number;
+  },
 ): string {
   const items = lines
     .map((l) => `• ${l.qty} × ${l.name} (${l.volume}) — ${money(l.lineCents)}`)
@@ -56,9 +65,15 @@ export function retailMessage(
       ? `${promo.eyebrow} (4th bottle free): -${money(totals.discount)}`
       : null,
     order.method === "delivery"
-      ? `Delivery: ${totals.delivery === 0 ? "Free" : money(totals.delivery)}`
+      ? totals.delivery === null
+        ? `Delivery (${zoneLabel(order.zone)}): to be confirmed`
+        : `Delivery (${zoneLabel(order.zone)}): ${money(totals.delivery)}`
       : `Pickup: Free`,
-    `Total: ${money(totals.total)}`,
+    // An unpriced delivery makes the total a subtotal, and saying so is the
+    // difference between a quote and a surprise.
+    totals.delivery === null
+      ? `Total so far: ${money(totals.total)} — plus delivery, confirmed before it goes out`
+      : `Total: ${money(totals.total)}`,
     ``,
     `Name: ${order.name}`,
     `Phone: ${order.phone}`,

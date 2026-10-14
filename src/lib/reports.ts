@@ -1,6 +1,5 @@
 import { db } from "./db";
 import { site } from "./site";
-import { DELIVERY_FEE_CENTS } from "./cart";
 import {
   demoDailyTakings,
   demoMode,
@@ -67,7 +66,9 @@ export type OrderRow = {
   preferred_time: string | null;
   notes: string | null;
   subtotal_cents: number;
-  delivery_cents: number;
+  /** null when the address is outside both states and awaits a price. */
+  delivery_cents: number | null;
+  delivery_zone: string | null;
   total_cents: number;
   created_at: string;
   items: OrderItem[];
@@ -84,7 +85,7 @@ export type Summary = {
   openCents: number;
   byStatus: Record<string, number>;
   deliveryFeesCents: number;
-  feesWaivedCents: number;
+  unpricedCount: number;
   deliveryCount: number;
   pickupCount: number;
 };
@@ -129,8 +130,8 @@ export async function getSummary(): Promise<Summary | null> {
         as delivery_count,
       count(*) filter (where o.method = 'pickup' and o.status = 'completed')::int
         as pickup_count,
-      count(*) filter (where o.method = 'delivery' and o.status = 'completed'
-                         and o.delivery_cents = 0)::int as waived_count
+      count(*) filter (where o.method = 'delivery' and o.status <> 'cancelled'
+                         and o.delivery_cents is null)::int as unpriced_count
     from orders o cross join bounds b
   `) as Record<string, number>[];
 
@@ -150,8 +151,9 @@ export async function getSummary(): Promise<Summary | null> {
     openCents: r.open_cents,
     byStatus: Object.fromEntries(statusRows.map((s) => [s.status, s.n])),
     deliveryFeesCents: r.delivery_fees_cents,
-    // Each waived delivery is one flat fee you chose not to charge.
-    feesWaivedCents: r.waived_count * DELIVERY_FEE_CENTS,
+    // Orders going outside both states, still waiting on a price from you.
+    // Counted rather than valued: nobody knows what they are worth yet.
+    unpricedCount: r.unpriced_count,
     deliveryCount: r.delivery_count,
     pickupCount: r.pickup_count,
   };

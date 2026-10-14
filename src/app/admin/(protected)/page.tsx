@@ -116,13 +116,17 @@ export default async function OverviewPage() {
             </div>
             <div className="flex items-baseline justify-between gap-4">
               <dt>
-                Given away
+                Waiting on a price
                 <span className="block text-xs text-bark-faint">
-                  orders that crossed the free-delivery threshold
+                  deliveries outside New Jersey and New York
                 </span>
               </dt>
-              <dd className="font-semibold tabular-nums text-clay">
-                −{money(summary.feesWaivedCents)}
+              <dd
+                className={`font-semibold tabular-nums ${
+                  summary.unpricedCount > 0 ? "text-clay" : ""
+                }`}
+              >
+                {summary.unpricedCount}
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-4 border-t border-bark/10 pt-3">

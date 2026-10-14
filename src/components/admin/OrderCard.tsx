@@ -68,7 +68,16 @@ export function OrderCard({ order }: { order: OrderRow }) {
           <dd className="capitalize">
             {order.method}
             {order.method === "delivery" &&
-              ` · ${order.delivery_cents === 0 ? "free" : money(order.delivery_cents)}`}
+              ` · ${
+                order.delivery_cents === null
+                  ? "delivery to be priced"
+                  : order.delivery_cents === 0
+                    ? "free"
+                    : money(order.delivery_cents)
+              }`}
+            {order.delivery_zone && (
+              <span className="ml-1 text-bark-faint">({order.delivery_zone})</span>
+            )}
           </dd>
         </div>
         {order.address && (

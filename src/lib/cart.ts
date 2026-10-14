@@ -54,13 +54,33 @@ export const discountCents = (lines: ResolvedLine[], now?: Date) =>
 export const itemCount = (lines: CartLine[]) =>
   lines.reduce((sum, l) => sum + l.qty, 0);
 
-/** Free local delivery over this amount; below it, a flat fee. */
-export const FREE_DELIVERY_CENTS = 5000;
-export const DELIVERY_FEE_CENTS = 600;
+/**
+ * Delivery is priced by where it is going, so the cart has to ask. The address
+ * field is free text and always will be — nobody is parsing "Elizabeth, NJ"
+ * out of it and getting it right every time, and a wrong guess here is a wrong
+ * price on a real order.
+ *
+ * Anywhere outside the two states has no price: `null` means "we cannot say
+ * yet", not "free". Everything downstream has to carry that distinction, or a
+ * customer in Connecticut is quoted a total that excludes a fee they will
+ * later be asked for.
+ */
+export type Zone = "NJ" | "NY" | "other";
 
-/** Judged on what is actually paid: a basket discounted below the threshold
- * should not still qualify for free delivery. */
-export function deliveryCents(subtotal: number, method: "delivery" | "pickup") {
+export const zones: { id: Zone; label: string; feeCents: number | null }[] = [
+  { id: "NJ", label: "New Jersey", feeCents: 999 },
+  { id: "NY", label: "New York", feeCents: 1499 },
+  { id: "other", label: "Somewhere else", feeCents: null },
+];
+
+export const zoneLabel = (zone: Zone) =>
+  zones.find((z) => z.id === zone)?.label ?? "Somewhere else";
+
+/** Cents to charge, or null when it has to be confirmed by hand. */
+export function deliveryCents(
+  method: "delivery" | "pickup",
+  zone: Zone,
+): number | null {
   if (method === "pickup") return 0;
-  return subtotal >= FREE_DELIVERY_CENTS ? 0 : DELIVERY_FEE_CENTS;
+  return zones.find((z) => z.id === zone)?.feeCents ?? null;
 }

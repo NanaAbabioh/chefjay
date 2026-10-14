@@ -1,6 +1,6 @@
 import { products } from "./catalog";
 import { hasDatabase } from "./db";
-import { DELIVERY_FEE_CENTS, FREE_DELIVERY_CENTS } from "./cart";
+import { zones } from "./cart";
 import type { OrderRow, OrderStatus, QuoteRow, Summary } from "./reports";
 
 /**
@@ -75,8 +75,10 @@ function build(): OrderRow[] {
 
       const subtotal = items.reduce((sum, i) => sum + i.line_cents, 0);
       const method: "delivery" | "pickup" = rand() > 0.35 ? "delivery" : "pickup";
-      const delivery =
-        method === "pickup" || subtotal >= FREE_DELIVERY_CENTS ? 0 : DELIVERY_FEE_CENTS;
+      // Mostly New Jersey, some New York, the occasional one further out that
+      // has not been priced yet — which is what a null delivery fee means.
+      const zone = method === "pickup" ? null : rand() > 0.82 ? (rand() > 0.5 ? zones[1] : zones[2]) : zones[0];
+      const delivery = method === "pickup" ? 0 : (zone?.feeCents ?? null);
 
       // Everything older than today is settled; today's is still moving.
       let status: OrderStatus = "completed";
@@ -103,7 +105,8 @@ function build(): OrderRow[] {
         notes: NOTES[Math.floor(rand() * NOTES.length)] || null,
         subtotal_cents: subtotal,
         delivery_cents: delivery,
-        total_cents: subtotal + delivery,
+        delivery_zone: zone?.id ?? null,
+        total_cents: subtotal + (delivery ?? 0),
         created_at: at.toISOString(),
         items,
       });
@@ -155,9 +158,8 @@ export function demoSummary(): Summary {
       acc[o.status] = (acc[o.status] ?? 0) + 1;
       return acc;
     }, {}),
-    deliveryFeesCents: done.reduce((n, o) => n + o.delivery_cents, 0),
-    feesWaivedCents:
-      deliveries.filter((o) => o.delivery_cents === 0).length * DELIVERY_FEE_CENTS,
+    deliveryFeesCents: done.reduce((n, o) => n + (o.delivery_cents ?? 0), 0),
+    unpricedCount: deliveries.filter((o) => o.delivery_cents === null).length,
     deliveryCount: deliveries.length,
     pickupCount: done.filter((o) => o.method === "pickup").length,
   };

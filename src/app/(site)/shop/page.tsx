@@ -5,7 +5,7 @@ import { promo } from "@/lib/promo";
 import { Container, Eyebrow, Seal } from "@/components/ui/Section";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
-import { FREE_DELIVERY_CENTS } from "@/lib/cart";
+import { zones } from "@/lib/cart";
 import { money } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -31,7 +31,10 @@ export default function ShopPage() {
                 {promo.short} — mix any flavours
               </p>
             </PromoGate>
-            <p>Free delivery over {money(FREE_DELIVERY_CENTS)}</p>
+            <p>
+              Delivery {money(zones[0].feeCents!)} in New Jersey,{" "}
+              {money(zones[1].feeCents!)} in New York
+            </p>
           </div>
           <span className="hidden sm:block">
               <Seal lines={["Blended", "to order"]} />
