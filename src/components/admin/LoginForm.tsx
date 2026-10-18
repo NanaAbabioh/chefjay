@@ -3,17 +3,16 @@
 import { useActionState } from "react";
 import { signIn } from "@/app/admin/actions";
 import { Button } from "@/components/ui/Button";
-import { Field } from "@/components/ui/Field";
+import { PasswordField } from "@/components/ui/PasswordField";
 
 export function LoginForm() {
   const [error, action, pending] = useActionState(signIn, null);
 
   return (
     <form action={action} className="mt-8">
-      <Field
+      <PasswordField
         label="Password"
         name="password"
-        type="password"
         required
         autoFocus
         autoComplete="current-password"

@@ -4,14 +4,14 @@ import type { ComponentProps, ReactNode } from "react";
  * `text-base` below the `sm` breakpoint is deliberate: iOS Safari zooms the
  * whole page when a focused control is under 16px. Desktop keeps `text-sm`.
  */
-const control =
+export const control =
   "w-full rounded-xl border border-bark/20 bg-cream px-4 py-3 text-base text-bark placeholder:text-bark-faint/70 focus:border-palm focus:outline-none sm:text-sm";
 
 /**
  * `className` on any of these applies to the field wrapper, not the control —
  * so grid spans and widths behave, and the control keeps its own styling.
  */
-function Label({
+export function Label({
   label,
   required,
   hint,
