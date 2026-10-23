@@ -169,7 +169,15 @@ export default function Home() {
       {/* Lineup */}
       <Band>
         <Container>
-          <SectionHead eyebrow="Eight coladas, and two from home" title="The lineup" />
+          <SectionHead
+            eyebrow="Eight coladas, and two from home"
+            title="The lineup"
+            aside={
+              <p className="text-base text-bark-faint">
+                Every drink in 8 oz or 12 oz
+              </p>
+            }
+          />
           {/* All of them. A link to the rest is too easy to miss, and there is
               room on the page to simply show the lot. */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

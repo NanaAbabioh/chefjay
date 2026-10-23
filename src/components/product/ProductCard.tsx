@@ -7,6 +7,8 @@ import { QuickAdd } from "./QuickAdd";
 export function ProductCard({ product }: { product: Product }) {
   const cheapest = product.sizes[0];
   // With two sizes on the card, a bare price would read as the only price.
+  // The size picker below advertises both volumes, so the card does not
+  // repeat them in prose.
   const fromPrice = product.sizes.length > 1;
 
   return (
@@ -39,11 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
       <p className="mt-1 text-base leading-relaxed text-bark-soft">{product.blurb}</p>
 
       <div className="mt-3">
-        <QuickAdd
-          slug={product.slug}
-          sizeId={cheapest.id}
-          label={`Add ${cheapest.volume}`}
-        />
+        <QuickAdd slug={product.slug} sizes={product.sizes} />
       </div>
     </article>
   );

@@ -11,7 +11,7 @@ import { money } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry and a less-sweet classic — plus the Gold Coast Corn Shake and Fura-liscious, iced kenkey and millet fura by the bottle.",
+    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry and a less-sweet classic — plus the Gold Coast Corn Shake and Fura-liscious, iced kenkey and millet fura. Every drink in 8 oz or 12 oz.",
 };
 
 export default function ShopPage() {
@@ -31,6 +31,7 @@ export default function ShopPage() {
                 {promo.short} — mix any flavours
               </p>
             </PromoGate>
+            <p>Every drink in 8 oz or 12 oz</p>
             <p>
               Delivery {money(zones[0].feeCents!)} in New Jersey,{" "}
               {money(zones[1].feeCents!)} in New York
