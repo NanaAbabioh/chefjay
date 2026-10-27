@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { claimSound, onSoundClaimed } from "@/lib/sound";
 
 const QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -81,12 +82,18 @@ export function ShippedClip({
   useEffect(() => {
     const el = audio.current;
     if (!el) return;
-    if (sound && onscreen) void el.play();
-    else el.pause();
-  }, [sound, onscreen]);
+    if (sound && onscreen) {
+      claimSound(music);
+      void el.play();
+    } else {
+      el.pause();
+    }
+  }, [sound, onscreen, music]);
+
+  useEffect(() => onSoundClaimed(music, () => setSound(false)), [music]);
 
   return (
-    <div className="relative mx-auto w-full max-w-[19rem] overflow-hidden rounded-card bg-bark shadow-[0_24px_60px_-30px_rgba(36,26,18,0.8)]">
+    <div className="relative w-full overflow-hidden rounded-card bg-bark shadow-[0_24px_60px_-30px_rgba(36,26,18,0.8)]">
       <video
         ref={video}
         src={near || still ? src : undefined}
@@ -102,17 +109,22 @@ export function ShippedClip({
       {/* Nothing is downloaded until the first press. */}
       <audio ref={audio} src={sound ? music : undefined} loop preload="none" />
 
+      {/* Icon only. The frame is narrow enough on a phone that a word beside
+          the speaker would take a third of its width. */}
       <button
         type="button"
         aria-pressed={sound}
         onClick={() => setSound((on) => !on)}
-        className={`absolute bottom-3 left-3 inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-[11px] font-semibold uppercase tracking-[0.14em] backdrop-blur-sm transition-colors ${
+        className={`absolute bottom-2.5 right-2.5 inline-flex size-9 items-center justify-center rounded-full backdrop-blur-sm transition-colors ${
           sound
             ? "bg-clay text-cream"
             : "bg-bark/70 text-cream/90 hover:bg-bark/85"
         }`}
       >
-        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden fill="currentColor">
+        <span className="sr-only">
+          {sound ? "Turn the music off" : "Turn the music on"}
+        </span>
+        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden fill="currentColor">
           <path d="M11 4.5 6.5 8.5H3.5v7h3L11 19.5z" />
           {sound ? (
             <path
@@ -132,15 +144,7 @@ export function ShippedClip({
             />
           )}
         </svg>
-        Music
-        <span className="sr-only">{sound ? ", on" : ", off"}</span>
       </button>
-
-      {/* The customer sped the recording up herself. Saying so costs one
-          line and keeps the clip honest about what it is. */}
-      <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-bark/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cream/90 backdrop-blur-sm">
-        Sped up
-      </span>
     </div>
   );
 }

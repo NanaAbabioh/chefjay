@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { claimSound, onSoundClaimed } from "@/lib/sound";
 
 /**
  * The customer clip, click to play.
@@ -11,9 +12,22 @@ import { useRef, useState } from "react";
  * only by people who asked for them: the poster is 67 KB, and `preload`
  * fetches nothing until the first tap.
  */
-export function Testimonial({ poster, src }: { poster: string; src: string }) {
+export function Testimonial({
+  poster,
+  src,
+  label,
+  aspect = "aspect-square",
+}: {
+  poster: string;
+  src: string;
+  /** What the first tap starts, and roughly how long it runs. */
+  label: string;
+  aspect?: string;
+}) {
   const video = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+
+  useEffect(() => onSoundClaimed(src, () => video.current?.pause()), [src]);
 
   return (
     <div className="relative overflow-hidden rounded-card bg-bark">
@@ -24,8 +38,11 @@ export function Testimonial({ poster, src }: { poster: string; src: string }) {
         controls={playing}
         playsInline
         preload="none"
-        className="aspect-square w-full object-cover"
-        onPlay={() => setPlaying(true)}
+        className={`${aspect} w-full object-cover`}
+        onPlay={() => {
+          claimSound(src);
+          setPlaying(true);
+        }}
       />
 
       {!playing && (
@@ -34,12 +51,12 @@ export function Testimonial({ poster, src }: { poster: string; src: string }) {
           onClick={() => void video.current?.play()}
           className="absolute inset-0 flex items-center justify-center bg-bark/25 transition-colors hover:bg-bark/15"
         >
-          <span className="sr-only">Play the customer clip, one minute</span>
+          <span className="sr-only">{label}</span>
           <span
             aria-hidden
-            className="flex h-20 w-20 items-center justify-center rounded-full bg-cream/95 text-bark shadow-[0_10px_40px_-12px_rgba(36,26,18,0.8)]"
+            className="flex size-14 items-center justify-center rounded-full bg-cream/95 text-bark shadow-[0_10px_40px_-12px_rgba(36,26,18,0.8)] sm:size-20"
           >
-            <svg viewBox="0 0 24 24" className="ml-1 h-7 w-7" fill="currentColor">
+            <svg viewBox="0 0 24 24" className="ml-1 size-5 sm:size-7" fill="currentColor">
               <path d="M8 5.5v13l11-6.5z" />
             </svg>
           </span>

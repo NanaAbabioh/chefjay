@@ -5,6 +5,7 @@ import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
 import { Testimonial } from "@/components/site/Testimonial";
 import { ShippedClip } from "@/components/site/ShippedClip";
+import { QuoteAudio } from "@/components/site/QuoteAudio";
 import { promo } from "@/lib/promo";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
@@ -198,6 +199,7 @@ export default function Home() {
             <Testimonial
               poster="/video/testimonials-poster.jpg"
               src="/video/testimonials.mp4"
+              label="Play the customer clip, one minute"
             />
             <div>
               <SectionHead
@@ -255,6 +257,13 @@ export default function Home() {
                   A customer in Massachusetts, on the first box we sent out of
                   state
                 </figcaption>
+                {/* The same fourteen seconds, as sound. The words are already
+                    set in type above it, so they caption themselves. */}
+                <div className="mt-5">
+                  <QuoteAudio src="/audio/massachusetts-quote.m4a">
+                    Hear her say it
+                  </QuoteAudio>
+                </div>
               </figure>
 
               <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -273,14 +282,31 @@ export default function Home() {
               </p>
             </div>
 
-            {/* The clip is the hook, so on a phone it leads and the
-                headline follows it; side by side it goes back to the right. */}
-            <div className="order-first lg:order-none">
-              <ShippedClip
-                poster="/video/massachusetts-poster.jpg"
-                src="/video/massachusetts.mp4"
-                music="/audio/log-drum-shaker.m4a"
-              />
+            {/* Two recordings of the same delivery, so they sit as a pair and
+                each says underneath what it is. On a phone they lead and the
+                headline follows; side by side they go back to the right. */}
+            <div className="order-first grid grid-cols-2 gap-4 sm:gap-5 lg:order-none lg:w-[30rem]">
+              <figure>
+                <ShippedClip
+                  poster="/video/massachusetts-poster.jpg"
+                  src="/video/massachusetts.mp4"
+                  music="/audio/log-drum-shaker.m4a"
+                />
+                <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
+                  Her plate, sped up. Music optional.
+                </figcaption>
+              </figure>
+              <figure>
+                <Testimonial
+                  poster="/video/massachusetts-review-poster.jpg"
+                  src="/video/massachusetts-review.mp4"
+                  label="Play her review, about a minute and three quarters"
+                  aspect="aspect-[9/16]"
+                />
+                <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
+                  Her review: the meals, then every flavour.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </Container>
