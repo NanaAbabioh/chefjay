@@ -4,6 +4,7 @@ import { Band, Container, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
 import { Testimonial } from "@/components/site/Testimonial";
+import { ShippedClip } from "@/components/site/ShippedClip";
 import { promo } from "@/lib/promo";
 import { ProductCard } from "@/components/product/ProductCard";
 import { drinks } from "@/lib/catalog";
@@ -216,6 +217,69 @@ export default function Home() {
                 </ButtonLink>
                 <ArrowLink href="/kpataashie">See the Kpataashie menu</ArrowLink>
               </div>
+            </div>
+          </div>
+        </Container>
+      </Band>
+
+      {/* Out of state. Straight after the testimonials, because it is the same
+          argument carried one step further: not only do people rate it, one of
+          them is three hundred miles away. */}
+      <Band>
+        <Container>
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
+            <div>
+              <SectionHead
+                eyebrow="New Jersey → Massachusetts"
+                title="It travels now."
+              />
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft">
+                The food leaves here vacuum-sealed and the bottles travel cold.
+                The first box to go out of state went to a customer in
+                Massachusetts — that is her plate, start to finish.
+              </p>
+
+              {/* Her words, not ours. The short one carries the feeling and
+                  the long one carries the claim, so both earn their place. */}
+              <figure className="mt-9 border-l-2 border-clay/40 pl-6">
+                <blockquote>
+                  <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                    &ldquo;Tastes like home.&rdquo;
+                  </p>
+                  <p className="mt-4 max-w-md text-lg leading-relaxed text-bark-soft">
+                    &ldquo;I live in Massachusetts and this was mailed to me.
+                    Vacuum sealed and it came perfectly.&rdquo;
+                  </p>
+                </blockquote>
+                <figcaption className="mt-4 text-sm text-bark-faint">
+                  A customer in Massachusetts, on the first box we sent out of
+                  state
+                </figcaption>
+              </figure>
+
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <ButtonLink href="/shop" size="lg">
+                  Shop the fridge
+                </ButtonLink>
+                <ArrowLink href="/contact">Ask about your address</ArrowLink>
+              </div>
+              {/* Matches what the cart actually does outside the two zones, so
+                  nobody reaches checkout expecting a number that isn't there. */}
+              <p className="mt-6 max-w-md text-sm leading-relaxed text-bark-faint">
+                New Jersey and New York have a set delivery fee. Anywhere else,
+                {" "}
+                {site.owner} works the shipping out with you and confirms it
+                before the order goes anywhere.
+              </p>
+            </div>
+
+            {/* The clip is the hook, so on a phone it leads and the
+                headline follows it; side by side it goes back to the right. */}
+            <div className="order-first lg:order-none">
+              <ShippedClip
+                poster="/video/massachusetts-poster.jpg"
+                src="/video/massachusetts.mp4"
+              />
             </div>
           </div>
         </Container>
