@@ -65,3 +65,7 @@ brag-output/brag.jpg
 brag-output/composition-vertical/
 brag-output/brag-vertical.mp4
 brag-output/brag-vertical.jpg
+
+# The Suno original for the home-page loop (~40 MB). The eight-bar cut that
+# the site uses lives in public/audio.
+design/audio/

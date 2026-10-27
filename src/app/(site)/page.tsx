@@ -279,6 +279,7 @@ export default function Home() {
               <ShippedClip
                 poster="/video/massachusetts-poster.jpg"
                 src="/video/massachusetts.mp4"
+                music="/audio/log-drum-shaker.m4a"
               />
             </div>
           </div>
