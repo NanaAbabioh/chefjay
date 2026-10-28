@@ -293,7 +293,7 @@ export default function Home() {
                   music="/audio/log-drum-shaker.m4a"
                 />
                 <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
-                  Her plate, sped up. Music optional.
+                  Her plate, sped up.
                 </figcaption>
               </figure>
               <figure>
@@ -304,7 +304,8 @@ export default function Home() {
                   aspect="aspect-[9/16]"
                 />
                 <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
-                  Her review: the meals, then every flavour.
+                  Watch her review on the meals and every flavour of piña
+                  colada.
                 </figcaption>
               </figure>
             </div>
