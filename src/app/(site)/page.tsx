@@ -318,7 +318,7 @@ export default function Home() {
                 <Seal lines={["Delayed", "three days", "still fresh"]} />
                 <p className="text-xs leading-relaxed text-bark-faint">
                   Her box was sent overnight. The courier took three days, and
-                  it still arrived cold and sealed.
+                  it still arrived intact.
                 </p>
               </div>
             </div>
