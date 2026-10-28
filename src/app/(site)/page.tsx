@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Band, Container, SectionHead } from "@/components/ui/Section";
+import { Band, Container, Seal, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
 import { Testimonial } from "@/components/site/Testimonial";
@@ -308,6 +308,19 @@ export default function Home() {
                   colada.
                 </figcaption>
               </figure>
+
+              {/* The best thing that happened to this delivery was that it
+                  went wrong. A stamp alone would state it without saying
+                  what it means, so the sentence sits next to it — and that
+                  way the claim is also there for anyone whose browser is
+                  reading the page aloud. */}
+              <div className="col-span-2 mt-6 flex items-center gap-4">
+                <Seal lines={["Delayed", "three days", "still fresh"]} />
+                <p className="text-xs leading-relaxed text-bark-faint">
+                  Her box was sent overnight. The courier took three days, and
+                  it still arrived cold and sealed.
+                </p>
+              </div>
             </div>
           </div>
         </Container>
