@@ -93,8 +93,8 @@ export default function KpataashiePage() {
             <span className="font-semibold text-clay">
               {promo.mealDiscountPercent}% off every meal, {promo.window}.
             </span>{" "}
-            Quote <span className="font-semibold">{promo.code}</span> when you
-            order and it comes off your quote.
+            It comes off your quote when you order — no code to remember.
+            Orders close {promo.ordersClose} so the kitchen can cook them.
           </p>
         </PromoGate>
 

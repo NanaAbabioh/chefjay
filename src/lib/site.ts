@@ -53,6 +53,8 @@ export const site = {
 
 export const nav = [
   { href: "/", label: "Home" },
+  // Seasonal. Goes out with the page it points at — see src/lib/promo.ts.
+  { href: "/thanksgiving", label: "Thanksgiving" },
   { href: "/shop", label: "Shop" },
   { href: "/subscribe", label: "Subscribe" },
   { href: "/events", label: "Events & Bulk" },

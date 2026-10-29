@@ -5,6 +5,20 @@ import { claimSound, onSoundClaimed } from "@/lib/sound";
 
 const QUERY = "(prefers-reduced-motion: reduce)";
 
+/**
+ * Start playback, and accept being told no.
+ *
+ * `play()` returns a promise that rejects whenever the browser declines —
+ * an autoplay policy, or a background tab being paused to save power, which
+ * is routine rather than exceptional. Left unhandled it surfaces as an
+ * uncaught rejection in the console of a page that is working perfectly.
+ * There is nothing to recover: the poster stays up and the next time the
+ * clip scrolls into view it asks again.
+ */
+function play(el: HTMLMediaElement) {
+  void el.play().catch(() => {});
+}
+
 /** Subscribed rather than read in an effect, so the first paint is already right. */
 function usePrefersStillness() {
   return useSyncExternalStore(
@@ -75,7 +89,7 @@ export function ShippedClip({
   useEffect(() => {
     const el = video.current;
     if (!el || still) return;
-    if (near && onscreen) void el.play();
+    if (near && onscreen) play(el);
     else el.pause();
   }, [near, onscreen, still]);
 
@@ -84,7 +98,7 @@ export function ShippedClip({
     if (!el) return;
     if (sound && onscreen) {
       claimSound(music);
-      void el.play();
+      play(el);
     } else {
       el.pause();
     }

@@ -86,42 +86,44 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Grand opening. Lives between the hero and the two paths so it is the
+      {/* The offer. Lives between the hero and the two paths so it is the
           first thing after the headline, and disappears on its own when the
           dates run out. */}
       <PromoGate>
         <Band tone="sand">
           <Container>
-            {/* The photograph was shot for this: drink on the right, bare wall
-                on the left. The words stay words — on a phone they sit under
-                the image, and from `sm` up they move onto the wall the picture
-                left empty for them. */}
-            <div className="overflow-hidden rounded-card bg-cream sm:relative">
-              <div className="relative aspect-[16/9] sm:aspect-auto sm:absolute sm:inset-0">
-                <Image
-                  src="/images/promo-opening.jpg"
-                  alt=""
-                  fill
-                  sizes="(min-width: 640px) 90vw, 100vw"
-                  className="object-cover object-right"
-                />
-              </div>
-
-              <div className="relative p-7 sm:mr-auto sm:flex sm:min-h-[26rem] sm:w-[52%] sm:flex-col sm:justify-center sm:p-14">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
-                  {promo.eyebrow} · {promo.window}
-                </p>
-                <h2 className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
-                  {promo.heading}
-                </h2>
-                <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
-                  {promo.body}
-                </p>
-                <div className="mt-7">
-                  <ButtonLink href="/shop" size="lg">
-                    Shop the fridge
-                  </ButtonLink>
+            {/* The bird carries the offer here the same way it does on its
+                own page. A photograph of a drink would only say that we sell
+                drinks; the turkey says which fortnight this is, and the card
+                is the door through to the rest of it. */}
+            <div className="overflow-hidden rounded-card bg-cream">
+              <div className="grid items-center gap-6 p-7 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:p-14">
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
+                    {promo.eyebrow} · {promo.window}
+                  </p>
+                  <h2 className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
+                    {promo.heading}
+                  </h2>
+                  <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
+                    {promo.body}
+                  </p>
+                  <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <ButtonLink href={promo.href} size="lg">
+                      See the Thanksgiving special
+                    </ButtonLink>
+                    <ArrowLink href="/shop">Shop the fridge</ArrowLink>
+                  </div>
                 </div>
+
+                <Image
+                  src="/images/turkey.webp"
+                  alt=""
+                  width={654}
+                  height={970}
+                  sizes="(min-width: 640px) 17rem, 11rem"
+                  className="nod order-first mx-auto w-44 sm:order-none sm:w-[17rem]"
+                />
               </div>
             </div>
           </Container>

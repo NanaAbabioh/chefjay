@@ -1,11 +1,16 @@
 /**
- * The grand opening offer, in one place.
+ * The offer currently running, in one place.
  *
  * Everything that mentions the promotion — the bar above the header, the
- * stamp on the shop page, the home page band, the Kpataashie note, the cart
- * total and the WhatsApp handoff — reads from here. Changing the dates or
- * pulling the offer is one edit, and nothing is left advertising a promotion
- * that ended.
+ * stamp on the shop page, the home page band, the Kpataashie note, the
+ * Thanksgiving page, the cart total and the WhatsApp handoff — reads from
+ * here. Changing the dates or pulling the offer is one edit, and nothing is
+ * left advertising a promotion that ended.
+ *
+ * One offer runs at a time. The grand opening that ran in October had exactly
+ * this shape — a free nth bottle and a percentage off meals — so Thanksgiving
+ * replaces its values rather than adding a second mechanism beside it. The
+ * October figures are in the git history if they are ever wanted back.
  *
  * Dates are business-local (site.timeZone), inclusive of both ends. A customer
  * in another timezone sees the offer by Chef Jay's clock, which is the one the
@@ -14,8 +19,6 @@
 import { site } from "./site";
 
 export const promo = {
-  /** Shown on flyers and posts; the bottle offer applies without it. */
-  code: "B3G1",
   /** First and last day the offer runs, inclusive, as YYYY-MM-DD.
    *
    * Live a day before the advertised start so the offer can be tested on the
@@ -24,32 +27,55 @@ export const promo = {
    * honours the offer for someone who turns up sooner. Never the reverse —
    * ending before the advertised last day would refuse a customer the thing
    * the banner promised them. */
-  startsOn: "2026-10-02",
-  endsOn: "2026-10-18",
+  startsOn: "2026-10-31",
+  endsOn: "2026-11-14",
 
   /** Bottles: every nth bottle in the cart is free. 4 = buy three, get one. */
   bottlesPerFree: 4,
-  /** Kpataashie meals, applied by hand when the order is confirmed. */
-  mealDiscountPercent: 15,
+  /** Food, applied by hand when the order is confirmed. Covers Kpataashie
+   *  pans and event quotes alike this time round. */
+  mealDiscountPercent: 20,
 
-  eyebrow: "Grand opening",
+  eyebrow: "Thanksgiving special",
   /** The scrolling bar above the header. It repeats, so it reads as one
    *  sentence rather than a headline. */
-  bar: "We're celebrating our grand opening with a promo — buy 3 bottles of any flavour and the 4th is on us, plus 15% off every meal with code B3G1",
-  heading: "Buy three bottles, the fourth is free.",
+  bar: "Thanksgiving special — 20% off every food order, and buy 3 drinks and the 4th is on us. Orders close 14 November so the kitchen can cook",
+  heading: "Need a pan or two? Chef Jay’s got you.",
   body:
-    "Mix any flavours you like — the free one is taken off automatically at " +
-    "checkout, no code needed. Ordering from Kpataashie? Quote B3G1 and take " +
-    "15% off your meal.",
+    "Thanksgiving, Friendsgiving, all the givings — 20% comes off every food " +
+    "order, pans and event quotes alike. Order three bottles of any flavour " +
+    "and the fourth is free, taken off at checkout without a code.",
   /** Said the same way everywhere a short version is needed. */
-  short: "Buy 3 bottles, get the 4th free",
-  /** Shown wherever the dates matter. Kept as prose: "3–11 October" reads
+  short: "Buy 3 drinks, get the 4th free",
+  /** Shown wherever the dates matter. Kept as prose: "1–14 November" reads
    *  better than a date range nobody parses. */
-  window: "3 – 18 October",
+  window: "1 – 14 November",
+
+  /**
+   * The hard close, written out.
+   *
+   * This is not a marketing deadline that quietly slips — the kitchen stops
+   * taking orders on this day in order to cook the ones it has. Said in full
+   * wherever there is room for it, because "order early" means nothing
+   * without the date it is early against.
+   */
+  ordersClose: "Saturday 14 November",
+  /** The day it is all for. */
+  thanksgiving: "Thursday 26 November",
+
+  /**
+   * Where the offer is explained in full.
+   *
+   * The bar at the top of every page is already the loudest thing on the
+   * site; pointing it at the page rather than adding a second shout beside
+   * it is what keeps the header from competing with itself. An offer without
+   * a page of its own can point this at /shop.
+   */
+  href: "/thanksgiving",
 } as const;
 
 /** Today where the business trades, as YYYY-MM-DD. */
-function businessToday(now: Date): string {
+function businessToday(now: Date = new Date()): string {
   // en-CA formats as YYYY-MM-DD, which compares correctly as a string.
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: site.timeZone,
@@ -62,6 +88,37 @@ function businessToday(now: Date): string {
 export function promoActive(now: Date = new Date()): boolean {
   const today = businessToday(now);
   return today >= promo.startsOn && today <= promo.endsOn;
+}
+
+/**
+ * Where we are in the offer, for the page built around it.
+ *
+ * `promoActive` answers the only question the cart and the banner need — is
+ * there a discount to apply right now. A page whose whole subject is the
+ * offer has to say something in the other two cases as well, and "nothing at
+ * all" is the wrong answer for both: someone who arrives from a flyer before
+ * it opens should be told when to come back, and someone who arrives after it
+ * closes should be told it closed rather than be sold a thing the kitchen can
+ * no longer cook.
+ */
+export type Phase = "before" | "open" | "closed";
+
+export function promoPhase(now: Date = new Date()): Phase {
+  const today = businessToday(now);
+  if (today < promo.startsOn) return "before";
+  if (today > promo.endsOn) return "closed";
+  return "open";
+}
+
+/** Whole days from today until `date` (YYYY-MM-DD), by the kitchen's clock.
+ *
+ * Both ends are taken as calendar days in the business timezone and compared
+ * as dates, so the answer never depends on the hour: at 11pm on the 13th the
+ * answer is still one day, which is what a customer means by "tomorrow".
+ */
+export function daysUntil(date: string, now: Date = new Date()): number {
+  const day = (iso: string) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
+  return Math.round((day(date) - day(businessToday(now))) / 86_400_000);
 }
 
 /** The free-bottle line, as a positive number of cents to subtract.

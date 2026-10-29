@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSyncExternalStore, type ReactNode } from "react";
 import { promo, promoActive } from "@/lib/promo";
 
@@ -38,6 +39,12 @@ export function PromoGate({ children }: { children: ReactNode }) {
  * when the pointer is over it so it can actually be read. Someone who has
  * asked their system for less motion gets it frozen, courtesy of the global
  * reduced-motion rule.
+ *
+ * The whole bar is the link to wherever the offer is explained. It is already
+ * the loudest thing on every page, so making it the door costs nothing and
+ * saves the header from carrying a second shout beside it. The accessible
+ * name is written out rather than left to the marquee, which would otherwise
+ * announce the entire sentence as the name of a link.
  */
 export function PromoBar() {
   const message = `${promo.bar} · ${promo.window}`;
@@ -47,7 +54,11 @@ export function PromoBar() {
 
   return (
     <PromoGate>
-      <div className="overflow-hidden bg-bark py-2.5 text-cream">
+      <Link
+        href={promo.href}
+        aria-label={`${promo.eyebrow} — see the details`}
+        className="block overflow-hidden bg-bark py-2.5 text-cream transition-colors hover:bg-bark-soft"
+      >
         <div
           className="marquee"
           // Speed, not duration: longer sentences take proportionally longer
@@ -64,7 +75,7 @@ export function PromoBar() {
             </p>
           ))}
         </div>
-      </div>
+      </Link>
     </PromoGate>
   );
 }

@@ -130,6 +130,60 @@
     }
   }
 
+  /* The mascot's idle. A turkey photographed standing still is a photograph;
+     the same bird breathing and shifting its weight is a mascot. Pivoting at
+     the feet is what keeps it standing on the floor rather than bobbing in
+     the air, and the angles are small enough that the drink it is holding
+     never looks like it would spill. Stopped by the global reduced-motion
+     rule along with everything else. */
+  .nod {
+    animation: nod 7s ease-in-out infinite;
+    transform-origin: 50% 100%;
+  }
+
+  @keyframes nod {
+    0%, 100% {
+      transform: rotate(0deg) translateY(0);
+    }
+    25% {
+      transform: rotate(-1.2deg) translateY(-5px);
+    }
+    55% {
+      transform: rotate(0.9deg) translateY(-1px);
+    }
+    80% {
+      transform: rotate(-0.4deg) translateY(-3px);
+    }
+  }
+
+  /* Leaves, in the Thanksgiving hero only. Each one carries its own duration,
+     delay, drift and fall distance as custom properties, so five elements
+     sharing one keyframe never fall in step — which is the whole difference
+     between weather and a loading spinner. Deliberately few and faint: this
+     is a seasonal note behind the type, not a screensaver. */
+  .leaf {
+    position: absolute;
+    top: 0;
+    animation: leaffall var(--fall-time, 19s) linear infinite;
+    animation-delay: var(--fall-delay, 0s);
+    will-change: transform, opacity;
+  }
+
+  @keyframes leaffall {
+    0% {
+      transform: translate3d(0, -80px, 0) rotate(0deg);
+      opacity: 0;
+    }
+    12%, 82% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate3d(var(--fall-drift, 60px), var(--fall-to, 780px), 0)
+        rotate(var(--fall-spin, 400deg));
+      opacity: 0;
+    }
+  }
+
   @keyframes marquee {
     from {
       transform: translateX(0);
