@@ -42,14 +42,17 @@ export const promo = {
   bar: "Thanksgiving special — 20% off every food order, and buy 3 drinks and the 4th is on us. Orders close 14 November so the kitchen can cook",
   heading: "Need a pan or two? Chef Jay’s got you.",
   body:
-    "Thanksgiving, Friendsgiving, all the givings — 20% comes off every food " +
-    "order, pans and event quotes alike. Order three bottles of any flavour " +
-    "and the fourth is free, taken off at checkout without a code.",
+    "20% off every food order, pans and event quotes alike. Buy three bottles " +
+    "of any flavour and the fourth comes off at checkout.",
   /** Said the same way everywhere a short version is needed. */
   short: "Buy 3 drinks, get the 4th free",
   /** Shown wherever the dates matter. Kept as prose: "1–14 November" reads
    *  better than a date range nobody parses. */
   window: "1 – 14 November",
+  /** The same fortnight, short enough to set in caps on a chip. The window is
+   *  the one fact on the page that is worthless the day after it matters, so
+   *  it is repeated as a label rather than left inside a sentence. */
+  windowShort: "Nov 1 – 14",
 
   /**
    * The hard close, written out.

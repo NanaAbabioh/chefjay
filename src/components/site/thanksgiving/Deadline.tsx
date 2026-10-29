@@ -61,13 +61,10 @@ export function Deadline() {
     <p className="inline-flex flex-wrap items-center gap-x-3 gap-y-0.5 rounded-full border border-cream/25 px-5 py-2.5 text-sm font-semibold text-cream sm:text-base">
       <span>Orders close {promo.ordersClose}</span>
       {phase !== PENDING && (
-        // The separator travels with the words it separates. Left as its own
-        // flex item it would be stranded at the end of the first line every
-        // time the pill wrapped, which on a phone is every time.
+        // No separator between the two. The pill wraps on a phone, and a
+        // middot left to fend for itself lands at the head of the second line
+        // every time; the colour change already does the separating.
         <span className={phase === "closed" ? "text-cream/60" : "text-pineapple"}>
-          <span aria-hidden className="pr-3 text-cream/35">
-            ·
-          </span>
           {note(phase, days)}
         </span>
       )}

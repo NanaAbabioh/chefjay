@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ShippedClip } from "@/components/site/ShippedClip";
 import { ClosedNotice, Deadline, Spent } from "@/components/site/thanksgiving/Deadline";
 import { Leaves } from "@/components/site/thanksgiving/Leaves";
+import { Offer, Window } from "@/components/site/thanksgiving/Loud";
 import { kpataashieMenu, panServings, products } from "@/lib/catalog";
 import { zones } from "@/lib/cart";
 import { money } from "@/lib/format";
@@ -67,26 +68,34 @@ export default function ThanksgivingPage() {
               </h1>
 
               <p className="mt-5 max-w-lg text-lg leading-relaxed text-cream/75 sm:text-xl">
-                Need a pan or two for Thanksgiving, Friendsgiving, or all the
-                givings? {site.owner}’s got you.
+                Need a pan or two? {site.owner}’s got you.
               </p>
 
+              {/* The window before the offer, not after it. An early-bird
+                  promotion whose dates arrive last is just a discount. */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Window />
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-cream/55 sm:text-sm">
+                  Early bird
+                </span>
+              </div>
+
               <Spent>
-                <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="mt-6 grid max-w-xl gap-3 sm:grid-cols-2 sm:gap-4">
                   <div className="rounded-card border border-cream/20 bg-cream/5 p-5">
-                    <p className="font-display text-3xl font-semibold text-pineapple sm:text-4xl">
-                      {promo.mealDiscountPercent}% off
+                    <p className="font-display text-5xl font-semibold leading-none text-pineapple xl:text-6xl">
+                      20% off
                     </p>
-                    <p className="mt-1.5 text-sm leading-snug text-cream/70">
-                      every food order — pans and event quotes alike
+                    <p className="mt-3 text-sm leading-snug text-cream/70">
+                      all food — pans and event quotes
                     </p>
                   </div>
                   <div className="rounded-card border border-cream/20 bg-cream/5 p-5">
-                    <p className="font-display text-3xl font-semibold text-pineapple sm:text-4xl">
+                    <p className="font-display text-5xl font-semibold leading-none text-pineapple xl:text-6xl">
                       4th free
                     </p>
-                    <p className="mt-1.5 text-sm leading-snug text-cream/70">
-                      buy three drinks of any flavour, the fourth is on us
+                    <p className="mt-3 text-sm leading-snug text-cream/70">
+                      buy three drinks, any flavour
                     </p>
                   </div>
                 </div>
@@ -132,16 +141,12 @@ export default function ThanksgivingPage() {
               <SectionHead
                 eyebrow="Order early"
                 title="Two weeks to order. Then the kitchen cooks."
+                aside={<Window />}
               />
               <p className="prose-measure mt-6 text-lg leading-relaxed text-bark-soft">
-                Every pan is cooked to order, which means the list has to shut
-                well before the week itself. Order on the thirteenth and you
-                are on it. Order on the fifteenth and there is no list left to
-                join — the shopping is done and the pots are already going.
-              </p>
-              <p className="prose-measure mt-4 text-lg leading-relaxed text-bark-soft">
-                So the offer and the deadline are the same date on purpose.
-                There is no quiet extension afterwards.
+                Every pan is cooked to order, so the list shuts before the week
+                itself. The offer and the deadline are the same date — there is
+                no extension after it.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -163,12 +168,12 @@ export default function ThanksgivingPage() {
                   {
                     date: "1 November",
                     head: "Orders open",
-                    note: `${promo.mealDiscountPercent}% off food, every fourth drink free.`,
+                    note: "20% off food, every fourth drink free.",
                   },
                   {
                     date: "14 November",
                     head: "Orders close",
-                    note: "The last day to get a pan on the list.",
+                    note: "Last day to get a pan on the list.",
                     loud: true,
                   },
                   {
@@ -209,13 +214,9 @@ export default function ThanksgivingPage() {
       <Band tone="shell">
         <Container>
           <SectionHead
-            eyebrow={`From the kitchen · ${promo.mealDiscountPercent}% off`}
+            eyebrow="From the kitchen"
             title="Pans for the table."
-            aside={
-              <p className="text-base text-bark-faint">
-                Priced by the pan — full pricing on the Kpataashie page
-              </p>
-            }
+            aside={<Offer>20% off</Offer>}
           />
 
           <ul className="mt-10 grid sm:grid-cols-2 sm:gap-x-14">
@@ -248,12 +249,10 @@ export default function ThanksgivingPage() {
 
           <p className="mt-6 border-l-2 border-clay/40 pl-4 text-base text-bark-soft">
             <span className="font-semibold text-clay">
-              {promo.mealDiscountPercent}% comes off every food order,{" "}
-              {promo.window}.
+              {promo.mealDiscountPercent}% off every food order, {promo.window}.
             </span>{" "}
-            Pans and event quotes alike — it is taken off when the order is
-            confirmed, with no code to remember. Proteins can be swapped, and
-            anything not on the list is quoted when you message.
+            Pans and event quotes alike, taken off when the order is confirmed.
+            Proteins swap; anything off the list is quoted on WhatsApp.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-6">
@@ -271,20 +270,15 @@ export default function ThanksgivingPage() {
       <Band tone="cream">
         <Container>
           <SectionHead
-            eyebrow="From the fridge · 4th free"
+            eyebrow="From the fridge"
             title="And what goes in the glass."
-            aside={
-              <p className="text-base text-bark-faint">
-                {promo.short} — mix any flavours
-              </p>
-            }
+            aside={<Offer>4th free</Offer>}
           />
 
           <p className="prose-measure mt-6 text-lg leading-relaxed text-bark-soft">
             Eight piña coladas, the Gold Coast Corn Shake and Fura-liscious.
-            Order three of any flavours and the fourth comes off at checkout —
-            no code, and the discount lands on the cheapest bottle in each four
-            so a free one never costs you the expensive flavour.
+            Buy three of any flavours and the fourth comes off at checkout, on
+            the cheapest bottle in each four.
           </p>
 
           <div className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
@@ -310,15 +304,9 @@ export default function ThanksgivingPage() {
               <SectionHead eyebrow="Further than the driveway" title="It travels." />
               <p className="prose-measure mt-6 text-lg leading-relaxed text-bark-soft">
                 Food and drinks both ship, vacuum sealed. The first out-of-state
-                box went to Massachusetts: it was sent overnight, the courier
-                took three days, and it still arrived intact.
-              </p>
-              <p className="prose-measure mt-4 text-base leading-relaxed text-bark-faint">
-                Which is the honest reason the list closes on the fourteenth
-                rather than the week of. We will not put a delivery date on a
-                courier we do not drive — ordering early is what makes the
-                difference between a late box and a late box that still lands
-                well before the day.
+                box went to Massachusetts — sent overnight, three days with the
+                courier, still intact. Which is why the list closes on the
+                fourteenth and not the week of.
               </p>
 
               <dl className="mt-7 flex flex-wrap gap-x-10 gap-y-2 text-base">
@@ -377,10 +365,12 @@ export default function ThanksgivingPage() {
               <p className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
                 Get your order in. He already has.
               </p>
-              <p className="mt-4 max-w-md text-lg text-cream/70">
-                Orders close {promo.ordersClose}. After that the kitchen is
-                cooking and the list is shut.
-              </p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+                <Window />
+                <span className="text-sm font-semibold text-cream/70">
+                  Orders close {promo.ordersClose}
+                </span>
+              </div>
               <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
                 <ButtonLink href={order} variant="light" size="lg">
                   Order on WhatsApp
