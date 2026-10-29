@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Band, Container, Seal, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import { PromoGate } from "@/components/site/Promo";
+import { Window } from "@/components/site/PromoMarks";
 import { Testimonial } from "@/components/site/Testimonial";
 import { ShippedClip } from "@/components/site/ShippedClip";
 import { QuoteAudio } from "@/components/site/QuoteAudio";
@@ -99,15 +100,38 @@ export default function Home() {
             <div className="overflow-hidden rounded-card bg-cream">
               <div className="grid items-center gap-6 p-7 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:p-14">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
-                    {promo.eyebrow} · {promo.window}
-                  </p>
-                  <h2 className="mt-3 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <Window />
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-clay sm:text-base">
+                      {promo.eyebrow}
+                    </p>
+                  </div>
+                  <h2 className="mt-4 font-display text-4xl font-semibold leading-[0.95] sm:text-5xl">
                     {promo.heading}
                   </h2>
-                  <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft sm:text-xl">
-                    {promo.body}
-                  </p>
+
+                  {/* The two numbers in place of the paragraph that used to
+                      describe them. Someone passing the home page is reading
+                      four words, not four lines. */}
+                  <dl className="mt-6 grid max-w-md gap-4 sm:grid-cols-2">
+                    <div>
+                      <dt className="font-display text-4xl font-semibold leading-none text-clay sm:text-5xl">
+                        {promo.mealDiscountPercent}% off
+                      </dt>
+                      <dd className="mt-2 text-base text-bark-soft">
+                        all food — pans and event quotes
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-display text-4xl font-semibold leading-none text-clay sm:text-5xl">
+                        4th free
+                      </dt>
+                      <dd className="mt-2 text-base text-bark-soft">
+                        buy three drinks, any flavour
+                      </dd>
+                    </div>
+                  </dl>
+
                   <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
                     <ButtonLink href={promo.href} size="lg">
                       See the Thanksgiving special
@@ -210,8 +234,7 @@ export default function Home() {
               />
               <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft">
                 A minute of customers with a bottle in hand and a plate in
-                front of them, at parties and at home, on the drinks and the
-                cooking both.
+                front of them.
               </p>
               {/* Both halves of the business are in the clip, so both are
                   reachable from under it. */}
@@ -238,9 +261,8 @@ export default function Home() {
                 title="It travels now."
               />
               <p className="mt-5 max-w-md text-lg leading-relaxed text-bark-soft">
-                The food leaves here vacuum-sealed and the bottles travel cold.
-                The first box to go out of state went to a customer in
-                Massachusetts — that is her plate, start to finish.
+                Food leaves vacuum-sealed, bottles travel cold. The first box
+                out of state went to Massachusetts — that is her plate.
               </p>
 
               {/* Her words, not ours. The short one carries the feeling and
@@ -277,10 +299,8 @@ export default function Home() {
               {/* Matches what the cart actually does outside the two zones, so
                   nobody reaches checkout expecting a number that isn't there. */}
               <p className="mt-6 max-w-md text-sm leading-relaxed text-bark-faint">
-                New Jersey and New York have a set delivery fee. Anywhere else,
-                {" "}
-                {site.owner} works the shipping out with you and confirms it
-                before the order goes anywhere.
+                New Jersey and New York have a set delivery fee. Anywhere else
+                is quoted before the order goes out.
               </p>
             </div>
 
@@ -306,8 +326,7 @@ export default function Home() {
                   aspect="aspect-[9/16]"
                 />
                 <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
-                  Watch her review on the meals and every flavour of piña
-                  colada.
+                  Her review — the meals and every flavour.
                 </figcaption>
               </figure>
 
@@ -319,8 +338,7 @@ export default function Home() {
               <div className="col-span-2 mt-6 flex items-center gap-4">
                 <Seal lines={["Delayed", "three days", "still fresh"]} />
                 <p className="text-xs leading-relaxed text-bark-faint">
-                  Her box was sent overnight. The courier took three days, and
-                  it still arrived intact.
+                  Sent overnight. The courier took three days. Still intact.
                 </p>
               </div>
             </div>
@@ -356,6 +374,14 @@ export default function Home() {
               <p className="mt-2 text-cream/75">
                 Jollof, fried rice, goat soups.
               </p>
+              <PromoGate>
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <Window />
+                  <span className="font-display text-2xl font-semibold text-pineapple">
+                    {promo.mealDiscountPercent}% off
+                  </span>
+                </div>
+              </PromoGate>
             </div>
           </Link>
         </Container>

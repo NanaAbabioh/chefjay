@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PromoGate } from "@/components/site/Promo";
+import { Offer, Window } from "@/components/site/PromoMarks";
 import { Container, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
 import {
@@ -57,6 +58,20 @@ export default function KpataashiePage() {
         </Container>
       </section>
 
+      <PromoGate>
+        {/* Above the menu, not under it. The discount is the reason someone
+            is reading this page this fortnight. */}
+        <div className="bg-clay/8">
+          <Container className="flex flex-wrap items-center justify-between gap-x-10 gap-y-5 py-8">
+            <Offer>{`${promo.mealDiscountPercent}% off`}</Offer>
+            <p className="text-base text-bark-soft">
+              Every pan and every event quote. Orders close {promo.ordersClose}.{" "}
+              <ArrowLink href={promo.href}>See the Thanksgiving special</ArrowLink>
+            </p>
+          </Container>
+        </div>
+      </PromoGate>
+
       <Container className="py-20 sm:py-28">
         <SectionHead
           eyebrow="Cooked to order"
@@ -88,17 +103,7 @@ export default function KpataashiePage() {
           ))}
         </ul>
 
-        <PromoGate>
-          <p className="mt-8 border-l-2 border-clay/40 pl-4 text-base text-bark-soft">
-            <span className="font-semibold text-clay">
-              {promo.mealDiscountPercent}% off every meal, {promo.window}.
-            </span>{" "}
-            It comes off your quote when you order. Orders close{" "}
-            {promo.ordersClose}.
-          </p>
-        </PromoGate>
-
-        <ul className="mt-6 space-y-1 text-base text-bark-faint">
+        <ul className="mt-8 space-y-1 text-base text-bark-faint">
           {kpataashieNotes.map((note) => (
             <li key={note}>{note}</li>
           ))}
@@ -107,7 +112,20 @@ export default function KpataashiePage() {
         {/* The prices, and the question everyone asks before them: how many
             does a pan feed. */}
         <div className="mt-16 border-t border-bark/10 pt-10">
-          <SectionHead eyebrow="By the pan" title="What it costs." />
+          <SectionHead
+            eyebrow="By the pan"
+            title="What it costs."
+            aside={
+              <PromoGate>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <Window />
+                  <p className="text-base font-semibold text-clay">
+                    Take {promo.mealDiscountPercent}% off every price below
+                  </p>
+                </div>
+              </PromoGate>
+            }
+          />
 
           <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-base">
             {panServings.map((p) => (

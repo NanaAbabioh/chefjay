@@ -1,12 +1,20 @@
 import { promo } from "@/lib/promo";
 
 /**
+ * The two marks every promotion is said with: the number and the dates.
+ *
+ * Deliberately outside `site/thanksgiving/`, which is written to be deleted.
+ * Neither of these knows what the offer is for — they read the figure and the
+ * window out of `promo.ts` — so the next promotion inherits them.
+ */
+
+/**
  * The date window, as a filled chip.
  *
  * Two things have to survive a skim: the discount and the fortnight it runs
  * in. The second is the one fact on the page that is worthless the day after
- * it matters, so it is set as a label and repeated in every band rather than
- * left inside a sentence to be scrolled past.
+ * it matters, so it is set as a label and repeated rather than left inside a
+ * sentence to be scrolled past.
  *
  * One style, light or dark band — pineapple on bark ink clears contrast on
  * cream, shell, sand and the dark hero alike.
@@ -22,9 +30,9 @@ export function Window({ className = "" }: { className?: string }) {
 }
 
 /**
- * A band's offer, in the two words it takes.
+ * The offer, in the two words it takes, with the window beside it.
  *
- * Sits in `SectionHead`'s aside so every section opens with the number rather
+ * Sits in `SectionHead`'s aside so a section opens with the number rather
  * than reaching it three lines into a paragraph.
  */
 export function Offer({ children }: { children: string }) {

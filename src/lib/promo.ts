@@ -41,9 +41,6 @@ export const promo = {
    *  sentence rather than a headline. */
   bar: "Thanksgiving special — 20% off every food order, and buy 3 drinks and the 4th is on us. Orders close 14 November so the kitchen can cook",
   heading: "Need a pan or two? Chef Jay’s got you.",
-  body:
-    "20% off every food order, pans and event quotes alike. Buy three bottles " +
-    "of any flavour and the fourth comes off at checkout.",
   /** Said the same way everywhere a short version is needed. */
   short: "Buy 3 drinks, get the 4th free",
   /** Shown wherever the dates matter. Kept as prose: "1–14 November" reads

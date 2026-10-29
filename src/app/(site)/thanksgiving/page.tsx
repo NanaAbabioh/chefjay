@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ShippedClip } from "@/components/site/ShippedClip";
 import { ClosedNotice, Deadline, Spent } from "@/components/site/thanksgiving/Deadline";
 import { Leaves } from "@/components/site/thanksgiving/Leaves";
-import { Offer, Window } from "@/components/site/thanksgiving/Loud";
+import { Offer, Window } from "@/components/site/PromoMarks";
 import { kpataashieMenu, panServings, products } from "@/lib/catalog";
 import { zones } from "@/lib/cart";
 import { money } from "@/lib/format";
@@ -26,7 +26,9 @@ export const metadata: Metadata = {
  * `components/site/thanksgiving/`, and in the handful of values at the top of
  * `lib/promo.ts` — taking it down on the fifteenth is removing the route, the
  * nav entry and the two turkeys, and pointing `promo.href` back at /shop.
- * Nothing in the shared components knows the word Thanksgiving.
+ * Nothing in the shared components knows the word Thanksgiving — `PromoMarks`
+ * sits outside this folder for that reason, because the home and Kpataashie
+ * pages use it too and the next offer will want it.
  *
  * The page is deliberately readable in all three phases of the offer. Someone
  * arriving from a printed flyer before the first of November should be told
