@@ -141,10 +141,10 @@ export default function Home() {
                 </div>
 
                 <Image
-                  src="/images/turkey.webp"
+                  src="/images/turkey-cartoon.webp"
                   alt=""
-                  width={654}
-                  height={970}
+                  width={647}
+                  height={965}
                   sizes="(min-width: 640px) 17rem, 11rem"
                   className="nod order-first mx-auto w-44 sm:order-none sm:w-[17rem]"
                 />

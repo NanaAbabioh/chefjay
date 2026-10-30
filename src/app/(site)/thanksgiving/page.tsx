@@ -25,7 +25,8 @@ export const metadata: Metadata = {
  * Built to be deleted. Everything seasonal lives in this folder, in
  * `components/site/thanksgiving/`, and in the handful of values at the top of
  * `lib/promo.ts` — taking it down on the fifteenth is removing the route, the
- * nav entry and the two turkeys, and pointing `promo.href` back at /shop.
+ * nav entry and the two turkey cutouts, and pointing `promo.href` back at
+ * /shop.
  * Nothing in the shared components knows the word Thanksgiving — `PromoMarks`
  * sits outside this folder for that reason, because the home and Kpataashie
  * pages use it too and the next offer will want it.
@@ -121,10 +122,10 @@ export default function ThanksgivingPage() {
                 the section rather than floating in it. */}
             <div className="order-first justify-self-center lg:order-none lg:-mb-14 lg:justify-self-end">
               <Image
-                src="/images/turkey.webp"
-                alt="A turkey raising a hurricane glass of piña colada"
-                width={654}
-                height={970}
+                src="/images/turkey-cartoon.webp"
+                alt="A cartoon turkey raising a hurricane glass of piña colada"
+                width={647}
+                height={965}
                 priority
                 sizes="(min-width: 1024px) 22rem, (min-width: 640px) 16rem, 12rem"
                 className="nod w-48 drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)] sm:w-64 lg:w-[22rem]"
@@ -349,10 +350,10 @@ export default function ThanksgivingPage() {
         <Container className="relative py-14 sm:py-16">
           <div className="flex flex-col items-center gap-8 text-center sm:flex-row sm:items-end sm:gap-12 sm:text-left">
             <Image
-              src="/images/turkey-done.webp"
-              alt="The same turkey, its glass now empty"
-              width={633}
-              height={951}
+              src="/images/turkey-cartoon-done.webp"
+              alt="The same cartoon turkey, its glass now empty"
+              width={645}
+              height={965}
               loading="lazy"
               sizes="(min-width: 640px) 13rem, 9rem"
               className="nod w-40 shrink-0 drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)] sm:w-60"
