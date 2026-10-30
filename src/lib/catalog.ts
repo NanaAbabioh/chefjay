@@ -9,7 +9,8 @@ export type Category = "drink" | "meal";
 export type Size = {
   id: string;
   label: string;
-  /** e.g. "12 oz" */
+  /** The size as it is sold: "12 oz" for a bottle, "Full pan" for a meal.
+   * This is what shows in the cart, the WhatsApp handoff and the dashboard. */
   volume: string;
   priceCents: number;
 };
@@ -21,9 +22,14 @@ export type Product = {
   /** One line, describing what is actually in the drink. This is the only
    * prose a product gets — the photograph does the rest of the talking. */
   blurb: string;
-  /** Placeholder photography under /public/images, named by slug. */
-  image: string;
-  ingredients: string[];
+  /** Placeholder photography under /public/images, named by slug. Optional:
+   * the Kpataashie pans are sold off a typographic menu rather than a grid of
+   * photographs, and a shot dropped in at /images/<slug>.jpg later needs no
+   * code change. */
+  image?: string;
+  /** Drinks list what is in them on their product page. A pan says what it is
+   * in its `blurb` instead, so this is optional. */
+  ingredients?: string[];
   sizes: Size[];
   tags?: string[];
 };
@@ -59,6 +65,38 @@ const size = (
 ) => [
   { id: "std", label: "Bottle", volume: "8 oz", priceCents },
   { id: "lg", label: "Bottle", volume: "12 oz", priceCents: largeCents },
+];
+
+/**
+ * Kpataashie sells by the pan, so a pan is a size the way 8 oz is a size.
+ *
+ * Dollars in, cents out — the kitchen quotes round numbers and everything
+ * downstream wants cents. Pass a half-pan price only where the kitchen sells
+ * one; soup is sold by the pot and has no half.
+ */
+export const panServes = { half: "7 – 10", full: "15 – 20" } as const;
+
+const pan = (fullDollars: number, halfDollars?: number): Size[] => [
+  ...(halfDollars === undefined
+    ? []
+    : [
+        {
+          id: "half",
+          label: `Feeds ${panServes.half}`,
+          volume: "Half pan",
+          priceCents: halfDollars * 100,
+        },
+      ]),
+  {
+    id: "full",
+    label: `Feeds ${panServes.full}`,
+    volume: "Full pan",
+    priceCents: fullDollars * 100,
+  },
+];
+
+const pot = (dollars: number): Size[] => [
+  { id: "full", label: "Sold by the pot", volume: "Full pot", priceCents: dollars * 100 },
 ];
 
 export const products: Product[] = [
@@ -170,6 +208,88 @@ export const products: Product[] = [
     sizes: size(599),
     tags: ["Alcohol-free"],
   },
+  /**
+   * Kpataashie — the kitchen. Priced the way the kitchen quotes: rice,
+   * protein and soup on their own, and the pairings that come cheaper bought
+   * together at the end.
+   *
+   * Every price below is one the kitchen already gave. Where a priced row
+   * names two foods at once — "jollof rice or fried rice", "turkey or
+   * chicken" — it becomes two products at that same price, so what goes in
+   * the cart is what gets cooked. Nothing else is priced here: the peppered
+   * goat, the gɔbɛ and anything else off the list is still quoted by message,
+   * and guessing a figure for them would be inventing one.
+   */
+  {
+    slug: "jollof-rice",
+    name: "Jollof rice",
+    category: "meal",
+    blurb: "Ghanaian jollof, cooked to order by the pan.",
+    sizes: pan(150, 80),
+  },
+  {
+    slug: "fried-rice",
+    name: "Fried rice",
+    category: "meal",
+    blurb: "Vegetable fried rice, cooked to order by the pan.",
+    sizes: pan(150, 80),
+  },
+  {
+    slug: "fried-turkey",
+    name: "Fried turkey",
+    category: "meal",
+    blurb: "Fried turkey, by the pan.",
+    sizes: pan(125, 70),
+  },
+  {
+    slug: "chicken",
+    name: "Chicken",
+    category: "meal",
+    blurb: "Chicken, by the pan.",
+    sizes: pan(100, 60),
+  },
+  {
+    slug: "goat-light-soup",
+    name: "Goat light soup",
+    category: "meal",
+    blurb: "Served with fufu or plain rice.",
+    sizes: pot(120),
+  },
+  {
+    slug: "goat-groundnut-soup",
+    name: "Goat groundnut soup",
+    category: "meal",
+    blurb: "Served with omotuo or fufu.",
+    sizes: pot(120),
+  },
+  {
+    slug: "goat-palm-nut-soup",
+    name: "Goat palm nut soup",
+    category: "meal",
+    blurb: "Served with omotuo or fufu.",
+    sizes: pot(120),
+  },
+  {
+    slug: "jollof-and-goat",
+    name: "Jollof and goat",
+    category: "meal",
+    blurb: "A full pan of jollof and a pot of goat soup.",
+    sizes: pan(240),
+  },
+  {
+    slug: "jollof-and-turkey",
+    name: "Jollof and turkey",
+    category: "meal",
+    blurb: "A full pan of jollof and a full pan of fried turkey.",
+    sizes: pan(220),
+  },
+  {
+    slug: "jollof-and-chicken",
+    name: "Jollof and chicken",
+    category: "meal",
+    blurb: "A full pan of jollof and a full pan of chicken.",
+    sizes: pan(220),
+  },
 ];
 
 /**
@@ -248,15 +368,15 @@ export function getProduct(slug: string): Product | undefined {
 }
 
 export const drinks = products.filter((p) => p.category === "drink");
+export const meals = products.filter((p) => p.category === "meal");
 
 /**
  * Kpataashie — the food menu. ("Kpataashie" is Ga for kitchen.)
  *
- * Deliberately not a `Product`. These are shown so people know what is on,
- * and ordered by message: a pan feeds a room, proteins get swapped, and the
- * final number wants agreeing by hand. The price list below is what a pan
- * costs; it is priced by pan and protein rather than by dish, so it is kept
- * separate from the menu rather than bolted onto each name.
+ * The named dishes are the showcase: what the kitchen cooks, said the way it
+ * sells it. They are not what you add to the cart — a pan is rice, protein or
+ * soup, and the same jollof pan is three different dish names depending on
+ * what goes beside it. The pan list does the ordering.
  */
 export type MenuItem = {
   /** The name it is sold under. */
@@ -298,55 +418,42 @@ export const kpataashieMenu: MenuItem[] = [
 ];
 
 /**
- * Shown under the menu. Kept separate from the dishes because they qualify
- * every one of them.
- */
-/**
- * What a pan costs. Rice, protein and soup are priced on their own because
- * that is how the kitchen sells them — a jollof pan with turkey is two lines,
- * not one dish. The pairs at the end are the combinations that come cheaper
+ * The pan list, grouped the way the kitchen quotes it.
+ *
+ * Each row is a `Product` from the catalog above, so the price list and the
+ * order form are the same list — there is no second place a price can drift
+ * out of step. The pairs at the end are the combinations that come cheaper
  * bought together than apart.
  */
-export type PanPrice = {
-  name: string;
-  /** Dollars, whole — the kitchen quotes round numbers. */
-  half?: number;
-  full?: number;
-  /** Shown instead of the two columns where only one size exists. */
-  note?: string;
-};
+export type MealGroup = { heading: string; items: Product[] };
 
-export type PanGroup = { heading: string; rows: PanPrice[] };
+const group = (heading: string, ...slugs: string[]): MealGroup => ({
+  heading,
+  items: slugs.map((slug) => {
+    const product = getProduct(slug);
+    // A typo here is a missing row on a live menu, so it fails the build
+    // rather than quietly shortening the list.
+    if (!product) throw new Error(`kpataashieGroups: no product "${slug}"`);
+    return product;
+  }),
+});
 
-export const kpataashiePricing: PanGroup[] = [
-  {
-    heading: "Rice",
-    rows: [{ name: "Jollof rice or fried rice", half: 80, full: 150 }],
-  },
-  {
-    heading: "Protein",
-    rows: [
-      { name: "Fried turkey", half: 70, full: 125 },
-      { name: "Chicken", half: 60, full: 100 },
-    ],
-  },
-  {
-    heading: "Soup",
-    rows: [{ name: "Goat soup", full: 120, note: "Full pot" }],
-  },
-  {
-    heading: "Together, by the full pan",
-    rows: [
-      { name: "Jollof and goat", full: 240 },
-      { name: "Jollof and turkey or chicken", full: 220 },
-    ],
-  },
+export const kpataashieGroups: MealGroup[] = [
+  group("Rice", "jollof-rice", "fried-rice"),
+  group("Protein", "fried-turkey", "chicken"),
+  group("Soup", "goat-light-soup", "goat-groundnut-soup", "goat-palm-nut-soup"),
+  group(
+    "Together, by the full pan",
+    "jollof-and-goat",
+    "jollof-and-turkey",
+    "jollof-and-chicken",
+  ),
 ];
 
 /** How many a pan feeds. The question every caterer is asked first. */
 export const panServings = [
-  { size: "Full pan", serves: "15 – 20 people" },
-  { size: "Half pan", serves: "7 – 10 people" },
+  { size: "Full pan", serves: `${panServes.full} people` },
+  { size: "Half pan", serves: `${panServes.half} people` },
 ];
 
 export const kpataashieNotes = [

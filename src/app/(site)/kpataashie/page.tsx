@@ -2,21 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PromoGate } from "@/components/site/Promo";
 import { Offer, Window } from "@/components/site/PromoMarks";
+import { CartLink } from "@/components/cart/CartLink";
+import { PanList } from "@/components/product/PanList";
 import { Container, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
-import {
-  kpataashieMenu,
-  kpataashieNotes,
-  kpataashiePricing,
-  panServings,
-} from "@/lib/catalog";
+import { kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
 import { promo } from "@/lib/promo";
 import { site } from "@/lib/site";
 import { whatsappUrl } from "@/lib/order";
 
 export const metadata: Metadata = {
   title: "Kpataashie",
-  description: `Jollof, fried rice and goat soups from ${site.name}. Ordered by message — pans and proteins confirmed by hand.`,
+  description: `Jollof, fried rice and goat soups from ${site.name}. Order a half or full pan online, or message for anything off the list.`,
 };
 
 export default function KpataashiePage() {
@@ -53,7 +50,8 @@ export default function KpataashiePage() {
             Ga for kitchen
           </p>
           <p className="mt-4 max-w-md text-lg text-cream/80">
-            Jollof, fried rice and goat soups, cooked to order.
+            Jollof, fried rice and goat soups, cooked to order. Priced by the
+            pan, ordered right here.
           </p>
         </Container>
       </section>
@@ -65,7 +63,8 @@ export default function KpataashiePage() {
           <Container className="flex flex-wrap items-center justify-between gap-x-10 gap-y-5 py-8">
             <Offer>{`${promo.mealDiscountPercent}% off`}</Offer>
             <p className="text-base text-bark-soft">
-              Every pan and every event quote. Orders close {promo.ordersClose}.{" "}
+              Comes off every pan in your cart. Orders close{" "}
+              {promo.ordersClose}.{" "}
               <ArrowLink href={promo.href}>See the Thanksgiving special</ArrowLink>
             </p>
           </Container>
@@ -78,7 +77,7 @@ export default function KpataashiePage() {
           title="On the menu"
           aside={
             <p className="text-base text-bark-faint">
-              Priced by the pan — prices below
+              Ordered by the pan — pick your rice, protein or soup below
             </p>
           }
         />
@@ -109,70 +108,42 @@ export default function KpataashiePage() {
           ))}
         </ul>
 
-        {/* The prices, and the question everyone asks before them: how many
-            does a pan feed. */}
+        {/* The price list is the order form — one list, so a price can never
+            drift between what is advertised and what is charged. The question
+            everyone asks first goes above it. */}
         <div className="mt-16 border-t border-bark/10 pt-10">
           <SectionHead
             eyebrow="By the pan"
-            title="What it costs."
+            title="Build your order."
             aside={
               <PromoGate>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <Window />
                   <p className="text-base font-semibold text-clay">
-                    Take {promo.mealDiscountPercent}% off every price below
+                    {promo.mealDiscountPercent}% off, taken off in your cart
                   </p>
                 </div>
               </PromoGate>
             }
           />
 
-          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-base">
-            {panServings.map((p) => (
-              <div key={p.size} className="flex gap-2">
-                <dt className="font-semibold">{p.size}</dt>
-                <dd className="text-bark-soft">feeds {p.serves}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-10 grid gap-x-14 gap-y-10 sm:grid-cols-2">
-            {kpataashiePricing.map((group) => (
-              <div key={group.heading}>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-bark-faint">
-                  {group.heading}
-                </h3>
-                <ul className="mt-3">
-                  {group.rows.map((row) => (
-                    <li
-                      key={row.name}
-                      className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-bark/15 py-3"
-                    >
-                      <span className="font-display text-lg font-semibold">
-                        {row.name}
-                      </span>
-                      <span className="text-base tabular-nums text-bark-soft">
-                        {row.half ? `Half pan $${row.half} · ` : ""}
-                        {row.note ? `${row.note} ` : row.half ? "Full pan " : "Full pan "}
-                        ${row.full}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="mt-8">
+            <PanList />
           </div>
 
           <p className="mt-8 text-base text-bark-faint">
-            Anything not listed — indomie, gɔbɛ, the other soups — is quoted
-            when you message.
+            Anything not listed — indomie, gɔbɛ, the peppered goat — is quoted
+            when you message. So is a protein swap on a pan above.
           </p>
         </div>
 
-        {/* No cart for food: pans and proteins are worth confirming by hand. */}
+        {/* The cart link appears only once something is in it. Everything
+            else here is for the orders a price list cannot close. */}
         <div className="mt-10 flex flex-wrap items-center gap-3">
+          <CartLink />
           <ButtonLink
             href={whatsappUrl(`Hi ${site.owner}, I'd like to order from Kpataashie.`)}
+            variant="outline"
             size="lg"
           >
             Order on WhatsApp

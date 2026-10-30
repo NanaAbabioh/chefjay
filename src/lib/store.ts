@@ -1,7 +1,7 @@
 import { db, type Sql } from "./db";
 import { site } from "./site";
 import type { ResolvedLine } from "./cart";
-import type { EventQuote, RetailOrder } from "./order";
+import type { EventQuote, RetailOrder, Totals } from "./order";
 
 /**
  * Writes submissions to the database.
@@ -28,12 +28,7 @@ export function saveOrder(
   ref: string,
   order: RetailOrder,
   lines: ResolvedLine[],
-  totals: {
-    subtotal: number;
-    discount: number;
-    delivery: number | null;
-    total: number;
-  },
+  totals: Totals,
 ) {
   return attempt(
     (sql) =>
@@ -52,7 +47,7 @@ export function saveOrder(
             ${order.method}, ${order.method === "delivery" ? order.zone : null},
             ${order.address || null}, ${order.when || null},
             ${order.notes || null},
-            ${totals.subtotal}, ${totals.discount}, ${totals.delivery},
+            ${totals.subtotal}, ${totals.discount.total}, ${totals.delivery},
             ${totals.total}
           )
           returning id

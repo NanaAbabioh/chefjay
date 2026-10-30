@@ -15,7 +15,13 @@ npm run dev
 | Path | Route | How it completes |
 | --- | --- | --- |
 | Individual | `/shop` → `/shop/[slug]` → `/cart` | Cart, then a details form. Prices are exact. |
+| Kpataashie pans | `/kpataashie` → `/cart` | The price list is the order form. Same cart, same totals, same handoff. |
 | Events & bulk | `/events` | Package picker, then a quote form. No prices charged — every event is quoted by hand. |
+
+Drinks and pans share one cart and one order. They are priced differently —
+a bottle by the bottle, a pan by the half or the full — and the two running
+offers come off different halves of the basket, but a customer fills one
+basket and gets one total.
 
 Both paths end the same way: a server action validates the submission, records
 it, and returns a reference plus a prefilled WhatsApp and email link. **No
@@ -45,11 +51,26 @@ Products, sizes, prices and event packages.
 - Each product has an `image` path pointing at `public/images/<slug>.jpg`. Keep
   the filename matched to the slug and swapping in a new photograph needs no
   code change.
-- `category` is `"drink" | "meal"`. The meals menu drops straight in here when
-  the kitchen launches — no restructuring needed.
+- `category` is `"drink" | "meal"`. Both are ordered through the same cart.
+  Drinks are sold in 8 oz and 12 oz bottles off `/shop`; meals are sold by the
+  half or full pan off `/kpataashie`, where `kpataashieGroups` arranges the
+  same products into the groups the kitchen quotes in.
+- **Only price what the kitchen has priced.** A row that names two foods at
+  one price ("jollof rice or fried rice") becomes two products at that price.
+  A dish the kitchen has never put a number on — the peppered goat, the gɔbɛ —
+  stays off the list and is quoted by message. Guessing is how a customer gets
+  charged a figure the business never agreed to.
+- `image` is optional. Drinks are photographed; a pan is sold off a
+  typographic menu, and its cart line shows the pan size instead. Dropping a
+  real photo in at `public/images/<slug>.jpg` turns it on with no code change.
 
-Delivery thresholds live in `src/lib/cart.ts` (`FREE_DELIVERY_CENTS`,
-`DELIVERY_FEE_CENTS`).
+Delivery is priced by the band the customer picks — `zones` in
+`src/lib/cart.ts`. One fee per order, whatever is in the basket.
+
+The running offer lives in `src/lib/promo.ts`: a free nth bottle and a
+percentage off food. Both are worked out in `discounts()` in
+`src/lib/cart.ts` and recomputed on the server in `submitOrder`, so a cart
+left open past the last day of the offer loses it.
 
 ## How the code is arranged
 

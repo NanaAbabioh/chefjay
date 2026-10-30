@@ -242,7 +242,7 @@ export default function Home() {
                 <ButtonLink href="/shop" size="lg">
                   Shop the fridge
                 </ButtonLink>
-                <ArrowLink href="/kpataashie">See the Kpataashie menu</ArrowLink>
+                <ArrowLink href="/kpataashie">Order from the kitchen</ArrowLink>
               </div>
             </div>
           </div>
@@ -372,7 +372,7 @@ export default function Home() {
                   page itself, and repeating it here would wear thin. */}
               <p className="mt-1 text-sm text-cream/55">Ga for kitchen</p>
               <p className="mt-2 text-cream/75">
-                Jollof, fried rice, goat soups.
+                Jollof, fried rice, goat soups. Ordered by the pan.
               </p>
               <PromoGate>
                 <div className="mt-5 flex flex-wrap items-center gap-3">

@@ -5,18 +5,28 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Section";
 import { AddToCart } from "@/components/product/AddToCart";
 import { ProductCard } from "@/components/product/ProductCard";
-import { getProduct, products } from "@/lib/catalog";
+import { drinks, getProduct } from "@/lib/catalog";
+
+/**
+ * Drinks only. A Kpataashie pan is a product like any other in the catalog,
+ * but it is sold off the menu at /kpataashie, where the pan sizes and the
+ * servings make sense — not from a page headed "more from the fridge".
+ */
+const drink = (slug: string) => {
+  const product = getProduct(slug);
+  return product?.category === "drink" ? product : undefined;
+};
 
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return drinks.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/shop/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
-  if (!product) return {};
+  const product = drink(slug);
+  if (!product?.image) return {};
   return {
     title: product.name,
     description: product.blurb,
@@ -37,10 +47,10 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: PageProps<"/shop/[slug]">) {
   const { slug } = await params;
-  const product = getProduct(slug);
-  if (!product) notFound();
+  const product = drink(slug);
+  if (!product?.image) notFound();
 
-  const others = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+  const others = drinks.filter((p) => p.slug !== product.slug).slice(0, 3);
 
   return (
     <>
@@ -67,14 +77,18 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
             </h1>
             <p className="mt-3 text-lg text-bark-soft">{product.blurb}</p>
 
-            <ul className="mt-6 flex flex-wrap gap-x-2 gap-y-1 text-sm text-bark-faint">
-              {product.ingredients.map((i, n) => (
-                <li key={i}>
-                  {i}
-                  {n < product.ingredients.length - 1 && <span className="ml-2">·</span>}
-                </li>
-              ))}
-            </ul>
+            {product.ingredients && (
+              <ul className="mt-6 flex flex-wrap gap-x-2 gap-y-1 text-sm text-bark-faint">
+                {product.ingredients.map((i, n) => (
+                  <li key={i}>
+                    {i}
+                    {n < product.ingredients!.length - 1 && (
+                      <span className="ml-2">·</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <AddToCart slug={product.slug} sizes={product.sizes} />
 

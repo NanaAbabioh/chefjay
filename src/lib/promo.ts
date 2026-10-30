@@ -32,8 +32,8 @@ export const promo = {
 
   /** Bottles: every nth bottle in the cart is free. 4 = buy three, get one. */
   bottlesPerFree: 4,
-  /** Food, applied by hand when the order is confirmed. Covers Kpataashie
-   *  pans and event quotes alike this time round. */
+  /** Food. Comes off Kpataashie pans in the cart, and off an event quote by
+   *  hand when the quote is written. */
   mealDiscountPercent: 20,
 
   eyebrow: "Thanksgiving special",
@@ -140,4 +140,18 @@ export function freeBottleCents(
     .sort((a, b) => a - b)
     .slice(0, free)
     .reduce((sum, cents) => sum + cents, 0);
+}
+
+/** The food discount, as a positive number of cents to subtract.
+ *
+ * Every pan is priced in whole dollars, so a fifth of one is exact — but the
+ * rounding is written down rather than assumed, because the day a pan is
+ * priced at $82.50 is not the day to discover the total is off by a cent.
+ */
+export function mealDiscountCents(
+  subtotalCents: number,
+  now: Date = new Date(),
+): number {
+  if (!promoActive(now)) return 0;
+  return Math.round((subtotalCents * promo.mealDiscountPercent) / 100);
 }

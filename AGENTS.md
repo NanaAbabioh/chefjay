@@ -20,18 +20,24 @@ and where business details live.
   server — `submitOrder` recomputes totals from the catalog on purpose.
 - **Business facts belong in `src/lib/site.ts`.** Do not hardcode a phone
   number, email, city or business name into a component.
-- **Products belong in `src/lib/catalog.ts`.** The `category` field already
-  supports `"meal"`; add the future food menu there rather than building a
-  parallel structure.
+- **Products belong in `src/lib/catalog.ts`.** Drinks and Kpataashie pans are
+  both `Product`s and both go through the same cart; `category` tells them
+  apart. Never price a pan the kitchen has not priced — see the README.
 - **The cart stores ids, not prices.** `{slug, sizeId, qty}` only. Prices are
   resolved from the catalog on every render so stale localStorage cannot produce
-  a wrong total.
+  a wrong total. A per-line choice has nowhere to live by design — protein
+  swaps and the like go in the order's notes field.
+- **The two offers are not interchangeable.** The free nth bottle counts
+  bottles only; the percentage comes off food only. `discounts()` keeps them
+  itemised all the way to the WhatsApp message, because a single netted figure
+  tells neither the customer nor the kitchen where the money went.
 - **`className` on `ui/Field` components applies to the wrapper, not the
   control.** Passing layout classes is safe; the input keeps its own styling.
 - **Product imagery lives in `public/images/<slug>.jpg`** and is referenced by
   the catalog's `image` field. The current set is AI-generated placeholder
   photography to be replaced with real shots; keep the filenames slug-matched
-  so swapping one in needs no code change.
+  so swapping one in needs no code change. `image` is optional — the pans
+  have none yet and fall back to a typographic tile.
 
 ## Verifying changes
 

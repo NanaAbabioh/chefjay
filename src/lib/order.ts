@@ -1,7 +1,7 @@
 import { money } from "./format";
 import { site } from "./site";
-import type { ResolvedLine, Zone } from "./cart";
-import { zoneLabel } from "./cart";
+import type { Discounts, ResolvedLine, Zone } from "./cart";
+import { only, zoneLabel } from "./cart";
 import { promo } from "./promo";
 
 export type Fulfilment = "delivery" | "pickup";
@@ -37,21 +37,38 @@ export function orderRef(seed: number): string {
   return `VC-${seed.toString(36).toUpperCase().slice(-5)}`;
 }
 
+export type Totals = {
+  subtotal: number;
+  discount: Discounts;
+  /** null when the address is outside both states and needs a quote. */
+  delivery: number | null;
+  total: number;
+};
+
 export function retailMessage(
   ref: string,
   order: RetailOrder,
   lines: ResolvedLine[],
-  totals: {
-    subtotal: number;
-    discount: number;
-    /** null when the address is outside both states and needs a quote. */
-    delivery: number | null;
-    total: number;
-  },
+  totals: Totals,
 ): string {
-  const items = lines
-    .map((l) => `• ${l.qty} × ${l.name} (${l.volume}) — ${money(l.lineCents)}`)
-    .join("\n");
+  const item = (l: ResolvedLine) =>
+    `• ${l.qty} × ${l.name} (${l.volume}) — ${money(l.lineCents)}`;
+
+  const pans = only(lines, "meal");
+  const bottles = only(lines, "drink");
+  // Headed only when an order crosses both. On the morning of, the kitchen
+  // and the fridge are two different jobs, and one undifferentiated list
+  // leaves someone to sort it by hand.
+  const items =
+    pans.length && bottles.length
+      ? [
+          "Kitchen",
+          ...pans.map(item),
+          "",
+          "Fridge",
+          ...bottles.map(item),
+        ].join("\n")
+      : lines.map(item).join("\n");
 
   return [
     `New order ${ref}`,
@@ -59,10 +76,15 @@ export function retailMessage(
     items,
     ``,
     `Subtotal: ${money(totals.subtotal)}`,
-    // Shown as a line of its own: this message is what the customer
-    // screenshots, so the discount has to be visible, not just netted off.
-    totals.discount > 0
-      ? `${promo.eyebrow} (4th bottle free): -${money(totals.discount)}`
+    // Shown as lines of their own: this message is what the customer
+    // screenshots, so a discount has to be visible, not just netted off. The
+    // two offers come off different halves of the basket and are never rolled
+    // into one figure.
+    totals.discount.meals > 0
+      ? `${promo.eyebrow} (${promo.mealDiscountPercent}% off food): -${money(totals.discount.meals)}`
+      : null,
+    totals.discount.bottles > 0
+      ? `${promo.eyebrow} (4th bottle free): -${money(totals.discount.bottles)}`
       : null,
     order.method === "delivery"
       ? totals.delivery === null

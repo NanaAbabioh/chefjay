@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useCart } from "./CartProvider";
 import {
+  bottleCount,
   deliveryCents,
-  discountCents,
-  itemCount,
+  discounts,
+  only,
   resolveLines,
   subtotalCents,
   zones,
@@ -44,14 +45,17 @@ export function CartClient() {
   const resolved = resolveLines(lines);
   const subtotal = subtotalCents(resolved);
   // Shown so the customer can see the offer land before they commit. The
-  // server works it out again on submit; this number is never trusted.
-  const discount = discountCents(resolved);
+  // server works it out again on submit; these numbers are never trusted.
+  const discount = discounts(resolved);
   const delivery = deliveryCents(order.method, order.zone);
   // `null` is "not known yet", not "nothing to pay" — the row and the total
   // both have to say so rather than quietly adding zero.
-  const total = subtotal - discount + (delivery ?? 0);
+  const total = subtotal - discount.total + (delivery ?? 0);
   const bottlesToFree =
-    promo.bottlesPerFree - (itemCount(lines) % promo.bottlesPerFree);
+    promo.bottlesPerFree - (bottleCount(resolved) % promo.bottlesPerFree);
+  // Pans are cooked on the day, so an order carrying one needs a word about
+  // timing that a crate of bottles does not.
+  const hasPans = only(resolved, "meal").length > 0;
 
   const set = <K extends keyof RetailOrder>(key: K, value: RetailOrder[K]) =>
     setOrder((o) => ({ ...o, [key]: value }));
@@ -87,11 +91,12 @@ export function CartClient() {
     return (
       <div className="py-16 text-center">
         <h2 className="font-display text-3xl font-semibold">Your cart is empty.</h2>
-        <p className="mt-3 text-bark-soft">
-          Eight blends are waiting. Start with the Classic.
-        </p>
+        <p className="mt-3 text-bark-soft">Ten blends and a kitchen full of pans.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <ButtonLink href="/shop">Shop the drinks</ButtonLink>
+          <ButtonLink href="/kpataashie" variant="outline">
+            Order a pan
+          </ButtonLink>
           <ButtonLink href="/events" variant="outline">
             Ordering for an event?
           </ButtonLink>
@@ -107,23 +112,36 @@ export function CartClient() {
         <ul className="divide-y divide-bark/10 border-y border-bark/10">
           {resolved.map((l) => (
             <li key={`${l.slug}:${l.sizeId}`} className="flex gap-4 py-5">
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-shell">
-                <Image
-                  src={l.image}
-                  alt=""
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                />
+              {/* A pan is sold off a typographic menu and has no photograph,
+                  so its tile carries the size instead — which is the thing
+                  worth checking twice on a food order anyway. */}
+              <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-shell">
+                {l.image ? (
+                  <Image
+                    src={l.image}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="px-1 text-center text-xs font-semibold uppercase leading-tight tracking-[0.12em] text-bark-faint">
+                    {l.volume}
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col gap-2">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-display text-lg font-semibold leading-tight">
-                      <Link href={`/shop/${l.slug}`} className="hover:text-clay">
-                        {l.name}
-                      </Link>
+                      {l.category === "drink" ? (
+                        <Link href={`/shop/${l.slug}`} className="hover:text-clay">
+                          {l.name}
+                        </Link>
+                      ) : (
+                        l.name
+                      )}
                     </h3>
                     <p className="text-sm text-bark-faint">
                       {l.volume} · {money(l.unitCents)} each
@@ -168,12 +186,14 @@ export function CartClient() {
         </ul>
 
         <div className="mt-6 flex items-center justify-between">
-          <Link
-            href="/shop"
-            className="text-sm font-semibold text-bark-soft underline underline-offset-4"
-          >
-            ← Keep shopping
-          </Link>
+          <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold text-bark-soft">
+            <Link href="/shop" className="underline underline-offset-4">
+              ← Keep shopping
+            </Link>
+            <Link href="/kpataashie" className="underline underline-offset-4">
+              Add a pan
+            </Link>
+          </div>
           {promoActive() && bottlesToFree < promo.bottlesPerFree && (
             <p className="text-sm font-semibold text-clay">
               {bottlesToFree === 1
@@ -321,7 +341,11 @@ export function CartClient() {
             rows={3}
             value={order.notes}
             onChange={(e) => set("notes", e.target.value)}
-            placeholder="Less sweet, no ginger, leave it at the door…"
+            placeholder={
+              hasPans
+                ? "Swap the protein, no egg, leave it at the door…"
+                : "Less sweet, no ginger, leave it at the door…"
+            }
           />
         </div>
 
@@ -330,10 +354,18 @@ export function CartClient() {
             <dt className="text-bark-soft">Subtotal</dt>
             <dd className="font-semibold">{money(subtotal)}</dd>
           </div>
-          {discount > 0 && (
+          {discount.meals > 0 && (
+            <div className="flex justify-between text-clay">
+              <dt>
+                {promo.eyebrow} — {promo.mealDiscountPercent}% off food
+              </dt>
+              <dd className="font-semibold">−{money(discount.meals)}</dd>
+            </div>
+          )}
+          {discount.bottles > 0 && (
             <div className="flex justify-between text-clay">
               <dt>{promo.eyebrow} — 4th bottle free</dt>
-              <dd className="font-semibold">−{money(discount)}</dd>
+              <dd className="font-semibold">−{money(discount.bottles)}</dd>
             </div>
           )}
           <div className="flex justify-between">
@@ -356,6 +388,12 @@ export function CartClient() {
             <p className="pt-1 text-sm text-bark-soft">
               Delivery outside New Jersey and New York is priced by hand — Chef
               Jay confirms it with you before your order goes out.
+            </p>
+          )}
+          {hasPans && (
+            <p className="pt-1 text-sm text-bark-soft">
+              Pans are cooked to order. Say when you need it and we confirm the
+              time with you.
             </p>
           )}
         </dl>

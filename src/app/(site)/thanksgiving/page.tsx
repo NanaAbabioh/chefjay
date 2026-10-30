@@ -31,6 +31,11 @@ export const metadata: Metadata = {
  * sits outside this folder for that reason, because the home and Kpataashie
  * pages use it too and the next offer will want it.
  *
+ * Ordering a pan is not seasonal and does not come down with this page. The
+ * pans are catalog products sold through the ordinary cart off /shop and
+ * /kpataashie; all this page adds is the 20%, and that leaves with the dates
+ * in `lib/promo.ts`.
+ *
  * The page is deliberately readable in all three phases of the offer. Someone
  * arriving from a printed flyer before the first of November should be told
  * when to come back rather than meet a blank page, and someone arriving after
@@ -254,15 +259,17 @@ export default function ThanksgivingPage() {
             <span className="font-semibold text-clay">
               {promo.mealDiscountPercent}% off every food order, {promo.window}.
             </span>{" "}
-            Pans and event quotes alike, taken off when the order is confirmed.
-            Proteins swap; anything off the list is quoted on WhatsApp.
+            Off every pan in your cart, and off an event quote when we write
+            it. Proteins swap; anything off the list is quoted on WhatsApp.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-6">
-            <ButtonLink href={order} size="lg">
-              Order on WhatsApp
+            {/* Pans go through the cart now, where the 20% comes off by
+                itself. WhatsApp stays for what the price list cannot close. */}
+            <ButtonLink href="/kpataashie" size="lg">
+              Order a pan
             </ButtonLink>
-            <ArrowLink href="/kpataashie">See the full pan pricing</ArrowLink>
+            <ArrowLink href={order}>Ask on WhatsApp</ArrowLink>
             <ArrowLink href="/events">Feeding a crowd</ArrowLink>
           </div>
         </Container>

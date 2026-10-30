@@ -3,7 +3,7 @@
 import {
   resolveLines,
   subtotalCents,
-  discountCents,
+  discounts,
   deliveryCents,
   type CartLine,
 } from "@/lib/cart";
@@ -98,7 +98,7 @@ export async function submitOrder(
   // dates. The browser's arithmetic is never trusted, and that includes the
   // discount: a cart kept open past the last day of the offer loses it.
   const subtotal = subtotalCents(resolved);
-  const discount = discountCents(resolved);
+  const discount = discounts(resolved);
   const delivery = deliveryCents(order.method, order.zone);
   const totals = {
     subtotal,
@@ -107,7 +107,7 @@ export async function submitOrder(
     // With no delivery price yet, the total is what is known so far. It is
     // never treated as zero: that would quote a customer a number the
     // business cannot honour.
-    total: subtotal - discount + (delivery ?? 0),
+    total: subtotal - discount.total + (delivery ?? 0),
   };
   const ref = orderRef(Date.now());
   const message = retailMessage(ref, order, resolved, totals);
