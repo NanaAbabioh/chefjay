@@ -53,13 +53,20 @@ Products, sizes, prices and event packages.
   code change.
 - `category` is `"drink" | "meal"`. Both are ordered through the same cart.
   Drinks are sold in 8 oz and 12 oz bottles off `/shop`; meals are sold by the
-  half or full pan off `/kpataashie`, where `kpataashieGroups` arranges the
-  same products into the groups the kitchen quotes in.
+  half or full pan off either page, where `kpataashieGroups` arranges the same
+  products into the groups the kitchen quotes in.
+- **A choice that moves the price is a `Size`, not a note.** Rice is sold with
+  a protein cooked into it for one combined figure — a half pan of jollof is
+  $80 plain and $160 with goat — so the protein is part of the size, which is
+  what the server prices and what lands on the kitchen's ticket. `ricePrices`
+  is that grid; `sizeName` is how it reads back ("Full pan with goat"). A swap
+  that costs nothing, like tilapia for chicken, goes in the order's notes.
 - **Only price what the kitchen has priced.** A row that names two foods at
   one price ("jollof rice or fried rice") becomes two products at that price.
   A dish the kitchen has never put a number on — the peppered goat, the gɔbɛ —
-  stays off the list and is quoted by message. Guessing is how a customer gets
-  charged a figure the business never agreed to.
+  stays off the list and is quoted by message. Protein alone is in the same
+  position: it has a price on rice and no price without it. Guessing is how a
+  customer gets charged a figure the business never agreed to.
 - `image` is optional. Drinks are photographed; a pan is sold off a
   typographic menu, and its cart line shows the pan size instead. Dropping a
   real photo in at `public/images/<slug>.jpg` turns it on with no code change.

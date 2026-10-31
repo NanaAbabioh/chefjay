@@ -25,8 +25,9 @@ and where business details live.
   apart. Never price a pan the kitchen has not priced — see the README.
 - **The cart stores ids, not prices.** `{slug, sizeId, qty}` only. Prices are
   resolved from the catalog on every render so stale localStorage cannot produce
-  a wrong total. A per-line choice has nowhere to live by design — protein
-  swaps and the like go in the order's notes field.
+  a wrong total. A per-line choice that moves the price has to be part of the
+  size — that is why a rice pan's protein is a `Size` and not a note. A swap
+  that costs nothing goes in the order's notes field.
 - **The two offers are not interchangeable.** The free nth bottle counts
   bottles only; the percentage comes off food only. `discounts()` keeps them
   itemised all the way to the WhatsApp message, because a single netted figure

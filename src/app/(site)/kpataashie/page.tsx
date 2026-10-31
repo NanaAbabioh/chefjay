@@ -77,7 +77,7 @@ export default function KpataashiePage() {
           title="On the menu"
           aside={
             <p className="text-base text-bark-faint">
-              Ordered by the pan — pick your rice, protein or soup below
+              Ordered by the pan — pick a rice, what goes on it, and a size
             </p>
           }
         />
@@ -133,7 +133,8 @@ export default function KpataashiePage() {
 
           <p className="mt-8 text-base text-bark-faint">
             Anything not listed — indomie, gɔbɛ, the peppered goat — is quoted
-            when you message. So is a protein swap on a pan above.
+            when you message. So is tilapia, veal or mackerel in place of a
+            protein above.
           </p>
         </div>
 

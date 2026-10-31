@@ -1,4 +1,4 @@
-import { getProduct, type Category } from "./catalog";
+import { getProduct, sizeName, type Category } from "./catalog";
 import { freeBottleCents, mealDiscountCents } from "./promo";
 
 /** What we persist. Deliberately minimal — prices are always re-read from the
@@ -11,6 +11,7 @@ export type CartLine = {
 
 export type ResolvedLine = CartLine & {
   name: string;
+  /** The size as chosen, protein included: "Full pan with goat". */
   volume: string;
   unitCents: number;
   lineCents: number;
@@ -33,7 +34,7 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
       {
         ...line,
         name: product.name,
-        volume: size.volume,
+        volume: sizeName(size),
         unitCents: size.priceCents,
         lineCents: size.priceCents * line.qty,
         image: product.image ?? null,
