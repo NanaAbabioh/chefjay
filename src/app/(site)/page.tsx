@@ -244,8 +244,40 @@ export default function Home() {
                 </ButtonLink>
                 <ArrowLink href="/kpataashie">Order from the kitchen</ArrowLink>
               </div>
+
+              {/* Two more, sent in since. Both were filmed on a phone and are
+                  portrait, so they sit as a pair rather than being cropped
+                  square to join the clip beside them. Under the copy, not
+                  below the whole band: the column is the only place they do
+                  not leave half a row empty, and on a phone they still come
+                  after the heading that explains them. */}
+              <div className="mt-10 grid grid-cols-2 gap-4 border-t border-bark/10 pt-8 sm:gap-5">
+              <figure>
+                <Testimonial
+                  poster="/video/delivery-review-poster.jpg"
+                  src="/video/delivery-review.mp4"
+                  label="Play a customer review, about two and a half minutes"
+                  aspect="aspect-[9/16]"
+                />
+                <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
+                  A review from a satisfied customer.
+                </figcaption>
+              </figure>
+              <figure>
+                <Testimonial
+                  poster="/video/colada-review-poster.jpg"
+                  src="/video/colada-review.mp4"
+                  label="Play a customer review, ten seconds"
+                  aspect="aspect-[9/16]"
+                />
+                <figcaption className="mt-3 text-xs leading-snug text-bark-faint">
+                  Another satisfied customer.
+                </figcaption>
+              </figure>
+              </div>
             </div>
           </div>
+
         </Container>
       </Band>
 
