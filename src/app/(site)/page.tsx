@@ -9,7 +9,7 @@ import { ShippedClip } from "@/components/site/ShippedClip";
 import { QuoteAudio } from "@/components/site/QuoteAudio";
 import { promo } from "@/lib/promo";
 import { ProductCard } from "@/components/product/ProductCard";
-import { drinks } from "@/lib/catalog";
+import { shopProducts } from "@/lib/catalog";
 import { site } from "@/lib/site";
 
 /** The two order paths, which are the whole point of the site. */
@@ -198,18 +198,18 @@ export default function Home() {
       <Band>
         <Container>
           <SectionHead
-            eyebrow="Eight coladas, and two from home"
+            eyebrow="Eight coladas, and three from home"
             title="The lineup"
             aside={
               <p className="text-base text-bark-faint">
-                Every drink in 8 oz or 12 oz
+                Drinks in 8 oz or 12 oz, pudding by the bowl
               </p>
             }
           />
           {/* All of them. A link to the rest is too easy to miss, and there is
               room on the page to simply show the lot. */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {drinks.map((p) => (
+            {shopProducts.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
