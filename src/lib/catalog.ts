@@ -307,6 +307,7 @@ export const products: Product[] = [
     name: "Tigernut pudding",
     category: "meal",
     blurb: "Atadwe — tigernut blended thick and sweet. A spoon, not a straw.",
+    image: "/images/tigernut-pudding.jpg",
     sizes: bowl(4999, 2499),
   },
 ];
