@@ -4,9 +4,11 @@ import { PromoGate } from "@/components/site/Promo";
 import { Offer, Window } from "@/components/site/PromoMarks";
 import { CartLink } from "@/components/cart/CartLink";
 import { PanList } from "@/components/product/PanList";
+import { QuickAdd } from "@/components/product/QuickAdd";
 import { Container, SectionHead } from "@/components/ui/Section";
 import { ArrowLink, ButtonLink } from "@/components/ui/Button";
-import { kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
+import { desserts, kpataashieMenu, kpataashieNotes } from "@/lib/catalog";
+import { money } from "@/lib/format";
 import { promo } from "@/lib/promo";
 import { site } from "@/lib/site";
 import { whatsappUrl } from "@/lib/order";
@@ -129,6 +131,36 @@ export default function KpataashiePage() {
 
           <div className="mt-8">
             <PanList />
+          </div>
+
+          {/* Dessert sits here rather than inside the pan list, because the
+              pan list also renders on the shop page — where the pudding
+              already has a card of its own, and would otherwise appear twice
+              on the one page. */}
+          <div className="mt-12 border-t border-bark/10 pt-8">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-bark-faint">
+              Dessert, by the bowl
+            </h3>
+            <ul className="mt-3 grid gap-x-12 sm:grid-cols-2">
+              {desserts.map((item) => (
+                <li key={item.slug} className="border-t border-bark/15 py-5">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                    <span className="font-display text-lg font-semibold">
+                      {item.name}
+                    </span>
+                    <span className="text-base tabular-nums text-bark-soft">
+                      {item.sizes
+                        .map((z) => `${z.volume} ${money(z.priceCents)}`)
+                        .join(" · ")}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-base text-bark-faint">{item.blurb}</p>
+                  <div className="mt-4">
+                    <QuickAdd slug={item.slug} sizes={item.sizes} />
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <p className="mt-8 text-base text-bark-faint">

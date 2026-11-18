@@ -5,14 +5,14 @@ import { promo } from "@/lib/promo";
 import { Container, Eyebrow, Seal, SectionHead } from "@/components/ui/Section";
 import { ProductCard } from "@/components/product/ProductCard";
 import { PanList } from "@/components/product/PanList";
-import { drinks } from "@/lib/catalog";
+import { shopProducts } from "@/lib/catalog";
 import { zones } from "@/lib/cart";
 import { money } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry and a less-sweet classic — plus the Gold Coast Corn Shake and Fura-liscious, iced kenkey and millet fura. Every drink in 8 oz or 12 oz, and jollof, fried rice and goat soups by the half or full pan.",
+    "Eight piña coladas made to order — classic, mango, tigernut, peach, passion fruit, strawberry, raspberry and a less-sweet classic — plus the Gold Coast Corn Shake and Fura-liscious, iced kenkey and millet fura. Every drink in 8 oz or 12 oz, and jollof, fried rice and goat soups by the half or full pan. Tigernut pudding by the bowl.",
 };
 
 export default function ShopPage() {
@@ -45,7 +45,7 @@ export default function ShopPage() {
       </div>
 
       <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-        {drinks.map((p) => (
+        {shopProducts.map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}
       </div>

@@ -90,6 +90,16 @@ const size = (
  */
 export const panServes = { half: "7 – 10", full: "15 – 20" } as const;
 
+/**
+ * Dessert is sold by the bowl. Cents in rather than dollars, unlike the pans:
+ * the kitchen prices a pan at a round $150 and a bowl at $49.99, and rounding
+ * that to dollars here would quietly overcharge by a penny.
+ */
+const bowl = (regularCents: number, smallCents: number): Size[] => [
+  { id: "small", label: "Small bowl", volume: "15 oz", priceCents: smallCents },
+  { id: "regular", label: "Regular bowl", volume: "35 oz", priceCents: regularCents },
+];
+
 /** Soup is sold by the pot and has no half. */
 const pot = (dollars: number): Size[] => [
   { id: "full", label: "Sold by the pot", volume: "Full pot", priceCents: dollars * 100 },
@@ -282,6 +292,23 @@ export const products: Product[] = [
     blurb: "Served with omotuo or fufu.",
     sizes: pot(120),
   },
+  /**
+   * Dessert. Food rather than drink, so it is discounted with the kitchen and
+   * never counts toward the free nth bottle — four bowls are not four bottles,
+   * and counting them as such would give away $24.99.
+   *
+   * It is the one meal sold off the shop page as well, because it is the one
+   * with a photograph: a pan is a line on a menu, a bowl of pudding is a
+   * picture. That is also why it is not in `kpataashieGroups` below — the pan
+   * list renders on the shop page too, and it would show up twice.
+   */
+  {
+    slug: "tigernut-pudding",
+    name: "Tigernut pudding",
+    category: "meal",
+    blurb: "Atadwe — tigernut blended thick and sweet. A spoon, not a straw.",
+    sizes: bowl(4999, 2499),
+  },
 ];
 
 /**
@@ -361,6 +388,17 @@ export function getProduct(slug: string): Product | undefined {
 
 export const drinks = products.filter((p) => p.category === "drink");
 export const meals = products.filter((p) => p.category === "meal");
+
+/**
+ * The meals sold off the shop page rather than the menu, because they are
+ * photographed and portioned like a bottle is. Kept as an explicit list: a
+ * rule that infers it from the size names would quietly pull in the next pan
+ * someone happens to measure in ounces.
+ */
+export const desserts = meals.filter((p) => p.slug === "tigernut-pudding");
+
+/** Everything with a card and a page of its own on /shop. */
+export const shopProducts = [...drinks, ...desserts];
 
 /**
  * Kpataashie — the food menu. ("Kpataashie" is Ga for kitchen.)

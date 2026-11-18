@@ -5,28 +5,31 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Section";
 import { AddToCart } from "@/components/product/AddToCart";
 import { ProductCard } from "@/components/product/ProductCard";
-import { drinks, getProduct } from "@/lib/catalog";
+import { drinks, getProduct, shopProducts } from "@/lib/catalog";
 
 /**
- * Drinks only. A Kpataashie pan is a product like any other in the catalog,
- * but it is sold off the menu at /kpataashie, where the pan sizes and the
- * servings make sense — not from a page headed "more from the fridge".
+ * What the shop sells by the bottle or the bowl. A Kpataashie pan is a product
+ * like any other in the catalog but has no page here: it is sold off the menu
+ * at /kpataashie, where the pan sizes and the servings make sense.
  */
-const drink = (slug: string) => {
+const sold = (slug: string) => {
   const product = getProduct(slug);
-  return product?.category === "drink" ? product : undefined;
+  return product && shopProducts.includes(product) ? product : undefined;
 };
 
 export function generateStaticParams() {
-  return drinks.map((p) => ({ slug: p.slug }));
+  return shopProducts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/shop/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const product = drink(slug);
-  if (!product?.image) return {};
+  const product = sold(slug);
+  if (!product) return {};
+  // A product waiting on its photograph still gets a title and a description;
+  // only the share cards, which are nothing without a picture, are held back.
+  const shots = product.image ? { images: [product.image] } : {};
   return {
     title: product.name,
     description: product.blurb,
@@ -34,21 +37,21 @@ export async function generateMetadata({
       title: product.name,
       description: product.blurb,
       type: "website",
-      images: [product.image],
+      ...shots,
     },
     twitter: {
-      card: "summary_large_image",
+      card: product.image ? "summary_large_image" : "summary",
       title: product.name,
       description: product.blurb,
-      images: [product.image],
+      ...shots,
     },
   };
 }
 
 export default async function ProductPage({ params }: PageProps<"/shop/[slug]">) {
   const { slug } = await params;
-  const product = drink(slug);
-  if (!product?.image) notFound();
+  const product = sold(slug);
+  if (!product) notFound();
 
   const others = drinks.filter((p) => p.slug !== product.slug).slice(0, 3);
 
@@ -56,19 +59,24 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
     <>
       <Container className="py-10 sm:py-14">
         <Link href="/shop" className="text-sm text-bark-faint hover:text-bark">
-          ← All drinks
+          ← The fridge
         </Link>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Empty until the photograph lands. Dropping the file in at
+              /images/<slug>.jpg fills it with no code change — the same rule
+              the pans follow. */}
           <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-shell">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
+            {product.image && (
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                priority
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            )}
           </div>
 
           <div className="lg:pt-6">
